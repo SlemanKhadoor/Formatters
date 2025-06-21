@@ -1,0 +1,331 @@
+"use client"
+
+import { useState, useCallback } from "react"
+import Link from "next/link"
+import { Button } from "@/components/ui/button"
+import { Textarea } from "@/components/ui/textarea"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Badge } from "@/components/ui/badge"
+import { ArrowLeft, Copy, Download, RotateCcw, CheckCircle, AlertCircle, Globe } from "lucide-react"
+import { useToast } from "@/hooks/use-toast"
+import LayoutWithAds from "./layout-with-ads"
+
+export default function UrlEncoder() {
+  const [input, setInput] = useState("")
+  const [output, setOutput] = useState("")
+  const [mode, setMode] = useState<"encode" | "decode">("encode")
+  const [isValid, setIsValid] = useState(true)
+  const [error, setError] = useState("")
+  const { toast } = useToast()
+
+  const encodeUrl = useCallback((text: string): string => {
+    try {
+      return encodeURIComponent(text)
+    } catch (err) {
+      throw new Error("Failed to encode URL")
+    }
+  }, [])
+
+  const decodeUrl = useCallback((text: string): string => {
+    try {
+      return decodeURIComponent(text)
+    } catch (err) {
+      throw new Error("Invalid URL-encoded string")
+    }
+  }, [])
+
+  const handleConvert = useCallback(
+    (text: string) => {
+      if (!text.trim()) {
+        setOutput("")
+        setIsValid(true)
+        setError("")
+        return
+      }
+
+      try {
+        const result = mode === "encode" ? encodeUrl(text) : decodeUrl(text)
+        setOutput(result)
+        setIsValid(true)
+        setError("")
+      } catch (err) {
+        setIsValid(false)
+        setError(err instanceof Error ? err.message : "Conversion error")
+        setOutput("")
+      }
+    },
+    [mode, encodeUrl, decodeUrl],
+  )
+
+  const handleInputChange = (value: string) => {
+    setInput(value)
+    handleConvert(value)
+  }
+
+  const handleModeChange = (newMode: "encode" | "decode") => {
+    setMode(newMode)
+    if (input.trim()) {
+      handleConvert(input)
+    }
+  }
+
+  const handleCopy = async () => {
+    if (output) {
+      await navigator.clipboard.writeText(output)
+      toast({
+        title: "Copied!",
+        description: `${mode === "encode" ? "Encoded" : "Decoded"} URL copied to clipboard`,
+      })
+    }
+  }
+
+  const handleDownload = () => {
+    if (output) {
+      const blob = new Blob([output], { type: "text/plain" })
+      const url = URL.createObjectURL(blob)
+      const a = document.createElement("a")
+      a.href = url
+      a.download = `url-${mode}.txt`
+      document.body.appendChild(a)
+      a.click()
+      document.body.removeChild(a)
+      URL.revokeObjectURL(url)
+
+      toast({
+        title: "Downloaded!",
+        description: "File downloaded successfully",
+      })
+    }
+  }
+
+  const handleClear = () => {
+    setInput("")
+    setOutput("")
+    setIsValid(true)
+    setError("")
+  }
+
+  const handleLoadExample = () => {
+    const example =
+      mode === "encode"
+        ? "https://example.com/search?q=hello world&category=tech&sort=date"
+        : "https%3A//example.com/search%3Fq%3Dhello%20world%26category%3Dtech%26sort%3Ddate"
+    setInput(example)
+    handleConvert(example)
+  }
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+      {/* Header */}
+      <header className="border-b bg-white/80 backdrop-blur-sm sticky top-0 z-50">
+        <div className="container mx-auto px-4 py-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-4">
+              <Button variant="ghost" size="sm" asChild>
+                <Link href="/">
+                  <ArrowLeft className="h-4 w-4 mr-2" />
+                  Back to Home
+                </Link>
+              </Button>
+              <div className="flex items-center space-x-2">
+                <Globe className="h-6 w-6 text-green-600" />
+                <h1 className="text-xl font-bold text-gray-900">URL Encoder & Decoder</h1>
+              </div>
+            </div>
+            <div className="flex items-center space-x-2">
+              {isValid ? (
+                <Badge variant="secondary" className="bg-green-100 text-green-800">
+                  <CheckCircle className="h-3 w-3 mr-1" />
+                  Valid
+                </Badge>
+              ) : (
+                <Badge variant="destructive">
+                  <AlertCircle className="h-3 w-3 mr-1" />
+                  Invalid
+                </Badge>
+              )}
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <div className="container mx-auto px-4 py-8">
+        <LayoutWithAds adPosition="right" showAds={true}>
+          <main>
+            {/* Page Header */}
+            <header className="mb-8">
+              <h1 className="text-3xl font-bold text-gray-900 mb-2">URL Encoder & Decoder</h1>
+              <p className="text-lg text-gray-600 mb-4">Encode URLs for web safety or decode URL-encoded strings</p>
+              <p className="text-gray-500">
+                Secure client-side URL encoding and decoding. Perfect for web development, API work, and handling
+                special characters in URLs.
+              </p>
+            </header>
+
+            {/* Mode Selection */}
+            <div className="mb-6">
+              <Tabs value={mode} onValueChange={(value) => handleModeChange(value as "encode" | "decode")}>
+                <TabsList>
+                  <TabsTrigger value="encode">Encode URL</TabsTrigger>
+                  <TabsTrigger value="decode">Decode URL</TabsTrigger>
+                </TabsList>
+              </Tabs>
+            </div>
+
+            <div className="grid lg:grid-cols-2 gap-6 items-start">
+              {/* Input Section */}
+              <section className="h-full">
+                <Card className="border-0 shadow-md h-full flex flex-col">
+                  <CardHeader className="pb-4 flex-shrink-0">
+                    <div className="flex flex-col space-y-4">
+                      <div>
+                        <CardTitle className="mb-2">{mode === "encode" ? "URL Input" : "Encoded URL Input"}</CardTitle>
+                        <CardDescription>
+                          {mode === "encode"
+                            ? "Enter the URL you want to encode"
+                            : "Enter the URL-encoded string you want to decode"}
+                        </CardDescription>
+                      </div>
+
+                      <div className="flex flex-col sm:flex-row flex-wrap gap-2">
+                        <Button variant="outline" size="sm" onClick={handleLoadExample} className="flex-1 sm:w-auto">
+                          Load Example
+                        </Button>
+                        <Button variant="outline" size="sm" onClick={handleClear} className="flex-1 sm:w-auto">
+                          <RotateCcw className="h-4 w-4" />
+                          Clear
+                        </Button>
+                      </div>
+                    </div>
+                  </CardHeader>
+                  <CardContent className="pt-0 flex-1 flex flex-col">
+                    <Textarea
+                      value={input}
+                      onChange={(e) => handleInputChange(e.target.value)}
+                      placeholder={mode === "encode" ? "Enter your URL here..." : "Enter your encoded URL here..."}
+                      className="min-h-[400px] flex-1 font-mono text-sm resize-none"
+                      aria-label={mode === "encode" ? "URL input" : "Encoded URL input"}
+                    />
+                    {error && (
+                      <div
+                        className="mt-4 p-3 bg-red-50 border border-red-200 rounded-md text-red-700 text-sm flex-shrink-0"
+                        role="alert"
+                      >
+                        <AlertCircle className="h-4 w-4 inline mr-2" />
+                        <strong>Error:</strong> {error}
+                      </div>
+                    )}
+                  </CardContent>
+                </Card>
+              </section>
+
+              {/* Output Section */}
+              <section className="h-full">
+                <Card className="border-0 shadow-md h-full flex flex-col">
+                  <CardHeader className="pb-4 flex-shrink-0">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <CardTitle className="mb-2">{mode === "encode" ? "Encoded URL" : "Decoded URL"}</CardTitle>
+                        <CardDescription>
+                          {mode === "encode" ? "URL-encoded result" : "Decoded URL result"}
+                        </CardDescription>
+                      </div>
+                      <div className="flex flex-col sm:flex-row gap-2">
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={handleCopy}
+                          disabled={!output || !isValid}
+                          className="flex-1 sm:w-auto"
+                        >
+                          <Copy className="h-4 w-4 mr-2" />
+                          Copy
+                        </Button>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={handleDownload}
+                          disabled={!output || !isValid}
+                          className="flex-1 sm:w-auto"
+                        >
+                          <Download className="h-4 w-4 mr-2" />
+                          Download
+                        </Button>
+                      </div>
+                    </div>
+                  </CardHeader>
+                  <CardContent className="pt-0 flex-1 flex flex-col">
+                    <Textarea
+                      value={output}
+                      readOnly
+                      placeholder={
+                        mode === "encode" ? "URL-encoded text will appear here..." : "Decoded URL will appear here..."
+                      }
+                      className="min-h-[400px] flex-1 font-mono text-sm bg-gray-50 resize-none"
+                      aria-label={mode === "encode" ? "Encoded URL output" : "Decoded URL output"}
+                    />
+                  </CardContent>
+                </Card>
+              </section>
+            </div>
+
+            {/* Tips Section */}
+            <section className="mt-8">
+              <Card className="border-0 shadow-md">
+                <CardHeader className="pb-4">
+                  <CardTitle>About URL Encoding</CardTitle>
+                </CardHeader>
+                <CardContent className="pt-0">
+                  <Tabs defaultValue="about" className="w-full">
+                    <TabsList>
+                      <TabsTrigger value="about">About</TabsTrigger>
+                      <TabsTrigger value="uses">Common Uses</TabsTrigger>
+                      <TabsTrigger value="characters">Special Characters</TabsTrigger>
+                    </TabsList>
+                    <TabsContent value="about" className="mt-4">
+                      <div className="space-y-3 text-sm text-gray-600">
+                        <h4 className="font-semibold text-gray-900">What is URL Encoding?</h4>
+                        <ul className="space-y-2 list-disc list-inside">
+                          <li>URL encoding converts special characters to percent-encoded format</li>
+                          <li>Also known as percent-encoding or URI encoding</li>
+                          <li>Ensures URLs are transmitted safely over the internet</li>
+                          <li>Required for special characters in query parameters</li>
+                        </ul>
+                      </div>
+                    </TabsContent>
+                    <TabsContent value="uses" className="mt-4">
+                      <div className="space-y-3 text-sm text-gray-600">
+                        <h4 className="font-semibold text-gray-900">Common Use Cases:</h4>
+                        <ul className="space-y-2 list-disc list-inside">
+                          <li>Query parameters with spaces or special characters</li>
+                          <li>Form data submission</li>
+                          <li>API endpoint parameters</li>
+                          <li>Search queries in URLs</li>
+                          <li>File paths with special characters</li>
+                        </ul>
+                      </div>
+                    </TabsContent>
+                    <TabsContent value="characters" className="mt-4">
+                      <div className="space-y-3 text-sm text-gray-600">
+                        <h4 className="font-semibold text-gray-900">Common Encodings:</h4>
+                        <ul className="space-y-2 list-disc list-inside">
+                          <li>Space → %20</li>
+                          <li>& → %26</li>
+                          <li>= → %3D</li>
+                          <li>? → %3F</li>
+                          <li># → %23</li>
+                          <li>+ → %2B</li>
+                        </ul>
+                      </div>
+                    </TabsContent>
+                  </Tabs>
+                </CardContent>
+              </Card>
+            </section>
+          </main>
+        </LayoutWithAds>
+      </div>
+    </div>
+  )
+}
