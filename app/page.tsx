@@ -391,16 +391,16 @@ export default function HomePage() {
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
       {/* Header */}
       <header className="border-b bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm sticky top-0 z-50">
-        <div className="container mx-auto px-4 py-4">
+        <div className="container mx-auto px-2 py-4">
           <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-2">
-              <Code className="h-8 w-8 text-blue-600" />
-              <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Formatters.net</h1>
+            <div className="flex items-center space-x-1">
+              <Code className="h-8 w-7 text-blue-600" />
+              <h1 className="text-base sm:text-2xl font-bold text-gray-900 dark:text-gray-100">Formatters.net</h1>
             </div>
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-1">
               <ThemeToggle />
-              <Badge variant="secondary" className="bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-100">
-                <Shield className="h-3 w-3 mr-1" />
+              <Badge variant="secondary" className="bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-100 text-xs text-nowrap">
+                <Shield className="h-3 w-3 mr-1 hidden sm:block" />
                 100% Client-Side
               </Badge>
             </div>
@@ -408,7 +408,7 @@ export default function HomePage() {
         </div>
       </header>
 
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-2 py-8">
         <LayoutWithAds adPosition="right" showAds={true}>
           <main>
             {/* Hero Section */}
@@ -434,7 +434,7 @@ export default function HomePage() {
             <section className="mb-12">
               <div className="flex items-center justify-between mb-6">
                 <h2 className="text-3xl font-bold text-gray-900 dark:text-gray-100">Code Formatters</h2>
-                <Badge variant="outline" className="text-blue-600 border-blue-200 dark:border-blue-800">
+                <Badge variant="outline" className="text-blue-600 border-blue-200 dark:border-blue-800 text-nowrap">
                   {formatters.length} Languages
                 </Badge>
               </div>
@@ -471,7 +471,7 @@ export default function HomePage() {
             <section className="mb-12">
               <div className="flex items-center justify-between mb-6">
                 <h2 className="text-3xl font-bold text-gray-900 dark:text-gray-100">Data Converters</h2>
-                <Badge variant="outline" className="text-green-600 border-green-200 dark:border-green-800">
+                <Badge variant="outline" className="text-green-600 border-green-200 dark:border-green-800 text-nowrap">
                   {converters.length} Tools
                 </Badge>
               </div>
@@ -508,7 +508,7 @@ export default function HomePage() {
             <section className="mb-12">
               <div className="flex items-center justify-between mb-6">
                 <h2 className="text-3xl font-bold text-gray-900 dark:text-gray-100">Developer Utilities</h2>
-                <Badge variant="outline" className="text-purple-600 border-purple-200 dark:border-purple-800">
+                <Badge variant="outline" className="text-purple-600 border-purple-200 dark:border-purple-800 ">
                   {utilities.length} Tools
                 </Badge>
               </div>
@@ -545,7 +545,7 @@ export default function HomePage() {
             <section className="mb-12">
               <div className="flex items-center justify-between mb-6">
                 <h2 className="text-3xl font-bold text-gray-900 dark:text-gray-100">Text Processing Tools</h2>
-                <Badge variant="outline" className="text-orange-600 border-orange-200 dark:border-orange-800">
+                <Badge variant="outline" className="text-orange-600 border-orange-200 dark:border-orange-800 text-nowrap">
                   {textTools.length} Tools
                 </Badge>
               </div>
@@ -610,7 +610,7 @@ export default function HomePage() {
                   asChild
                   size="lg"
                   variant="outline"
-                  className="text-white border-white hover:bg-white hover:text-blue-600"
+                  className="text-white border-white hover:bg-white hover:text-blue-600 bg-primary"
                 >
                   <Link href="/tools/uuid-generator">Generate UUID</Link>
                 </Button>

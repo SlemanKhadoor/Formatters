@@ -9,6 +9,7 @@ import { Badge } from "@/components/ui/badge"
 import { ArrowLeft, Copy, Download, RotateCcw, CheckCircle, AlertCircle, FileText } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
 import LayoutWithAds from "./layout-with-ads"
+import { Header } from "@/components/Header"
 
 export default function YamlToJsonConverter() {
   const [input, setInput] = useState("")
@@ -243,44 +244,30 @@ data:
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
       {/* Header */}
-      <header className="border-b bg-white/80 backdrop-blur-sm sticky top-0 z-50">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4">
-              <Button variant="ghost" size="sm" asChild>
-                <Link href="/">
-                  <ArrowLeft className="h-4 w-4 mr-2" />
-                  Back to Home
-                </Link>
-              </Button>
-              <div className="flex items-center space-x-2">
-                <FileText className="h-6 w-6 text-purple-600" />
-                <h1 className="text-xl font-bold text-gray-900">YAML to JSON Converter</h1>
-              </div>
-            </div>
-            <div className="flex items-center space-x-2">
-              {isValid ? (
-                <Badge variant="secondary" className="bg-green-100 text-green-800">
-                  <CheckCircle className="h-3 w-3 mr-1" />
-                  Valid
-                </Badge>
-              ) : (
-                <Badge variant="destructive">
-                  <AlertCircle className="h-3 w-3 mr-1" />
-                  Invalid
-                </Badge>
-              )}
-            </div>
-          </div>
-        </div>
-      </header>
+      <Header
+        formatterName={'JSON to CSV Converter'}
+        icon={<FileText className="sm:h-5 sm:w-5 h-4 w-4 text-purple-600" />}
+        statusBadge={
+          isValid ? (
+            <Badge variant="secondary" className="bg-green-100 text-green-800">
+              <CheckCircle className="h-3 w-3 mr-1" />
+              Valid
+            </Badge>
+          ) : (
+            <Badge variant="destructive">
+              <AlertCircle className="h-3 w-3 mr-1" />
+              Invalid
+            </Badge>
+          )
+        }
+      />
 
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-2 py-8">
         <LayoutWithAds adPosition="right" showAds={true}>
           <main>
             {/* Page Header */}
             <header className="mb-8">
-              <h1 className="text-3xl font-bold text-gray-900 mb-2">YAML to JSON Converter</h1>
+              <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">YAML to JSON Converter</h1>
               <p className="text-lg text-gray-600 mb-4">
                 Convert YAML data to JSON format for configuration files and API development
               </p>
@@ -337,12 +324,12 @@ data:
               <section className="h-full">
                 <Card className="border-0 shadow-md h-full flex flex-col">
                   <CardHeader className="pb-4 flex-shrink-0">
-                    <div className="flex items-center justify-between">
+                    <div className="flex items-start justify-between flex-col">
                       <div>
                         <CardTitle className="mb-2">JSON Output</CardTitle>
                         <CardDescription>Generated JSON data ready for download</CardDescription>
                       </div>
-                      <div className="flex space-x-2">
+                      <div className="flex gap-1 w-full sm:w-auto flex-wrap mt-4">
                         <Button variant="outline" size="sm" onClick={handleCopy} disabled={!output || !isValid}>
                           <Copy className="h-4 w-4" />
                           Copy
@@ -376,7 +363,7 @@ data:
                 <CardContent className="pt-0">
                   <div className="space-y-4 text-sm text-gray-600">
                     <div>
-                      <h4 className="font-semibold text-gray-900 mb-2">Features:</h4>
+                      <h4 className="font-semibold text-gray-900 dark:text-gray-100 mb-2">Features:</h4>
                       <ul className="space-y-1 list-disc list-inside">
                         <li>Converts YAML data to well-structured JSON</li>
                         <li>Handles nested objects and arrays</li>
@@ -385,7 +372,7 @@ data:
                       </ul>
                     </div>
                     <div>
-                      <h4 className="font-semibold text-gray-900 mb-2">Use Cases:</h4>
+                      <h4 className="font-semibold text-gray-900 dark:text-gray-100 mb-2">Use Cases:</h4>
                       <ul className="space-y-1 list-disc list-inside">
                         <li>Converting configuration files</li>
                         <li>API development and testing</li>

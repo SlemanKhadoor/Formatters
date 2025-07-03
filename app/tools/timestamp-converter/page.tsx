@@ -18,8 +18,6 @@ export const metadata: Metadata = {
 
 export default function TimestampConverterPage() {
   return (
-    <LayoutWithAds adPosition="right" showAds={true}>
-      <TimestampConverter />
-    </LayoutWithAds>
+    <TimestampConverter />
   )
 }

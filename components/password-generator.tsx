@@ -1,7 +1,6 @@
 "use client"
 
 import { useState, useCallback } from "react"
-import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Checkbox } from "@/components/ui/checkbox"
@@ -9,6 +8,7 @@ import { Badge } from "@/components/ui/badge"
 import { ArrowLeft, Copy, RefreshCw, ShieldCheck, AlertTriangle, Shield, Eye, EyeOff } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
 import LayoutWithAds from "./layout-with-ads"
+import { Header } from "@/components/Header"
 
 export default function PasswordGenerator() {
   const [password, setPassword] = useState("")
@@ -116,38 +116,25 @@ export default function PasswordGenerator() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
       {/* Header */}
-      <header className="border-b bg-white/80 backdrop-blur-sm sticky top-0 z-50">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4">
-              <Button variant="ghost" size="sm" asChild>
-                <Link href="/">
-                  <ArrowLeft className="h-4 w-4 mr-2" />
-                  Back to Home
-                </Link>
-              </Button>
-              <div className="flex items-center space-x-2">
-                <ShieldCheck className="h-6 w-6 text-red-600" />
-                <h1 className="text-xl font-bold text-gray-900">Password Generator</h1>
-              </div>
-            </div>
-            {strengthInfo && (
-              <Badge variant="secondary" className={`${strengthInfo.bgColor} ${strengthInfo.color}`}>
-                <Shield className="h-3 w-3 mr-1" />
-                {strengthInfo.strength}
-              </Badge>
-            )}
-          </div>
-        </div>
-      </header>
+      <Header
+        formatterName={'Password Generator'}
+        icon={<ShieldCheck className="sm:h-5 sm:w-5 h-4 w-4 text-red-600" />}
+        statusBadge=
+        {strengthInfo && (
+          <Badge variant="secondary" className={`${strengthInfo.bgColor} ${strengthInfo.color}`}>
+            <Shield className="h-3 w-3 mr-1" />
+            {strengthInfo.strength}
+          </Badge>
+        )}
+      />
 
       <div className="container mx-auto px-4 py-8">
         <LayoutWithAds adPosition="right" showAds={true}>
           <main>
             {/* Page Header */}
             <header className="mb-8">
-              <h1 className="text-3xl font-bold text-gray-900 mb-2">Password Generator</h1>
-              <p className="text-lg text-gray-600 mb-4">
+              <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">Password Generator</h1>
+              <p className="text-lg text-gray-500 mb-4">
                 Generate secure passwords with custom rules and character sets
               </p>
               <p className="text-gray-500">
@@ -184,9 +171,9 @@ export default function PasswordGenerator() {
 
                     {/* Character Options */}
                     <div className="space-y-4">
-                      <h4 className="font-medium text-gray-900">Include Characters</h4>
+                      <h4 className="font-medium text-gray-900 dark:text-gray-100">Include Characters</h4>
 
-                      <div className="flex items-center space-x-2">
+                      <div className="flex items-start space-x-2">
                         <Checkbox id="uppercase" checked={includeUppercase} onCheckedChange={setIncludeUppercase} />
                         <label htmlFor="uppercase" className="text-sm">
                           Uppercase Letters (A-Z)
@@ -276,17 +263,16 @@ export default function PasswordGenerator() {
 
                         <div className="w-full bg-gray-200 rounded-full h-2">
                           <div
-                            className={`h-2 rounded-full transition-all duration-300 ${
-                              strengthInfo.score >= 7
-                                ? "bg-green-500"
-                                : strengthInfo.score >= 5
-                                  ? "bg-blue-500"
-                                  : strengthInfo.score >= 3
-                                    ? "bg-yellow-500"
-                                    : strengthInfo.score >= 1
-                                      ? "bg-orange-500"
-                                      : "bg-red-500"
-                            }`}
+                            className={`h-2 rounded-full transition-all duration-300 ${strengthInfo.score >= 7
+                              ? "bg-green-500"
+                              : strengthInfo.score >= 5
+                                ? "bg-blue-500"
+                                : strengthInfo.score >= 3
+                                  ? "bg-yellow-500"
+                                  : strengthInfo.score >= 1
+                                    ? "bg-orange-500"
+                                    : "bg-red-500"
+                              }`}
                             style={{ width: `${Math.min(100, (strengthInfo.score / 8) * 100)}%` }}
                           />
                         </div>
@@ -313,7 +299,7 @@ export default function PasswordGenerator() {
                     <CardTitle className="text-lg">Security Tips</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <div className="space-y-3 text-sm text-gray-600">
+                    <div className="space-y-3 text-sm text-gray-600 dark:text-gray-400">
                       <div className="flex items-start space-x-2">
                         <Shield className="h-4 w-4 text-green-600 mt-0.5 flex-shrink-0" />
                         <span>Use a unique password for each account</span>

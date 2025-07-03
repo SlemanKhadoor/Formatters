@@ -8,6 +8,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Badge } from "@/components/ui/badge"
 import { ArrowLeft, Copy, Download, RefreshCw, Shuffle, CheckCircle } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
+import LayoutWithAds from "./layout-with-ads"
+import { Header } from "@/components/Header"
 
 export default function UuidGenerator() {
   const [uuids, setUuids] = useState<string[]>([])
@@ -88,220 +90,207 @@ export default function UuidGenerator() {
   }
 
   // Generate initial UUIDs
-  useState(() => {
-    generateUuids()
-  })
+  // useState(() => {
+  //   generateUuids()
+  // })
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
       {/* Header */}
-      <header className="border-b bg-white/80 backdrop-blur-sm sticky top-0 z-50">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4">
-              <Button variant="ghost" size="sm" asChild>
-                <Link href="/">
-                  <ArrowLeft className="h-4 w-4 mr-2" />
-                  Back to Home
-                </Link>
-              </Button>
-              <div className="flex items-center space-x-2">
-                <Shuffle className="h-6 w-6 text-indigo-600" />
-                <h1 className="text-xl font-bold text-gray-900 dark:text-gray-100">UUID Generator</h1>
-              </div>
-            </div>
-            <div className="flex items-center space-x-2">
-              <Badge variant="secondary" className="bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-100">
-                <CheckCircle className="h-3 w-3 mr-1" />
-                Secure
-              </Badge>
-            </div>
-          </div>
-        </div>
-      </header>
+      <Header
+        formatterName={'UUID Generator'}
+        icon={<Shuffle className="sm:h-5 sm:w-5 h-4 w-4 text-indigo-600" />}
+        statusBadge={
+          <Badge variant="secondary" className="bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-100">
+            <CheckCircle className="h-3 w-3 mr-1" />
+            Secure
+          </Badge>
+        } />
 
       <div className="container mx-auto px-4 py-8">
-        <main>
-          {/* Page Header */}
-          <header className="mb-8">
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">UUID Generator</h1>
-            <p className="text-lg text-gray-600 dark:text-gray-300 mb-4">
-              Generate UUID/GUID (Universally Unique Identifiers) instantly
-            </p>
-            <p className="text-gray-500 dark:text-gray-400">
-              Create version 1, version 4, or NIL UUIDs for your applications. All generation happens securely in your
-              browser.
-            </p>
-          </header>
+        <LayoutWithAds adPosition="right" showAds={true}>
+          <main>
+            {/* Page Header */}
+            <header className="mb-8">
+              <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">UUID Generator</h1>
+              <p className="text-lg text-gray-600 dark:text-gray-300 mb-4">
+                Generate UUID/GUID (Universally Unique Identifiers) instantly
+              </p>
+              <p className="text-gray-500 dark:text-gray-400">
+                Create version 1, version 4, or NIL UUIDs for your applications. All generation happens securely in your
+                browser.
+              </p>
+            </header>
 
-          <div className="grid lg:grid-cols-2 gap-6 items-start">
-            {/* Controls Section */}
-            <section className="h-full">
-              <Card className="border-0 shadow-md h-full flex flex-col">
-                <CardHeader className="pb-4 flex-shrink-0">
-                  <CardTitle className="mb-2">Generator Settings</CardTitle>
-                  <CardDescription>Configure UUID generation options</CardDescription>
-                </CardHeader>
-                <CardContent className="pt-0 flex-1 flex flex-col space-y-6">
-                  {/* UUID Version Selection */}
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                      UUID Version
-                    </label>
-                    <Tabs value={version} onValueChange={(value) => setVersion(value as any)}>
-                      <TabsList className="grid w-full grid-cols-3">
-                        <TabsTrigger value="v4">Version 4</TabsTrigger>
-                        <TabsTrigger value="v1">Version 1</TabsTrigger>
-                        <TabsTrigger value="nil">NIL UUID</TabsTrigger>
-                      </TabsList>
-                    </Tabs>
-                  </div>
-
-                  {/* Count Selection */}
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                      Number of UUIDs
-                    </label>
-                    <select
-                      value={count}
-                      onChange={(e) => setCount(Number(e.target.value))}
-                      className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    >
-                      {[1, 5, 10, 25, 50, 100].map((num) => (
-                        <option key={num} value={num}>
-                          {num}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-
-                  {/* Generate Button */}
-                  <div className="mt-auto">
-                    <Button onClick={generateUuids} className="w-full" size="lg">
-                      <RefreshCw className="h-4 w-4 mr-2" />
-                      Generate UUIDs
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            </section>
-
-            {/* Results Section */}
-            <section className="h-full">
-              <Card className="border-0 shadow-md h-full flex flex-col">
-                <CardHeader className="pb-4 flex-shrink-0">
-                  <div className="flex items-center justify-between">
+            <div className="grid lg:grid-cols-2 gap-6 items-start">
+              {/* Controls Section */}
+              <section className="h-full">
+                <Card className="border-0 shadow-md h-full flex flex-col">
+                  <CardHeader className="pb-4 flex-shrink-0">
+                    <CardTitle className="mb-2">Generator Settings</CardTitle>
+                    <CardDescription>Configure UUID generation options</CardDescription>
+                  </CardHeader>
+                  <CardContent className="pt-0 flex-1 flex flex-col space-y-6">
+                    {/* UUID Version Selection */}
                     <div>
-                      <CardTitle className="mb-2">Generated UUIDs</CardTitle>
-                      <CardDescription>
-                        {uuids.length} UUID{uuids.length !== 1 ? "s" : ""} generated
-                      </CardDescription>
+                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        UUID Version
+                      </label>
+                      <Tabs value={version} onValueChange={(value) => setVersion(value as any)}>
+                        <TabsList className="grid w-full grid-cols-3">
+                          <TabsTrigger value="v4">Version 4</TabsTrigger>
+                          <TabsTrigger value="v1">Version 1</TabsTrigger>
+                          <TabsTrigger value="nil">NIL UUID</TabsTrigger>
+                        </TabsList>
+                      </Tabs>
                     </div>
-                    <div className="flex flex-col sm:flex-row gap-2">
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => handleCopy()}
-                        disabled={uuids.length === 0}
-                        className="flex-1 sm:w-auto"
+
+                    {/* Count Selection */}
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        Number of UUIDs
+                      </label>
+                      <select
+                        value={count}
+                        onChange={(e) => setCount(Number(e.target.value))}
+                        className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
                       >
-                        <Copy className="h-4 w-4 mr-2" />
-                        Copy All
-                      </Button>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={handleDownload}
-                        disabled={uuids.length === 0}
-                        className="flex-1 sm:w-auto"
-                      >
-                        <Download className="h-4 w-4 mr-2" />
-                        Download
+                        {[1, 5, 10, 25, 50, 100].map((num) => (
+                          <option key={num} value={num}>
+                            {num}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+
+                    {/* Generate Button */}
+                    <div className="mt-auto">
+                      <Button onClick={generateUuids} className="w-full" size="lg">
+                        <RefreshCw className="h-4 w-4 mr-2" />
+                        Generate UUIDs
                       </Button>
                     </div>
-                  </div>
-                </CardHeader>
-                <CardContent className="pt-0 flex-1 flex flex-col">
-                  <div className="space-y-2 max-h-96 overflow-y-auto">
-                    {uuids.map((uuid, index) => (
-                      <div
-                        key={index}
-                        className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800 rounded-md font-mono text-sm"
-                      >
-                        <span className="flex-1 mr-2">{uuid}</span>
+                  </CardContent>
+                </Card>
+              </section>
+
+              {/* Results Section */}
+              <section className="h-full">
+                <Card className="border-0 shadow-md h-full flex flex-col">
+                  <CardHeader className="pb-4 flex-shrink-0">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <CardTitle className="mb-2">Generated UUIDs</CardTitle>
+                        <CardDescription>
+                          {uuids.length} UUID{uuids.length !== 1 ? "s" : ""} generated
+                        </CardDescription>
+                      </div>
+                      <div className="flex flex-col sm:flex-row gap-2">
                         <Button
-                          variant="ghost"
+                          variant="outline"
                           size="sm"
-                          onClick={() => handleCopy(uuid)}
-                          className="flex-shrink-0 min-w-[2rem]"
+                          onClick={() => handleCopy()}
+                          disabled={uuids.length === 0}
+                          className="flex-1 sm:w-auto"
                         >
-                          <Copy className="h-3 w-3" />
+                          <Copy className="h-4 w-4 mr-2" />
+                          Copy All
+                        </Button>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={handleDownload}
+                          disabled={uuids.length === 0}
+                          className="flex-1 sm:w-auto"
+                        >
+                          <Download className="h-4 w-4 mr-2" />
+                          Download
                         </Button>
                       </div>
-                    ))}
-                  </div>
+                    </div>
+                  </CardHeader>
+                  <CardContent className="pt-0 flex-1 flex flex-col">
+                    <div className="space-y-2 max-h-96 overflow-y-auto">
+                      {uuids.map((uuid, index) => (
+                        <div
+                          key={index}
+                          className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800 rounded-md font-mono text-sm"
+                        >
+                          <span className="flex-1 mr-2">{uuid}</span>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => handleCopy(uuid)}
+                            className="flex-shrink-0 min-w-[2rem]"
+                          >
+                            <Copy className="h-3 w-3" />
+                          </Button>
+                        </div>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+              </section>
+            </div>
+
+            {/* Information Section */}
+            <section className="mt-8">
+              <Card className="border-0 shadow-md">
+                <CardHeader className="pb-4">
+                  <CardTitle>About UUIDs</CardTitle>
+                </CardHeader>
+                <CardContent className="pt-0">
+                  <Tabs defaultValue="about" className="w-full">
+                    <TabsList>
+                      <TabsTrigger value="about">About</TabsTrigger>
+                      <TabsTrigger value="versions">Versions</TabsTrigger>
+                      <TabsTrigger value="uses">Use Cases</TabsTrigger>
+                    </TabsList>
+                    <TabsContent value="about" className="mt-4">
+                      <div className="space-y-3 text-sm text-gray-600 dark:text-gray-300">
+                        <h4 className="font-semibold text-gray-900 dark:text-gray-100">What are UUIDs?</h4>
+                        <ul className="space-y-2 list-disc list-inside">
+                          <li>UUID stands for Universally Unique Identifier</li>
+                          <li>128-bit values that are unique across space and time</li>
+                          <li>Standardized by RFC 4122</li>
+                          <li>Also known as GUID (Globally Unique Identifier) in Microsoft systems</li>
+                        </ul>
+                      </div>
+                    </TabsContent>
+                    <TabsContent value="versions" className="mt-4">
+                      <div className="space-y-3 text-sm text-gray-600 dark:text-gray-300">
+                        <h4 className="font-semibold text-gray-900 dark:text-gray-100">UUID Versions:</h4>
+                        <ul className="space-y-2 list-disc list-inside">
+                          <li>
+                            <strong>Version 1:</strong> Time-based UUIDs using MAC address and timestamp
+                          </li>
+                          <li>
+                            <strong>Version 4:</strong> Random UUIDs (most commonly used)
+                          </li>
+                          <li>
+                            <strong>NIL UUID:</strong> Special UUID with all bits set to zero
+                          </li>
+                        </ul>
+                      </div>
+                    </TabsContent>
+                    <TabsContent value="uses" className="mt-4">
+                      <div className="space-y-3 text-sm text-gray-600 dark:text-gray-300">
+                        <h4 className="font-semibold text-gray-900 dark:text-gray-100">Common Use Cases:</h4>
+                        <ul className="space-y-2 list-disc list-inside">
+                          <li>Database primary keys</li>
+                          <li>API request/response tracking</li>
+                          <li>File and resource identification</li>
+                          <li>Session management</li>
+                          <li>Distributed system coordination</li>
+                        </ul>
+                      </div>
+                    </TabsContent>
+                  </Tabs>
                 </CardContent>
               </Card>
             </section>
-          </div>
-
-          {/* Information Section */}
-          <section className="mt-8">
-            <Card className="border-0 shadow-md">
-              <CardHeader className="pb-4">
-                <CardTitle>About UUIDs</CardTitle>
-              </CardHeader>
-              <CardContent className="pt-0">
-                <Tabs defaultValue="about" className="w-full">
-                  <TabsList>
-                    <TabsTrigger value="about">About</TabsTrigger>
-                    <TabsTrigger value="versions">Versions</TabsTrigger>
-                    <TabsTrigger value="uses">Use Cases</TabsTrigger>
-                  </TabsList>
-                  <TabsContent value="about" className="mt-4">
-                    <div className="space-y-3 text-sm text-gray-600 dark:text-gray-300">
-                      <h4 className="font-semibold text-gray-900 dark:text-gray-100">What are UUIDs?</h4>
-                      <ul className="space-y-2 list-disc list-inside">
-                        <li>UUID stands for Universally Unique Identifier</li>
-                        <li>128-bit values that are unique across space and time</li>
-                        <li>Standardized by RFC 4122</li>
-                        <li>Also known as GUID (Globally Unique Identifier) in Microsoft systems</li>
-                      </ul>
-                    </div>
-                  </TabsContent>
-                  <TabsContent value="versions" className="mt-4">
-                    <div className="space-y-3 text-sm text-gray-600 dark:text-gray-300">
-                      <h4 className="font-semibold text-gray-900 dark:text-gray-100">UUID Versions:</h4>
-                      <ul className="space-y-2 list-disc list-inside">
-                        <li>
-                          <strong>Version 1:</strong> Time-based UUIDs using MAC address and timestamp
-                        </li>
-                        <li>
-                          <strong>Version 4:</strong> Random UUIDs (most commonly used)
-                        </li>
-                        <li>
-                          <strong>NIL UUID:</strong> Special UUID with all bits set to zero
-                        </li>
-                      </ul>
-                    </div>
-                  </TabsContent>
-                  <TabsContent value="uses" className="mt-4">
-                    <div className="space-y-3 text-sm text-gray-600 dark:text-gray-300">
-                      <h4 className="font-semibold text-gray-900 dark:text-gray-100">Common Use Cases:</h4>
-                      <ul className="space-y-2 list-disc list-inside">
-                        <li>Database primary keys</li>
-                        <li>API request/response tracking</li>
-                        <li>File and resource identification</li>
-                        <li>Session management</li>
-                        <li>Distributed system coordination</li>
-                      </ul>
-                    </div>
-                  </TabsContent>
-                </Tabs>
-              </CardContent>
-            </Card>
-          </section>
-        </main>
+          </main>
+        </LayoutWithAds>
       </div>
     </div>
   )

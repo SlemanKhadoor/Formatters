@@ -9,6 +9,8 @@ import { Badge } from "@/components/ui/badge"
 import { ArrowLeft, Copy, RotateCcw, Type, CheckCircle } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
 import LayoutWithAds from "./layout-with-ads"
+import { Header } from "@/components/Header"
+
 
 export default function CaseConverter() {
   const [input, setInput] = useState("")
@@ -127,38 +129,14 @@ export default function CaseConverter() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
       {/* Header */}
-      <header className="border-b bg-white/80 backdrop-blur-sm sticky top-0 z-50">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4">
-              <Button variant="ghost" size="sm" asChild>
-                <Link href="/">
-                  <ArrowLeft className="h-4 w-4 mr-2" />
-                  Back to Home
-                </Link>
-              </Button>
-              <div className="flex items-center space-x-2">
-                <Type className="h-6 w-6 text-green-600" />
-                <h1 className="text-xl font-bold text-gray-900">Case Converter</h1>
-              </div>
-            </div>
-            <div className="flex items-center space-x-2">
-              <Badge variant="secondary" className="bg-green-100 text-green-800">
-                <CheckCircle className="h-3 w-3 mr-1" />
-                {caseTypes.length} Formats
-              </Badge>
-            </div>
-          </div>
-        </div>
-      </header>
-
+      <Header formatterName={'Case Converter'} icon={<Type className="sm:h-5 sm:w-5 h-4 w-4 text-green-600" />} />
       <div className="container mx-auto px-4 py-8">
         <LayoutWithAds adPosition="right" showAds={true}>
           <main>
             {/* Page Header */}
             <header className="mb-8">
-              <h1 className="text-3xl font-bold text-gray-900 mb-2">Case Converter</h1>
-              <p className="text-lg text-gray-600 mb-4">
+              <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">Case Converter</h1>
+              <p className="text-lg text-gray-500 mb-4">
                 Convert text between different case formats for programming and writing
               </p>
               <p className="text-gray-500">
@@ -167,7 +145,7 @@ export default function CaseConverter() {
               </p>
             </header>
 
-            <div className="grid lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 gap-6">
               {/* Input Section */}
               <section className="lg:col-span-1">
                 <Card className="border-0 shadow-md">
@@ -211,7 +189,7 @@ export default function CaseConverter() {
                           <div key={caseType.name} className="border rounded-lg p-4 hover:bg-gray-50 transition-colors">
                             <div className="flex items-center justify-between mb-2">
                               <div>
-                                <h4 className="font-semibold text-gray-900">{caseType.name}</h4>
+                                <h4 className="font-semibold text-gray-900 dark:text-gray-400">{caseType.name}</h4>
                                 <p className="text-sm text-gray-600">{caseType.description}</p>
                               </div>
                               <Button
@@ -245,10 +223,10 @@ export default function CaseConverter() {
                 <CardHeader>
                   <CardTitle>Case Conversion Guide</CardTitle>
                 </CardHeader>
-                <CardContent>
+                <CardContent >
                   <div className="grid md:grid-cols-2 gap-6 text-sm text-gray-600">
                     <div>
-                      <h4 className="font-semibold text-gray-900 mb-2">Programming Cases:</h4>
+                      <h4 className="font-semibold text-gray-900 dark:text-gray-100 mb-2">Programming Cases:</h4>
                       <ul className="space-y-1 list-disc list-inside">
                         <li>
                           <strong>camelCase:</strong> JavaScript variables, Java methods
@@ -268,7 +246,7 @@ export default function CaseConverter() {
                       </ul>
                     </div>
                     <div>
-                      <h4 className="font-semibold text-gray-900 mb-2">Writing Cases:</h4>
+                      <h4 className="font-semibold text-gray-900 dark:text-gray-100 mb-2">Writing Cases:</h4>
                       <ul className="space-y-1 list-disc list-inside">
                         <li>
                           <strong>Title Case:</strong> Headings, book titles

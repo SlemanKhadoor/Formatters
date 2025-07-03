@@ -11,6 +11,7 @@ import { ArrowLeft, Copy, Download, RotateCcw, CheckCircle, AlertCircle, Code, Z
 import { useToast } from "@/hooks/use-toast"
 import LayoutWithAds from "@/components/layout-with-ads"
 import CodeEditor from "@/components/code-editor"
+import { Header } from "@/components/Header"
 
 interface FormatterProps {
   type: string
@@ -557,7 +558,7 @@ export default function FormatterInterface({ type, formatter }: FormatterProps) 
     return (
       <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center">
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-gray-900 mb-4">Loading Formatter...</h1>
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4">Loading Formatter...</h1>
           <p className="text-gray-600">Please wait while we load the formatter interface.</p>
         </div>
       </div>
@@ -565,51 +566,34 @@ export default function FormatterInterface({ type, formatter }: FormatterProps) 
   }
 
   return (
-    <LayoutWithAds>
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
-        {/* Header */}
-        <header className="border-b bg-white/80 backdrop-blur-sm sticky top-0 z-50">
-          <div className="container mx-auto px-4 py-4">
-            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-              <div className="flex items-center space-x-4">
-                <Button variant="ghost" size="sm" asChild>
-                  <Link href="/">
-                    <ArrowLeft className="h-4 w-4 mr-2" />
-                    Back to Home
-                  </Link>
-                </Button>
-                <div className="flex items-center space-x-2">
-                  <Code className="h-6 w-6 text-blue-600" />
-                  <h1 className="text-lg sm:text-xl font-bold text-gray-900">{formatter.name} Formatter</h1>
-                </div>
-              </div>
-              <div className="flex items-center space-x-2">
-                {isProcessing ? (
-                  <Badge variant="secondary" className="bg-yellow-100 text-yellow-800">
-                    <Zap className="h-3 w-3 mr-1 animate-pulse" />
-                    Processing
-                  </Badge>
-                ) : isValid ? (
-                  <Badge variant="secondary" className="bg-green-100 text-green-800">
-                    <CheckCircle className="h-3 w-3 mr-1" />
-                    Valid
-                  </Badge>
-                ) : (
-                  <Badge variant="destructive">
-                    <AlertCircle className="h-3 w-3 mr-1" />
-                    Invalid
-                  </Badge>
-                )}
-              </div>
-            </div>
-          </div>
-        </header>
-
-        <main className="container mx-auto px-4 py-8">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+      {/* Header */}
+      <Header formatterName={formatter.name + ' Formatter'}
+        icon={<Code className="sm:h-5 sm:w-5 h-4 w-4 text-blue-600" />}
+        statusBadge={
+          isProcessing ? (
+            <Badge variant="secondary" className="bg-yellow-100 text-yellow-800">
+              <Zap className="h-3 w-3 mr-1 animate-pulse" />
+              Processing
+            </Badge>
+          ) : isValid ? (
+            <Badge variant="secondary" className="bg-green-100 text-green-800">
+              <CheckCircle className="h-3 w-3 mr-1" />
+              Valid
+            </Badge>
+          ) : (
+            <Badge variant="destructive">
+              <AlertCircle className="h-3 w-3 mr-1" />
+              Invalid
+            </Badge>
+          )
+        } />
+      <div className="container mx-auto px-2 py-8">
+        <LayoutWithAds>
           {/* Page Header */}
           <header className="mb-8">
-            <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">{formatter.name} Formatter</h1>
-            <p className="text-base sm:text-lg text-gray-600 mb-4">{formatter.description}</p>
+            <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">{formatter.name} Formatter</h1>
+            <p className="text-base sm:text-lg text-gray-500 mb-4">{formatter.description}</p>
             <p className="text-sm sm:text-base text-gray-500">{formatter.longDescription}</p>
           </header>
 
@@ -663,23 +647,52 @@ export default function FormatterInterface({ type, formatter }: FormatterProps) 
 
                       {/* Second row: Dropdowns */}
                       <div className="flex flex-col sm:flex-row gap-2">
-                        <select
-                          value={indentationType}
-                          onChange={(e) => setIndentationType(e.target.value as any)}
-                          className="flex-1 px-2 sm:px-3 py-1 text-xs sm:text-sm border rounded-md bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        >
-                          <option value="2-spaces">2 Spaces</option>
-                          <option value="4-spaces">4 Spaces</option>
-                          <option value="tabs">Tabs</option>
-                        </select>
-                        <select
-                          value={formatMode}
-                          onChange={(e) => setFormatMode(e.target.value as any)}
-                          className="flex-1 px-2 sm:px-3 py-1 text-xs sm:text-sm border rounded-md bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        >
-                          <option value="beautify">Beautify</option>
-                          <option value="minify">Minify</option>
-                        </select>
+                        {/* First select with custom arrow */}
+                        <div className="relative flex-1">
+                          <select
+                            value={indentationType}
+                            onChange={(e) => setIndentationType(e.target.value as any)}
+                            className="w-full appearance-none px-2 sm:px-3 py-1 text-xs sm:text-sm border rounded-md bg-white dark:bg-background text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 pr-8"
+                          >
+                            <option value="2-spaces">2 Spaces</option>
+                            <option value="4-spaces">4 Spaces</option>
+                            <option value="tabs">Tabs</option>
+                          </select>
+                          <div className="pointer-events-none absolute inset-y-0 right-2 flex items-center text-gray-500 dark:text-white">
+                            <svg
+                              className="h-4 w-4"
+                              fill="none"
+                              stroke="currentColor"
+                              strokeWidth="2"
+                              viewBox="0 0 24 24"
+                            >
+                              <path d="M19 9l-7 7-7-7" />
+                            </svg>
+                          </div>
+                        </div>
+
+                        {/* Second select with custom arrow */}
+                        <div className="relative flex-1">
+                          <select
+                            value={formatMode}
+                            onChange={(e) => setFormatMode(e.target.value as any)}
+                            className="w-full appearance-none px-2 sm:px-3 py-1 text-xs sm:text-sm border rounded-md bg-white dark:bg-background text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 pr-8"
+                          >
+                            <option value="beautify">Beautify</option>
+                            <option value="minify">Minify</option>
+                          </select>
+                          <div className="pointer-events-none absolute inset-y-0 right-2 flex items-center text-gray-500 dark:text-white">
+                            <svg
+                              className="h-4 w-4"
+                              fill="none"
+                              stroke="currentColor"
+                              strokeWidth="2"
+                              viewBox="0 0 24 24"
+                            >
+                              <path d="M19 9l-7 7-7-7" />
+                            </svg>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -709,14 +722,14 @@ export default function FormatterInterface({ type, formatter }: FormatterProps) 
             <section>
               <Card>
                 <CardHeader>
-                  <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                  <div className="flex flex-col sm:flex-row items-start sm:items-start justify-between gap-3">
                     <div>
                       <CardTitle className="text-lg">Output</CardTitle>
                       <CardDescription className="text-sm">
                         Formatted {formatter.name.toLowerCase()} code
                       </CardDescription>
                     </div>
-                    <div className="flex gap-2 w-full sm:w-auto">
+                    <div className="flex gap-1 w-full sm:w-auto flex-wrap justify-end">
                       <Button
                         variant="outline"
                         size="sm"
@@ -774,10 +787,10 @@ export default function FormatterInterface({ type, formatter }: FormatterProps) 
                   </TabsList>
                   <TabsContent value="formatting" className="mt-4">
                     <div className="space-y-3 text-xs sm:text-sm text-gray-600">
-                      <h4 className="font-semibold text-gray-900 text-sm sm:text-base">
+                      <h4 className="font-semibold text-gray-900 dark:text-gray-100 text-sm sm:text-base">
                         How {formatter.name} Formatting Works:
                       </h4>
-                      <ul className="space-y-2 list-disc list-inside">
+                      <ul className="space-y-2 list-disc list-inside text-gray-600 dark:text-gray-400">
                         <li>Paste your {formatter.name.toLowerCase()} code and see it formatted instantly</li>
                         <li>The formatter automatically detects and fixes common formatting issues</li>
                         <li>Proper indentation and spacing are applied according to best practices</li>
@@ -787,8 +800,8 @@ export default function FormatterInterface({ type, formatter }: FormatterProps) 
                   </TabsContent>
                   <TabsContent value="validation" className="mt-4">
                     <div className="space-y-3 text-xs sm:text-sm text-gray-600">
-                      <h4 className="font-semibold text-gray-900 text-sm sm:text-base">Validation Features:</h4>
-                      <ul className="space-y-2 list-disc list-inside">
+                      <h4 className="font-semibold text-gray-900 dark:text-gray-100 text-sm sm:text-base">Validation Features:</h4>
+                      <ul className="space-y-2 list-disc list-inside text-gray-600 dark:text-gray-400">
                         <li>Real-time syntax validation as you type</li>
                         <li>Detailed error messages help you identify and fix issues</li>
                         <li>The status badge shows whether your code is valid</li>
@@ -798,10 +811,10 @@ export default function FormatterInterface({ type, formatter }: FormatterProps) 
                   </TabsContent>
                   <TabsContent value="shortcuts" className="mt-4">
                     <div className="space-y-3 text-xs sm:text-sm text-gray-600">
-                      <h4 className="font-semibold text-gray-900 text-sm sm:text-base">
+                      <h4 className="font-semibold text-gray-900 dark:text-gray-100 text-sm sm:text-base">
                         Keyboard Shortcuts & Features:
                       </h4>
-                      <ul className="space-y-2 list-disc list-inside">
+                      <ul className="space-y-2 list-disc list-inside text-gray-600 dark:text-gray-400">
                         <li>Copy formatted code with the copy button</li>
                         <li>Download formatted code as a file</li>
                         <li>Clear input with the reset button</li>
@@ -813,8 +826,8 @@ export default function FormatterInterface({ type, formatter }: FormatterProps) 
               </CardContent>
             </Card>
           </section>
-        </main>
+        </LayoutWithAds>
       </div>
-    </LayoutWithAds>
+    </div>
   )
 }

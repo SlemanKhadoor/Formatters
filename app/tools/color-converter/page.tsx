@@ -11,8 +11,6 @@ export const metadata: Metadata = {
 
 export default function ColorConverterPage() {
   return (
-    <LayoutWithAds adPosition="right" showAds={true}>
-      <ColorConverter />
-    </LayoutWithAds>
+    <ColorConverter />
   )
 }

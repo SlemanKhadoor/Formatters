@@ -9,6 +9,7 @@ import { Badge } from "@/components/ui/badge"
 import { ArrowLeft, FileText, Clock, BarChart3, Copy, RotateCcw } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
 import LayoutWithAds from "./layout-with-ads"
+import { Header } from "@/components/Header"
 
 export default function WordCounter() {
   const [text, setText] = useState("")
@@ -100,38 +101,23 @@ Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium dolor
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
       {/* Header */}
-      <header className="border-b bg-white/80 backdrop-blur-sm sticky top-0 z-50">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4">
-              <Button variant="ghost" size="sm" asChild>
-                <Link href="/">
-                  <ArrowLeft className="h-4 w-4 mr-2" />
-                  Back to Home
-                </Link>
-              </Button>
-              <div className="flex items-center space-x-2">
-                <FileText className="h-6 w-6 text-blue-600" />
-                <h1 className="text-xl font-bold text-gray-900">Word Counter</h1>
-              </div>
-            </div>
-            <div className="flex items-center space-x-2">
-              <Badge variant="secondary" className="bg-blue-100 text-blue-800">
-                <BarChart3 className="h-3 w-3 mr-1" />
-                {stats.words} words
-              </Badge>
-            </div>
-          </div>
-        </div>
-      </header>
+      <Header
+        formatterName={'Word Counter'}
+        icon={<FileText className="sm:h-5 sm:w-5 h-4 w-4 text-blue-600" />}
+        statusBadge={
+          <Badge variant="secondary" className="bg-blue-100 text-blue-800">
+            <BarChart3 className="h-3 w-3 mr-1" />
+            {stats.words} words
+          </Badge>
+        } />
 
       <div className="container mx-auto px-4 py-8">
         <LayoutWithAds adPosition="right" showAds={true}>
           <main>
             {/* Page Header */}
             <header className="mb-8">
-              <h1 className="text-3xl font-bold text-gray-900 mb-2">Word Counter & Text Statistics</h1>
-              <p className="text-lg text-gray-600 mb-4">
+              <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">Word Counter & Text Statistics</h1>
+              <p className="text-lg text-gray-500 mb-4">
                 Count words, characters, and get comprehensive text statistics
               </p>
               <p className="text-gray-500">
@@ -145,12 +131,12 @@ Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium dolor
               <section className="lg:col-span-2">
                 <Card className="border-0 shadow-md h-full">
                   <CardHeader className="pb-4">
-                    <div className="flex items-center justify-between">
+                    <div className="flex items-start justify-between flex-col sm:flex-row">
                       <div>
                         <CardTitle className="mb-2">Text Input</CardTitle>
                         <CardDescription>Paste or type your text here for analysis</CardDescription>
                       </div>
-                      <div className="flex space-x-2">
+                      <div className="flex space-x-2 mt-2">
                         <Button variant="outline" size="sm" onClick={handleLoadExample}>
                           Load Example
                         </Button>
@@ -218,7 +204,7 @@ Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium dolor
                   </CardHeader>
                   <CardContent className="space-y-3">
                     <div className="flex items-center justify-between">
-                      <span className="text-sm text-gray-600">Reading (200 WPM)</span>
+                      <span className="text-sm text-gray-500">Reading (200 WPM)</span>
                       <Badge
                         variant="outline"
                         className="cursor-pointer"
@@ -229,7 +215,7 @@ Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium dolor
                       </Badge>
                     </div>
                     <div className="flex items-center justify-between">
-                      <span className="text-sm text-gray-600">Speaking (150 WPM)</span>
+                      <span className="text-sm text-gray-500">Speaking (150 WPM)</span>
                       <Badge
                         variant="outline"
                         className="cursor-pointer"
@@ -308,8 +294,8 @@ Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium dolor
                 <CardContent>
                   <div className="grid md:grid-cols-2 gap-6 text-sm text-gray-600">
                     <div>
-                      <h4 className="font-semibold text-gray-900 mb-2">Features:</h4>
-                      <ul className="space-y-1 list-disc list-inside">
+                      <h4 className="font-semibold text-gray-900 dark:text-gray-100 mb-2">Features:</h4>
+                      <ul className="space-y-1 list-disc list-inside text-gray-600 dark:text-gray-400">
                         <li>Real-time word and character counting</li>
                         <li>Reading and speaking time estimates</li>
                         <li>Most common words analysis</li>
@@ -318,8 +304,8 @@ Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium dolor
                       </ul>
                     </div>
                     <div>
-                      <h4 className="font-semibold text-gray-900 mb-2">Use Cases:</h4>
-                      <ul className="space-y-1 list-disc list-inside">
+                      <h4 className="font-semibold text-gray-900 dark:text-gray-100 mb-2">Use Cases:</h4>
+                      <ul className="space-y-1 list-disc list-inside text-gray-600 dark:text-gray-400">
                         <li>Academic writing and essays</li>
                         <li>Blog posts and articles</li>
                         <li>Social media content</li>

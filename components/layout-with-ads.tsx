@@ -21,7 +21,7 @@ export default function LayoutWithAds({ children, adPosition = "right", showAds 
   }
 
   return (
-    <div className="flex flex-col lg:flex-row gap-6 lg:gap-8">
+    <div className="flex flex-col lg:flex-row gap-2 lg:gap-2">
       {/* Left Ad Panel */}
       {adPosition === "left" && !isHomePage && <AdPanel position="left" className="hidden lg:block flex-shrink-0" />}
 

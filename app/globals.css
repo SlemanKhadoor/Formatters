@@ -32,7 +32,7 @@
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
+    /* --background: 222.2 84% 4.9%;
     --foreground: 210 40% 98%;
     --card: 222.2 84% 4.9%;
     --card-foreground: 210 40% 98%;
@@ -55,7 +55,42 @@
     --chart-2: 160 60% 45%;
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%; */
+
+
+    --background: 220 20% 10%;
+    --foreground: 210 25% 90%;
+    --card: 220 20% 12%;
+    --card-foreground: 210 25% 90%;
+    --popover: 220 20% 15%;
+    --popover-foreground: 210 25% 90%;
+
+    --primary: 217 70% 45%;
+    --primary-foreground: 210 40% 98%;
+
+
+    --secondary: 220 15% 20%;
+    --secondary-foreground: 210 25% 90%;
+
+    --muted: 220 10% 30%;
+    --muted-foreground: 215 20% 70%;
+
+    --accent: 260 50% 40%;
+    --accent-foreground: 210 25% 90%;
+
+    --destructive: 0 70% 40%;
+    --destructive-foreground: 210 25% 90%;
+
+    --border: 220 10% 25%;
+    --input: 220 10% 25%;
+    --ring: 220 80% 70%;
+
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
+
   }
 }
 
@@ -63,6 +98,7 @@
   * {
     @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground;
   }
@@ -121,7 +157,7 @@
     gap: 0.5rem;
   }
 
-  .formatter-controls > * {
+  .formatter-controls>* {
     width: 100%;
   }
 
@@ -131,7 +167,7 @@
     gap: 0.5rem;
   }
 
-  .formatter-button-group > * {
+  .formatter-button-group>* {
     width: 100%;
   }
 
@@ -146,7 +182,7 @@
     gap: 0.5rem !important;
   }
 
-  .utility-buttons > * {
+  .utility-buttons>* {
     width: 100% !important;
     flex: none !important;
   }
@@ -157,7 +193,7 @@
     gap: 0.5rem;
   }
 
-  .card-header-buttons > * {
+  .card-header-buttons>* {
     width: 100%;
   }
 
@@ -284,7 +320,7 @@
   align-items: center;
 }
 
-.button-container > * {
+.button-container>* {
   flex-shrink: 0;
 }
 
@@ -294,7 +330,7 @@
     width: 100%;
   }
 
-  .button-container > * {
+  .button-container>* {
     width: 100%;
   }
 
@@ -304,7 +340,7 @@
     gap: 0.5rem;
   }
 
-  .utility-button-row > * {
+  .utility-button-row>* {
     width: 100%;
     justify-content: center;
   }

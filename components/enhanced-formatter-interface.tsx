@@ -765,7 +765,7 @@ export default function EnhancedFormatterInterface({ type, formatter }: Formatte
     return (
       <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center">
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-gray-900 mb-4">Loading Formatter...</h1>
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4">Loading Formatter...</h1>
           <p className="text-gray-600">Please wait while we load the formatter interface.</p>
         </div>
       </div>
@@ -787,7 +787,7 @@ export default function EnhancedFormatterInterface({ type, formatter }: Formatte
               </Button>
               <div className="flex items-center space-x-2">
                 <Code className="h-6 w-6 text-blue-600" />
-                <h1 className="text-xl font-bold text-gray-900">{formatter.name} Formatter</h1>
+                <h1 className="text-xl font-bold text-gray-900 dark:text-gray-100">{formatter.name} Formatter</h1>
               </div>
             </div>
             <div className="flex items-center space-x-2">
@@ -815,7 +815,7 @@ export default function EnhancedFormatterInterface({ type, formatter }: Formatte
       <main className="container mx-auto px-4 py-8">
         {/* Page Header */}
         <header className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">{formatter.name} Formatter</h1>
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">{formatter.name} Formatter</h1>
           <p className="text-lg text-gray-600 mb-4">{formatter.description}</p>
           <p className="text-gray-500">{formatter.longDescription}</p>
         </header>
@@ -968,7 +968,7 @@ export default function EnhancedFormatterInterface({ type, formatter }: Formatte
                 </TabsList>
                 <TabsContent value="formatting" className="mt-4">
                   <div className="space-y-3 text-sm text-gray-600">
-                    <h4 className="font-semibold text-gray-900">How {formatter.name} Formatting Works:</h4>
+                    <h4 className="font-semibold text-gray-900 dark:text-gray-100">How {formatter.name} Formatting Works:</h4>
                     <ul className="space-y-2 list-disc list-inside">
                       <li>Paste your {formatter.name.toLowerCase()} code and see it formatted instantly</li>
                       <li>The formatter automatically detects and fixes common formatting issues</li>
@@ -979,7 +979,7 @@ export default function EnhancedFormatterInterface({ type, formatter }: Formatte
                 </TabsContent>
                 <TabsContent value="validation" className="mt-4">
                   <div className="space-y-3 text-sm text-gray-600">
-                    <h4 className="font-semibold text-gray-900">Validation Features:</h4>
+                    <h4 className="font-semibold text-gray-900 dark:text-gray-100">Validation Features:</h4>
                     <ul className="space-y-2 list-disc list-inside">
                       <li>Real-time syntax validation as you type</li>
                       <li>Detailed error messages help you identify and fix issues</li>
@@ -990,7 +990,7 @@ export default function EnhancedFormatterInterface({ type, formatter }: Formatte
                 </TabsContent>
                 <TabsContent value="shortcuts" className="mt-4">
                   <div className="space-y-3 text-sm text-gray-600">
-                    <h4 className="font-semibold text-gray-900">Keyboard Shortcuts & Features:</h4>
+                    <h4 className="font-semibold text-gray-900 dark:text-gray-100">Keyboard Shortcuts & Features:</h4>
                     <ul className="space-y-2 list-disc list-inside">
                       <li>Copy formatted code with the copy button</li>
                       <li>Download formatted code as a file</li>

@@ -62,9 +62,9 @@ export default function AdPanel({ position = "right", className = "" }: AdPanelP
       className={`
         ${className}
         ${position === "left" ? "order-first" : "order-last"}
-        w-full lg:w-80 xl:w-96
+        w-full lg:w-80 xl:w-80
         space-y-4
-        ${position === "left" ? "lg:pr-6" : "lg:pl-6"}
+        ${position === "left" ? "lg:pr-3" : "lg:pl-3 "}
       `}
       aria-label="Advertisement panel"
     >
@@ -95,7 +95,7 @@ export default function AdPanel({ position = "right", className = "" }: AdPanelP
                 loading="lazy"
               />
               <div className="flex-1 min-w-0">
-                <h3 className="font-semibold text-sm text-gray-900 mb-1 line-clamp-2">{currentAd.title}</h3>
+                <h3 className="font-semibold text-sm text-gray-900 dark:text-gray-100 mb-1 line-clamp-2">{currentAd.title}</h3>
                 <p className="text-xs text-gray-600 mb-2 line-clamp-3">{currentAd.description}</p>
                 <Button
                   size="sm"
@@ -131,7 +131,7 @@ export default function AdPanel({ position = "right", className = "" }: AdPanelP
                 loading="lazy"
               />
               <div className="flex-1 min-w-0">
-                <h4 className="font-medium text-sm text-gray-900 line-clamp-1">{ad.title}</h4>
+                <h4 className="font-medium text-sm text-gray-900 dark:text-gray-100 line-clamp-1">{ad.title}</h4>
                 <p className="text-xs text-gray-600 line-clamp-2">{ad.description}</p>
               </div>
             </div>

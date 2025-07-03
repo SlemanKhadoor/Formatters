@@ -1,6 +1,5 @@
-import type { Metadata } from "next"
 import JsonToHtmlConverter from "@/components/json-to-html-converter"
-import LayoutWithAds from "@/components/layout-with-ads"
+import type { Metadata } from "next"
 
 export const metadata: Metadata = {
   title: "JSON to HTML Table Converter | Formatters.net",
@@ -11,18 +10,6 @@ export const metadata: Metadata = {
 
 export default function JsonToHtmlPage() {
   return (
-    <div className="container mx-auto py-8">
-      <LayoutWithAds adPosition="right" showAds={true}>
-        <div className="max-w-4xl mx-auto">
-          <div className="mb-8">
-            <h1 className="text-3xl font-bold mb-4">JSON to HTML Table Converter</h1>
-            <p className="text-gray-600 dark:text-gray-300">
-              Convert JSON arrays to HTML table format. Perfect for displaying structured data in web pages.
-            </p>
-          </div>
-          <JsonToHtmlConverter />
-        </div>
-      </LayoutWithAds>
-    </div>
+    <JsonToHtmlConverter />
   )
 }

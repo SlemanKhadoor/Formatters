@@ -8,6 +8,8 @@ import { Label } from "@/components/ui/label"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Copy, Palette, RefreshCw } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
+import { Header } from "@/components/Header"
+
 
 interface ColorValues {
   hex: string
@@ -33,10 +35,10 @@ export function ColorConverter() {
     const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex)
     return result
       ? {
-          r: Number.parseInt(result[1], 16),
-          g: Number.parseInt(result[2], 16),
-          b: Number.parseInt(result[3], 16),
-        }
+        r: Number.parseInt(result[1], 16),
+        g: Number.parseInt(result[2], 16),
+        b: Number.parseInt(result[3], 16),
+      }
       : null
   }
 
@@ -233,217 +235,220 @@ export function ColorConverter() {
   }, [color])
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">Color Converter</h1>
-          <p className="text-gray-600 dark:text-gray-300">
-            Convert colors between HEX, RGB, HSL, HSV, and CMYK formats with live preview.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {/* Color Input and Preview */}
-          <div className="space-y-6">
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Palette className="h-5 w-5" />
-                  Color Input
-                </CardTitle>
-                <CardDescription>Enter a color value or use the color picker</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="flex gap-2">
-                  <Input
-                    value={inputValue}
-                    onChange={(e) => handleInputChange(e.target.value)}
-                    placeholder="#3B82F6"
-                    className="font-mono"
-                  />
-                  <Button onClick={generateRandomColor} variant="outline">
-                    <RefreshCw className="h-4 w-4" />
-                  </Button>
-                </div>
-
-                <div className="flex gap-2">
-                  <input
-                    type="color"
-                    value={color.hex}
-                    onChange={(e) => {
-                      setInputValue(e.target.value)
-                      updateColor(e.target.value)
-                    }}
-                    className="w-full h-12 rounded border cursor-pointer"
-                  />
-                </div>
-
-                <div
-                  className="w-full h-32 rounded-lg border-2 border-gray-200 dark:border-gray-700"
-                  style={{ backgroundColor: color.hex }}
-                />
-              </CardContent>
-            </Card>
-
-            {/* Color Palette */}
-            <Card>
-              <CardHeader>
-                <CardTitle>Color Harmony</CardTitle>
-                <CardDescription>Generated color palette based on your selection</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="grid grid-cols-5 gap-2">
-                  {palette.map((paletteColor, index) => (
-                    <div key={index} className="space-y-2">
-                      <div
-                        className="w-full h-16 rounded cursor-pointer border-2 border-gray-200 dark:border-gray-700 hover:scale-105 transition-transform"
-                        style={{ backgroundColor: paletteColor }}
-                        onClick={() => copyToClipboard(paletteColor)}
-                        title={`Click to copy ${paletteColor}`}
-                      />
-                      <p className="text-xs text-center font-mono">{paletteColor}</p>
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+      <Header formatterName={'Color Converter'} icon={<Palette className="sm:h-5 sm:w-5 w-4 h-4 text-pink-600" />} />
+      <div className="container mx-auto px-4 py-8">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-start mb-8">
+            <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">Color Converter</h1>
+            <p className="text-gray-600 dark:text-gray-300">
+              Convert colors between HEX, RGB, HSL, HSV, and CMYK formats with live preview.
+            </p>
           </div>
 
-          {/* Color Values */}
-          <div>
-            <Card>
-              <CardHeader>
-                <CardTitle>Color Values</CardTitle>
-                <CardDescription>All color format representations</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <Tabs defaultValue="hex" className="w-full">
-                  <TabsList className="grid w-full grid-cols-5">
-                    <TabsTrigger value="hex">HEX</TabsTrigger>
-                    <TabsTrigger value="rgb">RGB</TabsTrigger>
-                    <TabsTrigger value="hsl">HSL</TabsTrigger>
-                    <TabsTrigger value="hsv">HSV</TabsTrigger>
-                    <TabsTrigger value="cmyk">CMYK</TabsTrigger>
-                  </TabsList>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            {/* Color Input and Preview */}
+            <div className="space-y-6">
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Palette className="h-5 w-5" />
+                    Color Input
+                  </CardTitle>
+                  <CardDescription>Enter a color value or use the color picker</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="flex gap-2">
+                    <Input
+                      value={inputValue}
+                      onChange={(e) => handleInputChange(e.target.value)}
+                      placeholder="#3B82F6"
+                      className="font-mono"
+                    />
+                    <Button onClick={generateRandomColor} variant="outline">
+                      <RefreshCw className="h-4 w-4" />
+                    </Button>
+                  </div>
 
-                  <TabsContent value="hex" className="space-y-4">
-                    <div>
-                      <Label>HEX Value</Label>
-                      <div className="flex gap-2 mt-2">
-                        <Input value={color.hex} readOnly className="font-mono" />
-                        <Button onClick={() => copyToClipboard(color.hex)} variant="outline">
-                          <Copy className="h-4 w-4" />
-                        </Button>
-                      </div>
-                    </div>
-                  </TabsContent>
+                  <div className="flex gap-2">
+                    <input
+                      type="color"
+                      value={color.hex}
+                      onChange={(e) => {
+                        setInputValue(e.target.value)
+                        updateColor(e.target.value)
+                      }}
+                      className="w-full h-12 rounded border cursor-pointer"
+                    />
+                  </div>
 
-                  <TabsContent value="rgb" className="space-y-4">
-                    <div className="grid grid-cols-3 gap-2">
-                      <div>
-                        <Label>Red</Label>
-                        <Input value={color.rgb.r} readOnly className="font-mono mt-2" />
-                      </div>
-                      <div>
-                        <Label>Green</Label>
-                        <Input value={color.rgb.g} readOnly className="font-mono mt-2" />
-                      </div>
-                      <div>
-                        <Label>Blue</Label>
-                        <Input value={color.rgb.b} readOnly className="font-mono mt-2" />
-                      </div>
-                    </div>
-                    <div>
-                      <Label>RGB String</Label>
-                      <div className="flex gap-2 mt-2">
-                        <Input
-                          value={`rgb(${color.rgb.r}, ${color.rgb.g}, ${color.rgb.b})`}
-                          readOnly
-                          className="font-mono"
+                  <div
+                    className="w-full h-32 rounded-lg border-2 border-gray-200 dark:border-gray-700"
+                    style={{ backgroundColor: color.hex }}
+                  />
+                </CardContent>
+              </Card>
+
+              {/* Color Palette */}
+              <Card>
+                <CardHeader>
+                  <CardTitle>Color Harmony</CardTitle>
+                  <CardDescription>Generated color palette based on your selection</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid grid-cols-5 gap-2">
+                    {palette.map((paletteColor, index) => (
+                      <div key={index} className="space-y-2">
+                        <div
+                          className="w-full h-16 rounded cursor-pointer border-2 border-gray-200 dark:border-gray-700 hover:scale-105 transition-transform"
+                          style={{ backgroundColor: paletteColor }}
+                          onClick={() => copyToClipboard(paletteColor)}
+                          title={`Click to copy ${paletteColor}`}
                         />
-                        <Button
-                          onClick={() => copyToClipboard(`rgb(${color.rgb.r}, ${color.rgb.g}, ${color.rgb.b})`)}
-                          variant="outline"
-                        >
-                          <Copy className="h-4 w-4" />
-                        </Button>
+                        <p className="text-xs text-center font-mono">{paletteColor}</p>
                       </div>
-                    </div>
-                  </TabsContent>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
 
-                  <TabsContent value="hsl" className="space-y-4">
-                    <div className="grid grid-cols-3 gap-2">
-                      <div>
-                        <Label>Hue</Label>
-                        <Input value={`${color.hsl.h}°`} readOnly className="font-mono mt-2" />
-                      </div>
-                      <div>
-                        <Label>Saturation</Label>
-                        <Input value={`${color.hsl.s}%`} readOnly className="font-mono mt-2" />
-                      </div>
-                      <div>
-                        <Label>Lightness</Label>
-                        <Input value={`${color.hsl.l}%`} readOnly className="font-mono mt-2" />
-                      </div>
-                    </div>
-                    <div>
-                      <Label>HSL String</Label>
-                      <div className="flex gap-2 mt-2">
-                        <Input
-                          value={`hsl(${color.hsl.h}, ${color.hsl.s}%, ${color.hsl.l}%)`}
-                          readOnly
-                          className="font-mono"
-                        />
-                        <Button
-                          onClick={() => copyToClipboard(`hsl(${color.hsl.h}, ${color.hsl.s}%, ${color.hsl.l}%)`)}
-                          variant="outline"
-                        >
-                          <Copy className="h-4 w-4" />
-                        </Button>
-                      </div>
-                    </div>
-                  </TabsContent>
+            {/* Color Values */}
+            <div>
+              <Card>
+                <CardHeader>
+                  <CardTitle>Color Values</CardTitle>
+                  <CardDescription>All color format representations</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <Tabs defaultValue="hex" className="w-full">
+                    <TabsList className="grid w-full grid-cols-5">
+                      <TabsTrigger value="hex">HEX</TabsTrigger>
+                      <TabsTrigger value="rgb">RGB</TabsTrigger>
+                      <TabsTrigger value="hsl">HSL</TabsTrigger>
+                      <TabsTrigger value="hsv">HSV</TabsTrigger>
+                      <TabsTrigger value="cmyk">CMYK</TabsTrigger>
+                    </TabsList>
 
-                  <TabsContent value="hsv" className="space-y-4">
-                    <div className="grid grid-cols-3 gap-2">
+                    <TabsContent value="hex" className="space-y-4">
                       <div>
-                        <Label>Hue</Label>
-                        <Input value={`${color.hsv.h}°`} readOnly className="font-mono mt-2" />
+                        <Label>HEX Value</Label>
+                        <div className="flex gap-2 mt-2">
+                          <Input value={color.hex} readOnly className="font-mono" />
+                          <Button onClick={() => copyToClipboard(color.hex)} variant="outline">
+                            <Copy className="h-4 w-4" />
+                          </Button>
+                        </div>
                       </div>
-                      <div>
-                        <Label>Saturation</Label>
-                        <Input value={`${color.hsv.s}%`} readOnly className="font-mono mt-2" />
-                      </div>
-                      <div>
-                        <Label>Value</Label>
-                        <Input value={`${color.hsv.v}%`} readOnly className="font-mono mt-2" />
-                      </div>
-                    </div>
-                  </TabsContent>
+                    </TabsContent>
 
-                  <TabsContent value="cmyk" className="space-y-4">
-                    <div className="grid grid-cols-2 gap-2">
-                      <div>
-                        <Label>Cyan</Label>
-                        <Input value={`${color.cmyk.c}%`} readOnly className="font-mono mt-2" />
+                    <TabsContent value="rgb" className="space-y-4">
+                      <div className="grid grid-cols-3 gap-2">
+                        <div>
+                          <Label>Red</Label>
+                          <Input value={color.rgb.r} readOnly className="font-mono mt-2" />
+                        </div>
+                        <div>
+                          <Label>Green</Label>
+                          <Input value={color.rgb.g} readOnly className="font-mono mt-2" />
+                        </div>
+                        <div>
+                          <Label>Blue</Label>
+                          <Input value={color.rgb.b} readOnly className="font-mono mt-2" />
+                        </div>
                       </div>
                       <div>
-                        <Label>Magenta</Label>
-                        <Input value={`${color.cmyk.m}%`} readOnly className="font-mono mt-2" />
+                        <Label>RGB String</Label>
+                        <div className="flex gap-2 mt-2">
+                          <Input
+                            value={`rgb(${color.rgb.r}, ${color.rgb.g}, ${color.rgb.b})`}
+                            readOnly
+                            className="font-mono"
+                          />
+                          <Button
+                            onClick={() => copyToClipboard(`rgb(${color.rgb.r}, ${color.rgb.g}, ${color.rgb.b})`)}
+                            variant="outline"
+                          >
+                            <Copy className="h-4 w-4" />
+                          </Button>
+                        </div>
+                      </div>
+                    </TabsContent>
+
+                    <TabsContent value="hsl" className="space-y-4">
+                      <div className="grid grid-cols-3 gap-2">
+                        <div>
+                          <Label>Hue</Label>
+                          <Input value={`${color.hsl.h}°`} readOnly className="font-mono mt-2" />
+                        </div>
+                        <div>
+                          <Label>Saturation</Label>
+                          <Input value={`${color.hsl.s}%`} readOnly className="font-mono mt-2" />
+                        </div>
+                        <div>
+                          <Label>Lightness</Label>
+                          <Input value={`${color.hsl.l}%`} readOnly className="font-mono mt-2" />
+                        </div>
                       </div>
                       <div>
-                        <Label>Yellow</Label>
-                        <Input value={`${color.cmyk.y}%`} readOnly className="font-mono mt-2" />
+                        <Label>HSL String</Label>
+                        <div className="flex gap-2 mt-2">
+                          <Input
+                            value={`hsl(${color.hsl.h}, ${color.hsl.s}%, ${color.hsl.l}%)`}
+                            readOnly
+                            className="font-mono"
+                          />
+                          <Button
+                            onClick={() => copyToClipboard(`hsl(${color.hsl.h}, ${color.hsl.s}%, ${color.hsl.l}%)`)}
+                            variant="outline"
+                          >
+                            <Copy className="h-4 w-4" />
+                          </Button>
+                        </div>
                       </div>
-                      <div>
-                        <Label>Black</Label>
-                        <Input value={`${color.cmyk.k}%`} readOnly className="font-mono mt-2" />
+                    </TabsContent>
+
+                    <TabsContent value="hsv" className="space-y-4">
+                      <div className="grid grid-cols-3 gap-2">
+                        <div>
+                          <Label>Hue</Label>
+                          <Input value={`${color.hsv.h}°`} readOnly className="font-mono mt-2" />
+                        </div>
+                        <div>
+                          <Label>Saturation</Label>
+                          <Input value={`${color.hsv.s}%`} readOnly className="font-mono mt-2" />
+                        </div>
+                        <div>
+                          <Label>Value</Label>
+                          <Input value={`${color.hsv.v}%`} readOnly className="font-mono mt-2" />
+                        </div>
                       </div>
-                    </div>
-                  </TabsContent>
-                </Tabs>
-              </CardContent>
-            </Card>
+                    </TabsContent>
+
+                    <TabsContent value="cmyk" className="space-y-4">
+                      <div className="grid grid-cols-2 gap-2">
+                        <div>
+                          <Label>Cyan</Label>
+                          <Input value={`${color.cmyk.c}%`} readOnly className="font-mono mt-2" />
+                        </div>
+                        <div>
+                          <Label>Magenta</Label>
+                          <Input value={`${color.cmyk.m}%`} readOnly className="font-mono mt-2" />
+                        </div>
+                        <div>
+                          <Label>Yellow</Label>
+                          <Input value={`${color.cmyk.y}%`} readOnly className="font-mono mt-2" />
+                        </div>
+                        <div>
+                          <Label>Black</Label>
+                          <Input value={`${color.cmyk.k}%`} readOnly className="font-mono mt-2" />
+                        </div>
+                      </div>
+                    </TabsContent>
+                  </Tabs>
+                </CardContent>
+              </Card>
+            </div>
           </div>
         </div>
       </div>
