@@ -1,14 +1,14 @@
 "use client"
 
 import { useState, useCallback } from "react"
-import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { ArrowLeft, Copy, Download, RotateCcw, CheckCircle, AlertCircle, FileSpreadsheet } from "lucide-react"
+import { Copy, Download, RotateCcw, AlertCircle, FileSpreadsheet, CheckCircle } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
 import LayoutWithAds from "./layout-with-ads"
+import { Header } from "@/components/Header"
+import { Badge } from "@/components/ui/badge"
 
 export default function CsvToJsonConverter() {
   const [input, setInput] = useState("")
@@ -184,45 +184,30 @@ export default function CsvToJsonConverter() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
       {/* Header */}
-      <header className="border-b bg-white/80 backdrop-blur-sm sticky top-0 z-50">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4">
-              <Button variant="ghost" size="sm" asChild>
-                <Link href="/">
-                  <ArrowLeft className="h-4 w-4 mr-2" />
-                  Back to Home
-                </Link>
-              </Button>
-              <div className="flex items-center space-x-2">
-                <FileSpreadsheet className="h-6 w-6 text-green-600" />
-                <h1 className="text-xl font-bold text-gray-900">CSV to JSON Converter</h1>
-              </div>
-            </div>
-            <div className="flex items-center space-x-2">
-              {isValid ? (
-                <Badge variant="secondary" className="bg-green-100 text-green-800">
-                  <CheckCircle className="h-3 w-3 mr-1" />
-                  Valid
-                </Badge>
-              ) : (
-                <Badge variant="destructive">
-                  <AlertCircle className="h-3 w-3 mr-1" />
-                  Invalid
-                </Badge>
-              )}
-            </div>
-          </div>
-        </div>
-      </header>
-
-      <div className="container mx-auto px-4 py-8">
+      <Header
+        formatterName={'CSV to JSON Converter'}
+        icon={<FileSpreadsheet className="sm:h-5 sm:w-5 h-4 w-4 text-green-600" />}
+        statusBadge={
+          isValid ? (
+            <Badge variant="secondary" className="bg-green-100 text-green-800">
+              <CheckCircle className="h-3 w-3 mr-1" />
+              Valid
+            </Badge>
+          ) : (
+            <Badge variant="destructive">
+              <AlertCircle className="h-3 w-3 mr-1" />
+              Invalid
+            </Badge>
+          )
+        }
+      />
+      <div className="container mx-auto px-2 py-8">
         <LayoutWithAds adPosition="right" showAds={true}>
           <main>
             {/* Page Header */}
             <header className="mb-8">
-              <h1 className="text-3xl font-bold text-gray-900 mb-2">CSV to JSON Converter</h1>
-              <p className="text-lg text-gray-600 mb-4">
+              <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">CSV to JSON Converter</h1>
+              <p className="text-lg text-gray-500 mb-4">
                 Convert CSV data to JSON format for data analysis and API development
               </p>
               <p className="text-gray-500">
@@ -278,12 +263,12 @@ export default function CsvToJsonConverter() {
               <section className="h-full">
                 <Card className="border-0 shadow-md h-full flex flex-col">
                   <CardHeader className="pb-4 flex-shrink-0">
-                    <div className="flex items-center justify-between">
+                    <div className="flex items-start justify-between flex-col">
                       <div>
                         <CardTitle className="mb-2">JSON Output</CardTitle>
                         <CardDescription>Generated JSON data ready for download</CardDescription>
                       </div>
-                      <div className="flex space-x-2">
+                      <div className="flex gap-1 w-full sm:w-auto flex-wrap mt-4">
                         <Button variant="outline" size="sm" onClick={handleCopy} disabled={!output || !isValid}>
                           <Copy className="h-4 w-4" />
                           Copy
@@ -300,7 +285,7 @@ export default function CsvToJsonConverter() {
                       value={output}
                       readOnly
                       placeholder="JSON output will appear here..."
-                      className="min-h-[400px] flex-1 font-mono text-sm bg-gray-50 resize-none"
+                      className="min-h-[400px] flex-1 font-mono text-sm resize-none"
                       aria-label="JSON output"
                     />
                   </CardContent>
@@ -317,8 +302,8 @@ export default function CsvToJsonConverter() {
                 <CardContent className="pt-0">
                   <div className="space-y-4 text-sm text-gray-600">
                     <div>
-                      <h4 className="font-semibold text-gray-900 mb-2">Features:</h4>
-                      <ul className="space-y-1 list-disc list-inside">
+                      <h4 className="font-semibold text-gray-900 dark:text-gray-100 mb-2">Features:</h4>
+                      <ul className="space-y-1 list-disc list-inside text-gray-600 dark:text-gray-400">
                         <li>Converts CSV data to JSON arrays with proper object structure</li>
                         <li>Automatically detects headers from the first row</li>
                         <li>Handles quoted values and commas within fields</li>
@@ -326,8 +311,8 @@ export default function CsvToJsonConverter() {
                       </ul>
                     </div>
                     <div>
-                      <h4 className="font-semibold text-gray-900 mb-2">Use Cases:</h4>
-                      <ul className="space-y-1 list-disc list-inside">
+                      <h4 className="font-semibold text-gray-900 dark:text-gray-100 mb-2">Use Cases:</h4>
+                      <ul className="space-y-1 list-disc list-inside text-gray-600 dark:text-gray-400">
                         <li>Data analysis and visualization</li>
                         <li>API development and testing</li>
                         <li>Database import operations</li>

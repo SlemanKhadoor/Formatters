@@ -5,8 +5,10 @@ import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Copy, Download, FileText, Table } from "lucide-react"
+import { Copy, Download, FileCode, FileText, Table } from "lucide-react"
 import { Checkbox } from "@/components/ui/checkbox"
+import LayoutWithAds from "./layout-with-ads"
+import { Header } from "@/components/Header"
 
 export default function JsonToHtmlConverter() {
   const [jsonInput, setJsonInput] = useState("")
@@ -77,9 +79,8 @@ export default function JsonToHtmlConverter() {
   background-color: #f5f5f5;
 }
 
-${
-  responsive
-    ? `
+${responsive
+            ? `
 @media screen and (max-width: 600px) {
   .json-table {
     font-size: 14px;
@@ -91,8 +92,8 @@ ${
   }
 }
 `
-    : ""
-}
+            : ""
+          }
 </style>
 
 `
@@ -106,12 +107,12 @@ ${keys.map((key) => `      <th>${escapeHtml(key)}</th>`).join("\n")}
   </thead>
   <tbody>
 ${data
-  .map(
-    (item) => `    <tr>
+          .map(
+            (item) => `    <tr>
 ${keys.map((key) => `      <td>${escapeHtml(String(item[key] || ""))}</td>`).join("\n")}
     </tr>`,
-  )
-  .join("\n")}
+          )
+          .join("\n")}
   </tbody>
 </table>`
 
@@ -174,127 +175,161 @@ ${keys.map((key) => `      <td>${escapeHtml(String(item[key] || ""))}</td>`).joi
 
   return (
     <div className="space-y-6">
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <FileText className="h-5 w-5" />
-              JSON Input
-            </CardTitle>
-            <CardDescription>Enter your JSON array data (must be an array of objects)</CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <Textarea
-              placeholder="Paste your JSON array here..."
-              value={jsonInput}
-              onChange={(e) => setJsonInput(e.target.value)}
-              className="min-h-[300px] font-mono text-sm"
-            />
-            <div className="flex flex-wrap gap-4">
-              <div className="flex items-center space-x-2">
-                <Checkbox
-                  id="styles"
-                  checked={includeStyles}
-                  onCheckedChange={(checked) => setIncludeStyles(checked as boolean)}
-                />
-                <label htmlFor="styles" className="text-sm">
-                  Include CSS styles
-                </label>
-              </div>
-              <div className="flex items-center space-x-2">
-                <Checkbox
-                  id="responsive"
-                  checked={responsive}
-                  onCheckedChange={(checked) => setResponsive(checked as boolean)}
-                />
-                <label htmlFor="responsive" className="text-sm">
-                  Responsive design
-                </label>
-              </div>
-            </div>
-            <div className="flex gap-2">
-              <Button onClick={convertToHtml} className="flex-1">
-                <Table className="h-4 w-4 mr-2" />
-                Convert to HTML
-              </Button>
-              <Button variant="outline" onClick={() => setJsonInput(sampleJson)}>
-                Load Sample
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
+      <Header
+        formatterName={'JSON to HTML Converter'}
+        icon={<FileCode className="sm:h-5 sm:w-5 h-4 w-4 text-orange-600" />}
+      // statusBadge={
+      //   isValid ? (
+      //     <Badge variant="secondary" className="bg-green-100 text-green-800">
+      //       <CheckCircle className="h-3 w-3 mr-1" />
+      //       Valid
+      //     </Badge>
+      //   ) : (
+      //     <Badge variant="destructive">
+      //       <AlertCircle className="h-3 w-3 mr-1" />
+      //       Invalid
+      //     </Badge>
+      //   )
+      // } 
+      />
+      <div className="container mx-auto px-2 py-8">
+        <LayoutWithAds adPosition="right" showAds={true}>
+          <main>
+            {/* Page Header */}
+            <header className="mb-8">
+              <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">JSON to TypeScript Converter</h1>
+              <p className="text-lg text-gray-500 mb-4">
+                Generate TypeScript interfaces and types from JSON data for better type safety
+              </p>
+              <p className="text-gray-500">
+                Transform your JSON data into TypeScript interfaces automatically. Perfect for API development, type
+                definitions, and ensuring type safety in your applications.
+              </p>
+            </header>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <FileText className="h-5 w-5" />
+                    JSON Input
+                  </CardTitle>
+                  <CardDescription>Enter your JSON array data (must be an array of objects)</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <Textarea
+                    placeholder="Paste your JSON array here..."
+                    value={jsonInput}
+                    onChange={(e) => setJsonInput(e.target.value)}
+                    className="min-h-[300px] font-mono text-sm"
+                  />
+                  <div className="flex flex-wrap gap-4">
+                    <div className="flex items-center space-x-2">
+                      <Checkbox
+                        id="styles"
+                        checked={includeStyles}
+                        onCheckedChange={(checked) => setIncludeStyles(checked as boolean)}
+                      />
+                      <label htmlFor="styles" className="text-sm">
+                        Include CSS styles
+                      </label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <Checkbox
+                        id="responsive"
+                        checked={responsive}
+                        onCheckedChange={(checked) => setResponsive(checked as boolean)}
+                      />
+                      <label htmlFor="responsive" className="text-sm">
+                        Responsive design
+                      </label>
+                    </div>
+                  </div>
+                  <div className="flex gap-2 sm:flex-row flex-col">
+                    <Button onClick={convertToHtml} >
+                      <Table className="h-4 w-4 mr-2" />
+                      Convert to HTML
+                    </Button>
+                    <Button variant="outline" onClick={() => setJsonInput(sampleJson)}>
+                      Load Sample
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
 
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Table className="h-5 w-5" />
-              HTML Output
-            </CardTitle>
-            <CardDescription>Generated HTML table code</CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            {error && (
-              <div className="p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-md">
-                <p className="text-red-600 dark:text-red-400 text-sm">{error}</p>
-              </div>
-            )}
-            <Textarea
-              value={htmlOutput}
-              readOnly
-              placeholder="HTML table will appear here..."
-              className="min-h-[300px] font-mono text-sm"
-            />
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Table className="h-5 w-5" />
+                    HTML Output
+                  </CardTitle>
+                  <CardDescription>Generated HTML table code</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  {error && (
+                    <div className="p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-md">
+                      <p className="text-red-600 dark:text-red-400 text-sm">{error}</p>
+                    </div>
+                  )}
+                  <Textarea
+                    value={htmlOutput}
+                    readOnly
+                    placeholder="HTML table will appear here..."
+                    className="min-h-[300px] font-mono text-sm"
+                  />
+                  {htmlOutput && (
+                    <div className="flex gap-2">
+                      <Button onClick={copyToClipboard} variant="outline" size="sm">
+                        <Copy className="h-4 w-4 mr-2" />
+                        Copy HTML
+                      </Button>
+                      <Button onClick={downloadHtml} variant="outline" size="sm">
+                        <Download className="h-4 w-4 mr-2" />
+                        Download
+                      </Button>
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+            </div>
+
             {htmlOutput && (
-              <div className="flex gap-2">
-                <Button onClick={copyToClipboard} variant="outline" size="sm">
-                  <Copy className="h-4 w-4 mr-2" />
-                  Copy HTML
-                </Button>
-                <Button onClick={downloadHtml} variant="outline" size="sm">
-                  <Download className="h-4 w-4 mr-2" />
-                  Download
-                </Button>
-              </div>
+              <Card>
+                <CardHeader>
+                  <CardTitle>Preview</CardTitle>
+                  <CardDescription>How your HTML table will look</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div
+                    className="border rounded-md p-4 bg-white dark:bg-gray-900"
+                    dangerouslySetInnerHTML={{ __html: htmlOutput }}
+                  />
+                </CardContent>
+              </Card>
             )}
-          </CardContent>
-        </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle>Usage Tips</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-2">
+                <div className="flex flex-wrap gap-2">
+                  <Badge variant="secondary">Array Required</Badge>
+                  <Badge variant="secondary">Object Structure</Badge>
+                  <Badge variant="secondary">CSS Included</Badge>
+                  <Badge variant="secondary">Responsive</Badge>
+                </div>
+                <ul className="text-sm text-gray-600 dark:text-gray-300 space-y-1 mt-4">
+                  <li>• Input must be a valid JSON array of objects</li>
+                  <li>• All objects will be converted to table rows</li>
+                  <li>• Missing properties will show as empty cells</li>
+                  <li>• CSS styles make the table look professional</li>
+                  <li>• Responsive option adds mobile-friendly styles</li>
+                </ul>
+              </CardContent>
+            </Card>
+          </main>
+        </LayoutWithAds>
       </div>
-
-      {htmlOutput && (
-        <Card>
-          <CardHeader>
-            <CardTitle>Preview</CardTitle>
-            <CardDescription>How your HTML table will look</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div
-              className="border rounded-md p-4 bg-white dark:bg-gray-900"
-              dangerouslySetInnerHTML={{ __html: htmlOutput }}
-            />
-          </CardContent>
-        </Card>
-      )}
-
-      <Card>
-        <CardHeader>
-          <CardTitle>Usage Tips</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-2">
-          <div className="flex flex-wrap gap-2">
-            <Badge variant="secondary">Array Required</Badge>
-            <Badge variant="secondary">Object Structure</Badge>
-            <Badge variant="secondary">CSS Included</Badge>
-            <Badge variant="secondary">Responsive</Badge>
-          </div>
-          <ul className="text-sm text-gray-600 dark:text-gray-300 space-y-1 mt-4">
-            <li>• Input must be a valid JSON array of objects</li>
-            <li>• All objects will be converted to table rows</li>
-            <li>• Missing properties will show as empty cells</li>
-            <li>• CSS styles make the table look professional</li>
-            <li>• Responsive option adds mobile-friendly styles</li>
-          </ul>
-        </CardContent>
-      </Card>
     </div>
   )
 }

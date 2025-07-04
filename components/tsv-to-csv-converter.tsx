@@ -5,8 +5,10 @@ import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Copy, Download, FileSpreadsheet, ArrowRight } from "lucide-react"
+import { Copy, Download, FileSpreadsheet, ArrowRight, ArrowLeft, Code, CheckCircle, AlertCircle } from "lucide-react"
 import { Checkbox } from "@/components/ui/checkbox"
+import LayoutWithAds from "./layout-with-ads"
+import { Header } from "@/components/Header"
 
 export default function TsvToCsvConverter() {
   const [tsvInput, setTsvInput] = useState("")
@@ -87,118 +89,154 @@ Alice Brown	28	Sydney	Australia`
 
   return (
     <div className="space-y-6">
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <FileSpreadsheet className="h-5 w-5" />
-              TSV Input
-            </CardTitle>
-            <CardDescription>Enter your Tab-Separated Values data</CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <Textarea
-              placeholder="Paste your TSV data here..."
-              value={tsvInput}
-              onChange={(e) => setTsvInput(e.target.value)}
-              className="min-h-[300px] font-mono text-sm"
-            />
-            <div className="flex flex-wrap gap-4">
-              <div className="flex items-center space-x-2">
-                <Checkbox
-                  id="headers"
-                  checked={includeHeaders}
-                  onCheckedChange={(checked) => setIncludeHeaders(checked as boolean)}
-                />
-                <label htmlFor="headers" className="text-sm">
-                  First row contains headers
-                </label>
-              </div>
-              <div className="flex items-center space-x-2">
-                <label htmlFor="delimiter" className="text-sm">
-                  CSV Delimiter:
-                </label>
-                <select
-                  id="delimiter"
-                  value={customDelimiter}
-                  onChange={(e) => setCustomDelimiter(e.target.value)}
-                  className="px-2 py-1 border rounded text-sm"
-                >
-                  <option value=",">Comma (,)</option>
-                  <option value=";">Semicolon (;)</option>
-                  <option value="|">Pipe (|)</option>
-                </select>
-              </div>
-            </div>
-            <div className="flex gap-2">
-              <Button onClick={convertToCsv} className="flex-1">
-                <ArrowRight className="h-4 w-4 mr-2" />
-                Convert to CSV
-              </Button>
-              <Button variant="outline" onClick={() => setTsvInput(sampleTsv)}>
-                Load Sample
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
+      <Header
+        formatterName={'TSV to CSV Converter'}
+        icon={<FileSpreadsheet className="sm:h-5 sm:w-5 h-4 w-4 text-blue-600" />}
+      // statusBadge={
+      //   isValid ? (
+      //     <Badge variant="secondary" className="bg-green-100 text-green-800">
+      //       <CheckCircle className="h-3 w-3 mr-1" />
+      //       Valid
+      //     </Badge>
+      //   ) : (
+      //     <Badge variant="destructive">
+      //       <AlertCircle className="h-3 w-3 mr-1" />
+      //       Invalid
+      //     </Badge>
+      //   )
+      // }
+      />
+      <div className="container mx-auto px-2 py-8">
+        <LayoutWithAds adPosition="right" showAds={true}>
+          <main>
+            {/* Page Header */}
+            <header className="mb-8">
+              <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">JSON to TypeScript Converter</h1>
+              <p className="text-lg text-gray-600 mb-4">
+                Generate TypeScript interfaces and types from JSON data for better type safety
+              </p>
+              <p className="text-gray-500">
+                Transform your JSON data into TypeScript interfaces automatically. Perfect for API development, type
+                definitions, and ensuring type safety in your applications.
+              </p>
+            </header>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <FileSpreadsheet className="h-5 w-5" />
+                    TSV Input
+                  </CardTitle>
+                  <CardDescription>Enter your Tab-Separated Values data</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <Textarea
+                    placeholder="Paste your TSV data here..."
+                    value={tsvInput}
+                    onChange={(e) => setTsvInput(e.target.value)}
+                    className="min-h-[300px] font-mono text-sm"
+                  />
+                  <div className="flex flex-wrap gap-4">
+                    <div className="flex items-center space-x-2">
+                      <Checkbox
+                        id="headers"
+                        checked={includeHeaders}
+                        onCheckedChange={(checked) => setIncludeHeaders(checked as boolean)}
+                      />
+                      <label htmlFor="headers" className="text-sm">
+                        First row contains headers
+                      </label>
+                    </div>
+                    <div className="flex items-center space-x-3">
+                      <label htmlFor="delimiter" className="text-sm text-nowrap">
+                        CSV Delimiter:
+                      </label>
+                      <select
+                        id="delimiter"
+                        value={customDelimiter}
+                        onChange={(e) => setCustomDelimiter(e.target.value)}
+                        className="px-2 py-1 border rounded text-sm"
+                      >
+                        <option value=",">Comma (,)</option>
+                        <option value=";">Semicolon (;)</option>
+                        <option value="|">Pipe (|)</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div className="flex gap-2">
+                    <Button onClick={convertToCsv} className="flex-1 !text-nowrap !p-3">
+                      <ArrowRight className="!h-3 !w-3" />
+                      Convert to CSV
+                    </Button>
+                    <Button variant="outline" className="!text-nowrap !p-3" onClick={() => setTsvInput(sampleTsv)}>
+                      Load Sample
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
 
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <FileSpreadsheet className="h-5 w-5" />
-              CSV Output
-            </CardTitle>
-            <CardDescription>Generated CSV data</CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            {error && (
-              <div className="p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-md">
-                <p className="text-red-600 dark:text-red-400 text-sm">{error}</p>
-              </div>
-            )}
-            <Textarea
-              value={csvOutput}
-              readOnly
-              placeholder="CSV data will appear here..."
-              className="min-h-[300px] font-mono text-sm"
-            />
-            {csvOutput && (
-              <div className="flex gap-2">
-                <Button onClick={copyToClipboard} variant="outline" size="sm">
-                  <Copy className="h-4 w-4 mr-2" />
-                  Copy CSV
-                </Button>
-                <Button onClick={downloadCsv} variant="outline" size="sm">
-                  <Download className="h-4 w-4 mr-2" />
-                  Download
-                </Button>
-              </div>
-            )}
-          </CardContent>
-        </Card>
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <FileSpreadsheet className="h-5 w-5" />
+                    CSV Output
+                  </CardTitle>
+                  <CardDescription>Generated CSV data</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  {error && (
+                    <div className="p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-md">
+                      <p className="text-red-600 dark:text-red-400 text-sm">{error}</p>
+                    </div>
+                  )}
+                  <Textarea
+                    value={csvOutput}
+                    readOnly
+                    placeholder="CSV data will appear here..."
+                    className="min-h-[300px] font-mono text-sm"
+                  />
+                  {csvOutput && (
+                    <div className="flex gap-2">
+                      <Button onClick={copyToClipboard} variant="outline" size="sm">
+                        <Copy className="h-4 w-4 mr-2" />
+                        Copy CSV
+                      </Button>
+                      <Button onClick={downloadCsv} variant="outline" size="sm">
+                        <Download className="h-4 w-4 mr-2" />
+                        Download
+                      </Button>
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+            </div>
+
+            <section className="mt-8">
+              <Card>
+                <CardHeader>
+                  <CardTitle>Conversion Details</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-2">
+                  <div className="flex flex-wrap gap-2">
+                    <Badge variant="secondary">
+                      Tab → {customDelimiter === "," ? "Comma" : customDelimiter === ";" ? "Semicolon" : "Pipe"}
+                    </Badge>
+                    <Badge variant="secondary">Auto Escaping</Badge>
+                    <Badge variant="secondary">Quote Protection</Badge>
+                  </div>
+                  <ul className="text-sm text-gray-600 dark:text-gray-300 space-y-1 mt-4">
+                    <li>• Converts tab characters to your chosen delimiter</li>
+                    <li>• Automatically quotes fields containing special characters</li>
+                    <li>• Escapes internal quotes by doubling them</li>
+                    <li>• Preserves data integrity during conversion</li>
+                    <li>• Handles multi-line fields properly</li>
+                  </ul>
+                </CardContent>
+              </Card>
+            </section>
+          </main>
+        </LayoutWithAds>
       </div>
-
-      <Card>
-        <CardHeader>
-          <CardTitle>Conversion Details</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-2">
-          <div className="flex flex-wrap gap-2">
-            <Badge variant="secondary">
-              Tab → {customDelimiter === "," ? "Comma" : customDelimiter === ";" ? "Semicolon" : "Pipe"}
-            </Badge>
-            <Badge variant="secondary">Auto Escaping</Badge>
-            <Badge variant="secondary">Quote Protection</Badge>
-          </div>
-          <ul className="text-sm text-gray-600 dark:text-gray-300 space-y-1 mt-4">
-            <li>• Converts tab characters to your chosen delimiter</li>
-            <li>• Automatically quotes fields containing special characters</li>
-            <li>• Escapes internal quotes by doubling them</li>
-            <li>• Preserves data integrity during conversion</li>
-            <li>• Handles multi-line fields properly</li>
-          </ul>
-        </CardContent>
-      </Card>
     </div>
   )
 }

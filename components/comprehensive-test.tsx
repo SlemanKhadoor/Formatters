@@ -98,11 +98,11 @@ export default function ComprehensiveTest() {
         prev.map((suite) =>
           suite.name === suiteName
             ? {
-                ...suite,
-                tests: suite.tests.map((test) =>
-                  test.name === testName ? { ...test, status, error, duration } : test,
-                ),
-              }
+              ...suite,
+              tests: suite.tests.map((test) =>
+                test.name === testName ? { ...test, status, error, duration } : test,
+              ),
+            }
             : suite,
         ),
       )
@@ -445,7 +445,7 @@ export default function ComprehensiveTest() {
               </Button>
               <div className="flex items-center space-x-2">
                 <Play className="h-6 w-6 text-blue-600" />
-                <h1 className="text-xl font-bold text-gray-900">Comprehensive Functionality Test</h1>
+                <h1 className="text-xl font-bold text-gray-900 dark:text-gray-100">Comprehensive Functionality Test</h1>
               </div>
             </div>
             <div className="flex items-center space-x-2">
@@ -461,7 +461,7 @@ export default function ComprehensiveTest() {
         {/* Controls */}
         <div className="mb-8 flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">Test All Functionalities</h1>
+            <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">Test All Functionalities</h1>
             <p className="text-gray-600">Comprehensive test suite for all {stats.total} tools on Formatters.net</p>
           </div>
           <div className="flex gap-2">
@@ -479,7 +479,7 @@ export default function ComprehensiveTest() {
         <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
           <Card>
             <CardContent className="p-4 text-center">
-              <div className="text-2xl font-bold text-gray-900">{stats.total}</div>
+              <div className="text-2xl font-bold text-gray-900 dark:text-gray-100">{stats.total}</div>
               <div className="text-sm text-gray-600">Total Tests</div>
             </CardContent>
           </Card>

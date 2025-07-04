@@ -12,6 +12,7 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { ArrowLeft, Copy, Download, RotateCcw, CheckCircle, AlertCircle, Search, Zap } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
 import LayoutWithAds from "./layout-with-ads"
+import { Header } from "@/components/Header"
 
 interface Match {
   match: string
@@ -161,22 +162,21 @@ export default function RegexTester() {
 
 Pattern: ${pattern}
 Flags: ${Object.entries(flags)
-      .filter(([_, enabled]) => enabled)
-      .map(([flag]) => flag)
-      .join(", ")}
+        .filter(([_, enabled]) => enabled)
+        .map(([flag]) => flag)
+        .join(", ")}
 
 Test String:
 ${testString}
 
 Matches Found: ${matches.length}
 ${matches
-  .map(
-    (match, i) =>
-      `Match ${i + 1}: "${match.match}" at position ${match.index}${
-        match.groups.length > 0 ? `\nGroups: ${match.groups.join(", ")}` : ""
-      }`,
-  )
-  .join("\n")}
+        .map(
+          (match, i) =>
+            `Match ${i + 1}: "${match.match}" at position ${match.index}${match.groups.length > 0 ? `\nGroups: ${match.groups.join(", ")}` : ""
+            }`,
+        )
+        .join("\n")}
 
 ${replacement ? `Replacement Result:\n${replacementResult}` : ""}`
 
@@ -232,19 +232,43 @@ user123@domain.net`)
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
       {/* Header */}
-      <header className="border-b bg-white/80 backdrop-blur-sm sticky top-0 z-50">
-        <div className="container mx-auto px-4 py-4">
+      <Header
+        formatterName={'Regex Tester'}
+        icon={<Search className="sm:h-5 sm:w-5 h-4 w-4 text-green-600" />}
+        statusBadge={
+          <>
+            {isValid ? (
+              <Badge variant="secondary" className="bg-green-100 text-green-800 text-[10px]">
+                <CheckCircle className="h-3 w-3 mr-1" />
+                Valid
+              </Badge>
+            ) : (
+              <Badge variant="destructive" className="!text-[10px]">
+                <AlertCircle className="h-3 w-3 mr-1" />
+                Invalid
+              </Badge>
+            )}
+            <Badge variant="outline" className="bg-blue-100 !ms-1 text-blue-800 text-[10px] ">
+              <Zap className="h-3 w-3 mr-1" />
+              {matches.length} matches
+            </Badge>
+          </>
+        }
+      />
+
+      {/* <header className="border-b bg-white/80 backdrop-blur-sm sticky top-0 z-50">
+        <div className="container mx-auto px-2 py-4">
           <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-2 ml-0">
               <Button variant="ghost" size="sm" asChild>
-                <Link href="/">
+                <Link href="/" className="!px-1">
                   <ArrowLeft className="h-4 w-4 mr-2" />
-                  Back to Home
+                  <span className="hidden sm:inline">Back to Home</span>
                 </Link>
               </Button>
               <div className="flex items-center space-x-2">
                 <Search className="h-6 w-6 text-orange-600" />
-                <h1 className="text-xl font-bold text-gray-900">Regular Expression Tester</h1>
+                <h1 className="text-sm sm:text-xl font-bold text-gray-900 dark:text-gray-100">Regular Expression Tester</h1>
               </div>
             </div>
             <div className="flex items-center space-x-2">
@@ -260,20 +284,20 @@ user123@domain.net`)
                 </Badge>
               )}
               <Badge variant="outline" className="bg-blue-100 text-blue-800">
-                <Zap className="h-3 w-3 mr-1" />
+                <Zap className="h-3 w-3 mr-1 text-xs" />
                 {matches.length} matches
               </Badge>
             </div>
           </div>
         </div>
-      </header>
+      </header> */}
 
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-2 py-8">
         <LayoutWithAds adPosition="right" showAds={true}>
           <main>
             {/* Page Header */}
             <header className="mb-8">
-              <h1 className="text-3xl font-bold text-gray-900 mb-2">Regular Expression Tester</h1>
+              <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">Regular Expression Tester</h1>
               <p className="text-lg text-gray-600 mb-4">
                 Test and debug regular expressions with real-time matching and detailed results
               </p>
@@ -285,7 +309,7 @@ user123@domain.net`)
 
             {/* Controls */}
             <div className="mb-6">
-              <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+              <div className="flex flex-row sm:flex-row items-center justify-between gap-4">
                 <div className="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-2">
                   <Button variant="outline" size="sm" onClick={handleLoadExample} className="w-full sm:w-auto">
                     Load Example
@@ -486,9 +510,9 @@ user123@domain.net`)
                 <CardContent>
                   <Tabs defaultValue="matches" className="w-full">
                     <TabsList className="grid w-full grid-cols-3">
-                      <TabsTrigger value="matches">Matches ({matches.length})</TabsTrigger>
-                      <TabsTrigger value="replace">Replace</TabsTrigger>
-                      <TabsTrigger value="reference">Reference</TabsTrigger>
+                      <TabsTrigger className="text-xs" value="matches">Matches ({matches.length})</TabsTrigger>
+                      <TabsTrigger className="text-xs" value="replace">Replace</TabsTrigger>
+                      <TabsTrigger className="text-xs" value="reference">Reference</TabsTrigger>
                     </TabsList>
 
                     <TabsContent value="matches" className="mt-4">

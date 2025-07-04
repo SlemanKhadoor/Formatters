@@ -1,5 +1,4 @@
 import type { Metadata } from "next"
-import LayoutWithAds from "@/components/layout-with-ads"
 import { LoremGenerator } from "@/components/lorem-generator"
 
 export const metadata: Metadata = {
@@ -11,8 +10,6 @@ export const metadata: Metadata = {
 
 export default function LoremGeneratorPage() {
   return (
-    <LayoutWithAds adPosition="right" showAds={true}>
-      <LoremGenerator />
-    </LayoutWithAds>
+    <LoremGenerator />
   )
 }

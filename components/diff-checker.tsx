@@ -1,15 +1,16 @@
 "use client"
 
 import { useState, useMemo } from "react"
-import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Copy, Download, RotateCcw, GitCompare, FileText, Zap, Settings } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
-import { ArrowLeft, Copy, Download, RotateCcw, GitCompare, FileText, Zap, Settings } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
 import { Checkbox } from "@/components/ui/checkbox"
+import LayoutWithAds from "./layout-with-ads"
+import { Header } from '@/components/Header'
 
 interface DiffSegment {
   type: "added" | "removed" | "unchanged"
@@ -360,340 +361,338 @@ console.log("Total:", calculateTotal(items));`
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
       {/* Header */}
-      <header className="border-b bg-white/80 backdrop-blur-sm sticky top-0 z-50">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4">
-              <Button variant="ghost" size="sm" asChild>
-                <Link href="/">
-                  <ArrowLeft className="h-4 w-4 mr-2" />
-                  Back to Home
-                </Link>
-              </Button>
-              <div className="flex items-center space-x-2">
-                <GitCompare className="h-6 w-6 text-blue-600" />
-                <h1 className="text-xl font-bold text-gray-900">Enhanced Diff Checker</h1>
-              </div>
-            </div>
-            <div className="flex items-center space-x-2">
-              <Badge variant="secondary" className="bg-blue-100 text-blue-800">
-                <Zap className="h-3 w-3 mr-1" />
-                {stats.total} lines compared
-              </Badge>
-            </div>
-          </div>
-        </div>
-      </header>
+      <Header
+        formatterName={'Diff Checker'}
+        icon={<GitCompare className="sm:h-5 sm:w-5 w-4 h-4 text-blue-600" />}
+        statusBadge={
+          <Badge variant="secondary" className="bg-blue-100 text-blue-800">
+            <Zap className="h-3 w-3 mr-1 text-xs" />
+            {stats.total} lines compared
+          </Badge>
+        }
+      />
+      <div className="container mx-auto py-8">
+        <LayoutWithAds adPosition="right" showAds={true}>
+          <div className="max-w-7xl mx-auto">
+            {/* <div className="mb-8">
+              <h1 className="text-3xl font-bold mb-4">Advanced Diff Checker</h1>
+              <p className="text-gray-600 dark:text-gray-300">
+                Compare text and code differences with advanced features like file upload, ignore options, and export
+                functionality.
+              </p>
+            </div> */}
+            <div className="container mx-auto px-4 py-8">
+              <main>
+                {/* Page Header */}
+                <header className="mb-8">
+                  <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">Enhanced Text & Code Diff Checker</h1>
+                  <p className="text-lg text-gray-500 mb-4">
+                    Compare two pieces of text or code with word-level highlighting and advanced options
+                  </p>
+                  <p className="text-gray-500">
+                    Perfect for comparing code versions, documents, or any text content with detailed word-by-word analysis.
+                  </p>
+                </header>
 
-      <div className="container mx-auto px-4 py-8">
-        <main>
-          {/* Page Header */}
-          <header className="mb-8">
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">Enhanced Text & Code Diff Checker</h1>
-            <p className="text-lg text-gray-600 mb-4">
-              Compare two pieces of text or code with word-level highlighting and advanced options
-            </p>
-            <p className="text-gray-500">
-              Perfect for comparing code versions, documents, or any text content with detailed word-by-word analysis.
-            </p>
-          </header>
-
-          {/* Advanced Options */}
-          <Card className="mb-6">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Settings className="h-5 w-5" />
-                Comparison Options
-              </CardTitle>
-              <CardDescription>Customize how the comparison is performed</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="flex flex-wrap gap-6">
-                <div className="flex items-center space-x-2">
-                  <Checkbox id="word-diff" checked={showWordDiff} onCheckedChange={setShowWordDiff} />
-                  <label htmlFor="word-diff" className="text-sm font-medium">
-                    Word-level highlighting
-                  </label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <Checkbox id="ignore-whitespace" checked={ignoreWhitespace} onCheckedChange={setIgnoreWhitespace} />
-                  <label htmlFor="ignore-whitespace" className="text-sm font-medium">
-                    Ignore whitespace
-                  </label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <Checkbox id="ignore-case" checked={ignoreCase} onCheckedChange={setIgnoreCase} />
-                  <label htmlFor="ignore-case" className="text-sm font-medium">
-                    Ignore case
-                  </label>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Controls */}
-          <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
-            <div className="flex items-center space-x-2">
-              <Button variant="outline" size="sm" onClick={handleLoadExample}>
-                <FileText className="h-4 w-4 mr-2" />
-                Load Example
-              </Button>
-              <Button variant="outline" size="sm" onClick={handleClear}>
-                <RotateCcw className="h-4 w-4 mr-2" />
-                Clear All
-              </Button>
-            </div>
-            <div className="flex items-center space-x-2">
-              <Button variant="outline" size="sm" onClick={handleCopyDiff} disabled={stats.total === 0}>
-                <Copy className="h-4 w-4 mr-2" />
-                Copy Diff
-              </Button>
-              <Button variant="outline" size="sm" onClick={handleDownloadDiff} disabled={stats.total === 0}>
-                <Download className="h-4 w-4 mr-2" />
-                Download
-              </Button>
-            </div>
-          </div>
-
-          {/* Statistics */}
-          {stats.total > 0 && (
-            <div className="mb-6 grid grid-cols-2 md:grid-cols-4 gap-4">
-              <Card className="text-center border-0 shadow-md">
-                <CardContent className="pt-6 pb-4">
-                  <div className="text-2xl font-bold text-green-600 mb-1">{stats.added}</div>
-                  <div className="text-sm text-gray-600">Added</div>
-                </CardContent>
-              </Card>
-              <Card className="text-center border-0 shadow-md">
-                <CardContent className="pt-6 pb-4">
-                  <div className="text-2xl font-bold text-red-600 mb-1">{stats.removed}</div>
-                  <div className="text-sm text-gray-600">Removed</div>
-                </CardContent>
-              </Card>
-              <Card className="text-center border-0 shadow-md">
-                <CardContent className="pt-6 pb-4">
-                  <div className="text-2xl font-bold text-yellow-600 mb-1">{stats.modified}</div>
-                  <div className="text-sm text-gray-600">Modified</div>
-                </CardContent>
-              </Card>
-              <Card className="text-center border-0 shadow-md">
-                <CardContent className="pt-6 pb-4">
-                  <div className="text-2xl font-bold text-gray-600 mb-1">{stats.unchanged}</div>
-                  <div className="text-sm text-gray-600">Unchanged</div>
-                </CardContent>
-              </Card>
-            </div>
-          )}
-
-          {/* Input Section */}
-          <div className="grid lg:grid-cols-2 gap-6 mb-8">
-            {/* Left Text */}
-            <section>
-              <Card>
-                <CardHeader>
-                  <CardTitle>Original Text</CardTitle>
-                  <CardDescription>Paste or type your original text/code here</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <Textarea
-                    value={leftText}
-                    onChange={(e) => setLeftText(e.target.value)}
-                    placeholder="Enter your original text here..."
-                    className="min-h-[300px] font-mono text-sm"
-                    aria-label="Original text input"
-                  />
-                </CardContent>
-              </Card>
-            </section>
-
-            {/* Right Text */}
-            <section>
-              <Card>
-                <CardHeader>
-                  <CardTitle>Modified Text</CardTitle>
-                  <CardDescription>Paste or type your modified text/code here</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <Textarea
-                    value={rightText}
-                    onChange={(e) => setRightText(e.target.value)}
-                    placeholder="Enter your modified text here..."
-                    className="min-h-[300px] font-mono text-sm"
-                    aria-label="Modified text input"
-                  />
-                </CardContent>
-              </Card>
-            </section>
-          </div>
-
-          {/* Diff Result */}
-          {diffResult.length > 0 && (
-            <section>
-              <Card>
-                <CardHeader>
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <CardTitle>Comparison Result</CardTitle>
-                      <CardDescription>
-                        {showWordDiff
-                          ? "Word-level highlighting shows exact changes within modified lines"
-                          : "Line-level comparison showing differences between the texts"}
-                      </CardDescription>
+                {/* Advanced Options */}
+                <Card className="mb-6">
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <Settings className="h-5 w-5" />
+                      Comparison Options
+                    </CardTitle>
+                    <CardDescription>Customize how the comparison is performed</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="flex flex-wrap gap-6">
+                      <div className="flex items-center space-x-2">
+                        <Checkbox id="word-diff" checked={showWordDiff} onCheckedChange={setShowWordDiff} />
+                        <label htmlFor="word-diff" className="text-sm font-medium">
+                          Word-level highlighting
+                        </label>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <Checkbox id="ignore-whitespace" checked={ignoreWhitespace} onCheckedChange={setIgnoreWhitespace} />
+                        <label htmlFor="ignore-whitespace" className="text-sm font-medium">
+                          Ignore whitespace
+                        </label>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <Checkbox id="ignore-case" checked={ignoreCase} onCheckedChange={setIgnoreCase} />
+                        <label htmlFor="ignore-case" className="text-sm font-medium">
+                          Ignore case
+                        </label>
+                      </div>
                     </div>
-                    <Tabs value={viewMode} onValueChange={(value) => setViewMode(value as any)}>
-                      <TabsList>
-                        <TabsTrigger value="side-by-side">Side by Side</TabsTrigger>
-                        <TabsTrigger value="unified">Unified</TabsTrigger>
-                      </TabsList>
-                    </Tabs>
+                  </CardContent>
+                </Card>
+
+                {/* Controls */}
+                <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
+                  <div className="flex items-center space-x-2">
+                    <Button variant="outline" size="sm" onClick={handleLoadExample}>
+                      <FileText className="h-4 w-4 mr-2" />
+                      Load Example
+                    </Button>
+                    <Button variant="outline" size="sm" onClick={handleClear}>
+                      <RotateCcw className="h-4 w-4 mr-2" />
+                      Clear All
+                    </Button>
                   </div>
-                </CardHeader>
-                <CardContent>
-                  {viewMode === "side-by-side" ? (
-                    <div className="grid grid-cols-2 gap-4">
-                      {/* Left Side */}
-                      <div className="border rounded-lg overflow-hidden">
-                        <div className="bg-gray-100 px-3 py-2 text-sm font-medium text-gray-700 border-b">Original</div>
-                        <div className="max-h-96 overflow-y-auto">
-                          {diffResult.map((line, index) => (
-                            <div
-                              key={`left-${index}`}
-                              className={`px-3 py-1 text-sm font-mono flex ${getLineClassName(line.type)}`}
-                            >
-                              <span className="w-8 text-gray-400 mr-3 flex-shrink-0">{line.leftLineNumber || ""}</span>
-                              <span className="text-gray-700">
-                                {line.leftSegments ? renderSegments(line.leftSegments) : line.leftContent || " "}
-                              </span>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
+                  <div className="flex items-center space-x-2">
+                    <Button variant="outline" size="sm" onClick={handleCopyDiff} disabled={stats.total === 0}>
+                      <Copy className="h-4 w-4 mr-2" />
+                      Copy Diff
+                    </Button>
+                    <Button variant="outline" size="sm" onClick={handleDownloadDiff} disabled={stats.total === 0}>
+                      <Download className="h-4 w-4 mr-2" />
+                      Download
+                    </Button>
+                  </div>
+                </div>
 
-                      {/* Right Side */}
-                      <div className="border rounded-lg overflow-hidden">
-                        <div className="bg-gray-100 px-3 py-2 text-sm font-medium text-gray-700 border-b">Modified</div>
-                        <div className="max-h-96 overflow-y-auto">
-                          {diffResult.map((line, index) => (
-                            <div
-                              key={`right-${index}`}
-                              className={`px-3 py-1 text-sm font-mono flex ${getLineClassName(line.type)}`}
-                            >
-                              <span className="w-8 text-gray-400 mr-3 flex-shrink-0">{line.rightLineNumber || ""}</span>
-                              <span className="text-gray-700">
-                                {line.rightSegments ? renderSegments(line.rightSegments) : line.rightContent || " "}
-                              </span>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                  ) : (
-                    /* Unified View */
-                    <div className="border rounded-lg overflow-hidden">
-                      <div className="bg-gray-100 px-3 py-2 text-sm font-medium text-gray-700 border-b">
-                        Unified Diff
-                      </div>
-                      <div className="max-h-96 overflow-y-auto">
-                        {diffResult.map((line, index) => (
-                          <div
-                            key={`unified-${index}`}
-                            className={`px-3 py-1 text-sm font-mono flex ${getLineClassName(line.type)}`}
-                          >
-                            <span className="w-16 text-gray-400 mr-3 flex-shrink-0">
-                              {line.leftLineNumber || "-"},{line.rightLineNumber || "-"}
-                            </span>
-                            <span className="w-4 mr-2 flex-shrink-0">
-                              {line.type === "added"
-                                ? "+"
-                                : line.type === "removed"
-                                  ? "-"
-                                  : line.type === "modified"
-                                    ? "~"
-                                    : " "}
-                            </span>
-                            <span className="text-gray-700">
-                              {line.type === "modified" && showWordDiff
-                                ? renderSegments(line.rightSegments)
-                                : line.rightContent || line.leftContent || " "}
-                            </span>
+                {/* Statistics */}
+                {stats.total > 0 && (
+                  <div className="mb-6 grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <Card className="text-center border-0 shadow-md">
+                      <CardContent className="pt-6 pb-4">
+                        <div className="text-2xl font-bold text-green-600 mb-1">{stats.added}</div>
+                        <div className="text-sm text-gray-600">Added</div>
+                      </CardContent>
+                    </Card>
+                    <Card className="text-center border-0 shadow-md">
+                      <CardContent className="pt-6 pb-4">
+                        <div className="text-2xl font-bold text-red-600 mb-1">{stats.removed}</div>
+                        <div className="text-sm text-gray-600">Removed</div>
+                      </CardContent>
+                    </Card>
+                    <Card className="text-center border-0 shadow-md">
+                      <CardContent className="pt-6 pb-4">
+                        <div className="text-2xl font-bold text-yellow-600 mb-1">{stats.modified}</div>
+                        <div className="text-sm text-gray-600">Modified</div>
+                      </CardContent>
+                    </Card>
+                    <Card className="text-center border-0 shadow-md">
+                      <CardContent className="pt-6 pb-4">
+                        <div className="text-2xl font-bold text-gray-600 mb-1">{stats.unchanged}</div>
+                        <div className="text-sm text-gray-600">Unchanged</div>
+                      </CardContent>
+                    </Card>
+                  </div>
+                )}
+
+                {/* Input Section */}
+                <div className="grid lg:grid-cols-2 gap-6 mb-8">
+                  {/* Left Text */}
+                  <section>
+                    <Card>
+                      <CardHeader>
+                        <CardTitle>Original Text</CardTitle>
+                        <CardDescription>Paste or type your original text/code here</CardDescription>
+                      </CardHeader>
+                      <CardContent>
+                        <Textarea
+                          value={leftText}
+                          onChange={(e) => setLeftText(e.target.value)}
+                          placeholder="Enter your original text here..."
+                          className="min-h-[300px] font-mono text-sm"
+                          aria-label="Original text input"
+                        />
+                      </CardContent>
+                    </Card>
+                  </section>
+
+                  {/* Right Text */}
+                  <section>
+                    <Card>
+                      <CardHeader>
+                        <CardTitle>Modified Text</CardTitle>
+                        <CardDescription>Paste or type your modified text/code here</CardDescription>
+                      </CardHeader>
+                      <CardContent>
+                        <Textarea
+                          value={rightText}
+                          onChange={(e) => setRightText(e.target.value)}
+                          placeholder="Enter your modified text here..."
+                          className="min-h-[300px] font-mono text-sm"
+                          aria-label="Modified text input"
+                        />
+                      </CardContent>
+                    </Card>
+                  </section>
+                </div>
+
+                {/* Diff Result */}
+                {diffResult.length > 0 && (
+                  <section>
+                    <Card>
+                      <CardHeader>
+                        <div className="flex items-center justify-between">
+                          <div>
+                            <CardTitle>Comparison Result</CardTitle>
+                            <CardDescription>
+                              {showWordDiff
+                                ? "Word-level highlighting shows exact changes within modified lines"
+                                : "Line-level comparison showing differences between the texts"}
+                            </CardDescription>
                           </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                </CardContent>
-              </Card>
-            </section>
-          )}
+                          <Tabs value={viewMode} onValueChange={(value) => setViewMode(value as any)}>
+                            <TabsList>
+                              <TabsTrigger value="side-by-side">Side by Side</TabsTrigger>
+                              <TabsTrigger value="unified">Unified</TabsTrigger>
+                            </TabsList>
+                          </Tabs>
+                        </div>
+                      </CardHeader>
+                      <CardContent>
+                        {viewMode === "side-by-side" ? (
+                          <div className="grid grid-cols-2 gap-4">
+                            {/* Left Side */}
+                            <div className="border rounded-lg overflow-hidden">
+                              <div className="bg-gray-100 px-3 py-2 text-sm font-medium text-gray-700 border-b">Original</div>
+                              <div className="overflow-y-auto">
+                                {diffResult.map((line, index) => (
+                                  <div
+                                    key={`left-${index}`}
+                                    className={`px-3 py-1 text-sm font-mono flex ${getLineClassName(line.type)}`}
+                                  >
+                                    <span className="w-8 text-gray-400 mr-3 flex-shrink-0">{line.leftLineNumber || ""}</span>
+                                    <span className="text-gray-700">
+                                      {line.leftSegments ? renderSegments(line.leftSegments) : line.leftContent || " "}
+                                    </span>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
 
-          {/* Tips and Information Section */}
-          <section className="mt-8">
-            <Card>
-              <CardHeader>
-                <CardTitle>How to Use the Enhanced Diff Checker</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <Tabs defaultValue="usage" className="w-full">
-                  <TabsList>
-                    <TabsTrigger value="usage">Usage</TabsTrigger>
-                    <TabsTrigger value="features">Features</TabsTrigger>
-                    <TabsTrigger value="tips">Tips</TabsTrigger>
-                  </TabsList>
-                  <TabsContent value="usage" className="mt-4">
-                    <div className="space-y-3 text-sm text-gray-600">
-                      <h4 className="font-semibold text-gray-900">How to Compare Text:</h4>
-                      <ul className="space-y-2 list-disc list-inside">
-                        <li>Paste your original text in the left panel</li>
-                        <li>Paste your modified text in the right panel</li>
-                        <li>Enable word-level highlighting to see exact word changes</li>
-                        <li>Use comparison options to ignore whitespace or case</li>
-                        <li>Use "Load Example" to see how it works</li>
-                      </ul>
-                    </div>
-                  </TabsContent>
-                  <TabsContent value="features" className="mt-4">
-                    <div className="space-y-3 text-sm text-gray-600">
-                      <h4 className="font-semibold text-gray-900">Enhanced Features:</h4>
-                      <ul className="space-y-2 list-disc list-inside">
-                        <li>
-                          <span className="text-green-600">Green highlighting</span> for added words
-                        </li>
-                        <li>
-                          <span className="text-red-600">Red highlighting</span> for removed words
-                        </li>
-                        <li>
-                          <span className="text-yellow-600">Yellow highlighting</span> for modified lines
-                        </li>
-                        <li>
-                          <strong>Word-level highlighting</strong> shows exact word changes within lines
-                        </li>
-                        <li>Ignore whitespace and case options for flexible comparison</li>
-                        <li>Side-by-side and unified diff views</li>
-                        <li>Line numbers for easy reference</li>
-                        <li>Statistics showing changes summary</li>
-                      </ul>
-                    </div>
-                  </TabsContent>
-                  <TabsContent value="tips" className="mt-4">
-                    <div className="space-y-3 text-sm text-gray-600">
-                      <h4 className="font-semibold text-gray-900">Pro Tips:</h4>
-                      <ul className="space-y-2 list-disc list-inside">
-                        <li>Enable word-level highlighting for precise word change detection</li>
-                        <li>Use ignore whitespace when comparing code with different formatting</li>
-                        <li>Use ignore case for case-insensitive text comparison</li>
-                        <li>Word-level highlighting is perfect for prose and documentation</li>
-                        <li>Copy the diff result to share with others</li>
-                        <li>Download the diff as a text file for records</li>
-                        <li>Use unified view for a more compact comparison</li>
-                        <li>Perfect for code reviews and document comparisons</li>
-                      </ul>
-                    </div>
-                  </TabsContent>
-                </Tabs>
-              </CardContent>
-            </Card>
-          </section>
-        </main>
+                            {/* Right Side */}
+                            <div className="border rounded-lg overflow-hidden">
+                              <div className="bg-gray-100 px-3 py-2 text-sm font-medium text-gray-700 border-b">Modified</div>
+                              <div className=" overflow-y-auto">
+                                {diffResult.map((line, index) => (
+                                  <div
+                                    key={`right-${index}`}
+                                    className={`px-3 py-1 text-sm font-mono flex ${getLineClassName(line.type)}`}
+                                  >
+                                    <span className="w-8 text-gray-400 mr-3 flex-shrink-0">{line.rightLineNumber || ""}</span>
+                                    <span className="text-gray-700">
+                                      {line.rightSegments ? renderSegments(line.rightSegments) : line.rightContent || " "}
+                                    </span>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          </div>
+                        ) : (
+                          /* Unified View */
+                          <div className="border rounded-lg overflow-hidden">
+                            <div className="bg-gray-100 px-3 py-2 text-sm font-medium text-gray-700 border-b">
+                              Unified Diff
+                            </div>
+                            <div className=" overflow-y-auto">
+                              {diffResult.map((line, index) => (
+                                <div
+                                  key={`unified-${index}`}
+                                  className={`px-3 py-1 text-sm font-mono flex ${getLineClassName(line.type)}`}
+                                >
+                                  <span className="w-16 text-gray-400 mr-3 flex-shrink-0">
+                                    {line.leftLineNumber || "-"},{line.rightLineNumber || "-"}
+                                  </span>
+                                  <span className="w-4 mr-2 flex-shrink-0">
+                                    {line.type === "added"
+                                      ? "+"
+                                      : line.type === "removed"
+                                        ? "-"
+                                        : line.type === "modified"
+                                          ? "~"
+                                          : " "}
+                                  </span>
+                                  <span className="text-gray-700">
+                                    {line.type === "modified" && showWordDiff
+                                      ? renderSegments(line.rightSegments)
+                                      : line.rightContent || line.leftContent || " "}
+                                  </span>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+                      </CardContent>
+                    </Card>
+                  </section>
+                )}
+
+                {/* Tips and Information Section */}
+                <section className="mt-8">
+                  <Card>
+                    <CardHeader>
+                      <CardTitle>How to Use the Enhanced Diff Checker</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <Tabs defaultValue="usage" className="w-full">
+                        <TabsList>
+                          <TabsTrigger value="usage">Usage</TabsTrigger>
+                          <TabsTrigger value="features">Features</TabsTrigger>
+                          <TabsTrigger value="tips">Tips</TabsTrigger>
+                        </TabsList>
+                        <TabsContent value="usage" className="mt-4">
+                          <div className="space-y-3 text-sm text-gray-600">
+                            <h4 className="font-semibold text-gray-900 dark:text-gray-100">How to Compare Text:</h4>
+                            <ul className="space-y-2 list-disc list-inside text-gray-600 dark:text-gray-400">
+                              <li>Paste your original text in the left panel</li>
+                              <li>Paste your modified text in the right panel</li>
+                              <li>Enable word-level highlighting to see exact word changes</li>
+                              <li>Use comparison options to ignore whitespace or case</li>
+                              <li>Use "Load Example" to see how it works</li>
+                            </ul>
+                          </div>
+                        </TabsContent>
+                        <TabsContent value="features" className="mt-4">
+                          <div className="space-y-3 text-sm text-gray-600">
+                            <h4 className="font-semibold text-gray-900 dark:text-gray-100">Enhanced Features:</h4>
+                            <ul className="space-y-2 list-disc list-inside text-gray-600 dark:text-gray-400">
+                              <li>
+                                <span className="text-green-600">Green highlighting</span> for added words
+                              </li>
+                              <li>
+                                <span className="text-red-600">Red highlighting</span> for removed words
+                              </li>
+                              <li>
+                                <span className="text-yellow-600">Yellow highlighting</span> for modified lines
+                              </li>
+                              <li>
+                                <strong>Word-level highlighting</strong> shows exact word changes within lines
+                              </li>
+                              <li>Ignore whitespace and case options for flexible comparison</li>
+                              <li>Side-by-side and unified diff views</li>
+                              <li>Line numbers for easy reference</li>
+                              <li>Statistics showing changes summary</li>
+                            </ul>
+                          </div>
+                        </TabsContent>
+                        <TabsContent value="tips" className="mt-4">
+                          <div className="space-y-3 text-sm text-gray-600">
+                            <h4 className="font-semibold text-gray-900 dark:text-gray-100">Pro Tips:</h4>
+                            <ul className="space-y-2 list-disc list-inside text-gray-600 dark:text-gray-400">
+                              <li>Enable word-level highlighting for precise word change detection</li>
+                              <li>Use ignore whitespace when comparing code with different formatting</li>
+                              <li>Use ignore case for case-insensitive text comparison</li>
+                              <li>Word-level highlighting is perfect for prose and documentation</li>
+                              <li>Copy the diff result to share with others</li>
+                              <li>Download the diff as a text file for records</li>
+                              <li>Use unified view for a more compact comparison</li>
+                              <li>Perfect for code reviews and document comparisons</li>
+                            </ul>
+                          </div>
+                        </TabsContent>
+                      </Tabs>
+                    </CardContent>
+                  </Card>
+                </section>
+              </main>
+            </div>
+          </div>
+        </LayoutWithAds>
       </div>
     </div>
   )

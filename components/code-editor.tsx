@@ -196,10 +196,10 @@ export default function CodeEditor({
   }, [value, language])
 
   return (
-    <div ref={containerRef} className={cn("relative border rounded-md bg-white overflow-hidden", className)}>
+    <div ref={containerRef} className={cn("relative border rounded-md bg-white dark:bg-background dark:border-gray-700 overflow-hidden", className)}>
       <div className="flex">
         {/* Line numbers */}
-        <div className="flex-shrink-0 bg-gray-50 border-r border-gray-200 px-2 py-2 text-xs text-gray-500 font-mono select-none">
+        <div className="flex-shrink-0 bg-gray-50 border-r border-gray-200 px-2 py-2 text-xs text-gray-500 font-mono select-none dark:bg-background">
           {Array.from({ length: Math.max(lineCount, 1) }, (_, i) => (
             <div key={i + 1} className="leading-5 text-right min-w-[2rem]">
               {i + 1}
@@ -212,7 +212,7 @@ export default function CodeEditor({
           {/* Syntax highlighting layer */}
           <div
             ref={highlightRef}
-            className="absolute inset-0 p-2 font-mono text-sm leading-5 pointer-events-none overflow-auto whitespace-pre-wrap break-words text-gray-900"
+            className="absolute inset-0 p-2 font-mono text-sm leading-5 pointer-events-none overflow-auto whitespace-pre-wrap break-words text-gray-900 dark:text-gray-300"
             style={{
               background: "transparent",
               border: "none",
@@ -234,13 +234,13 @@ export default function CodeEditor({
             className={cn(
               "w-full h-full p-2 font-mono text-sm leading-5 border-none outline-none resize-none",
               "placeholder:text-gray-400",
-              readOnly ? "cursor-default bg-gray-50" : "cursor-text bg-white",
+              readOnly ? "cursor-default bg-gray-50 dark:bg-background" : "cursor-text bg-background",
               // Make text color transparent but keep caret visible
               "text-transparent caret-gray-900 selection:bg-blue-200",
             )}
             style={{
               minHeight: "400px",
-              background: readOnly ? "#f9fafb" : "white",
+              background: readOnly ? "bg-gray-50 dark:bg-[#1f1f1f]" : "bg-background",
             }}
             spellCheck={false}
             autoComplete="off"

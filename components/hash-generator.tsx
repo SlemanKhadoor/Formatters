@@ -1,15 +1,15 @@
 "use client"
 
 import { useState, useCallback } from "react"
-import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Copy, Download, RotateCcw, Hash, Shield, CheckCircle, AlertCircle } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
-import { ArrowLeft, Copy, Download, RotateCcw, Hash, Shield } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
 import LayoutWithAds from "./layout-with-ads"
+import { Header } from "@/components/Header"
 
 export default function HashGenerator() {
   const [input, setInput] = useState("")
@@ -132,38 +132,23 @@ export default function HashGenerator() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
       {/* Header */}
-      <header className="border-b bg-white/80 backdrop-blur-sm sticky top-0 z-50">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4">
-              <Button variant="ghost" size="sm" asChild>
-                <Link href="/">
-                  <ArrowLeft className="h-4 w-4 mr-2" />
-                  Back to Home
-                </Link>
-              </Button>
-              <div className="flex items-center space-x-2">
-                <Hash className="h-6 w-6 text-orange-600" />
-                <h1 className="text-xl font-bold text-gray-900">Hash Generator</h1>
-              </div>
-            </div>
-            <div className="flex items-center space-x-2">
-              <Badge variant="secondary" className="bg-blue-100 text-blue-800">
-                <Shield className="h-3 w-3 mr-1" />
-                Secure
-              </Badge>
-            </div>
-          </div>
-        </div>
-      </header>
-
-      <div className="container mx-auto px-4 py-8">
+      <Header
+        formatterName={'Hash Generator'}
+        icon={<Hash className="sm:h-5 sm:w-5 h-4 w-4 text-orange-600" />}
+        statusBadge={
+          <Badge variant="secondary" className="bg-blue-100 text-blue-800">
+            <Shield className="h-3 w-3 mr-1" />
+            Secure
+          </Badge>
+        }
+      />
+      <div className="container mx-auto px-2 py-8">
         <LayoutWithAds adPosition="right" showAds={true}>
           <main>
             {/* Page Header */}
             <header className="mb-8">
-              <h1 className="text-3xl font-bold text-gray-900 mb-2">Hash Generator</h1>
-              <p className="text-lg text-gray-600 mb-4">
+              <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">Hash Generator</h1>
+              <p className="text-lg text-gray-500 mb-4">
                 Generate MD5, SHA-1, and SHA-256 hashes from text for security and data integrity
               </p>
               <p className="text-gray-500">
@@ -210,12 +195,12 @@ export default function HashGenerator() {
               <section className="h-full">
                 <Card className="border-0 shadow-md h-full flex flex-col">
                   <CardHeader className="pb-4 flex-shrink-0">
-                    <div className="flex items-center justify-between">
+                    <div className="flex items-start justify-between flex-col">
                       <div>
                         <CardTitle className="mb-2">Generated Hashes</CardTitle>
                         <CardDescription>MD5, SHA-1, and SHA-256 hash results</CardDescription>
                       </div>
-                      <div className="flex flex-col sm:flex-row gap-2">
+                      <div className="flex gap-1 w-full sm:w-auto flex-wrap mt-4">
                         <Button
                           variant="outline"
                           size="sm"
@@ -318,8 +303,8 @@ export default function HashGenerator() {
                     </TabsList>
                     <TabsContent value="about" className="mt-4">
                       <div className="space-y-3 text-sm text-gray-600">
-                        <h4 className="font-semibold text-gray-900">What are Hash Functions?</h4>
-                        <ul className="space-y-2 list-disc list-inside">
+                        <h4 className="font-semibold text-gray-900 dark:text-gray-100">What are Hash Functions?</h4>
+                        <ul className="space-y-2 list-disc list-inside text-gray-600 dark:text-gray-400">
                           <li>Hash functions convert input data into fixed-size strings</li>
                           <li>Same input always produces the same hash</li>
                           <li>Small changes in input create completely different hashes</li>
@@ -329,8 +314,8 @@ export default function HashGenerator() {
                     </TabsContent>
                     <TabsContent value="uses" className="mt-4">
                       <div className="space-y-3 text-sm text-gray-600">
-                        <h4 className="font-semibold text-gray-900">Common Use Cases:</h4>
-                        <ul className="space-y-2 list-disc list-inside">
+                        <h4 className="font-semibold text-gray-900 dark:text-gray-100">Common Use Cases:</h4>
+                        <ul className="space-y-2 list-disc list-inside text-gray-600 dark:text-gray-400">
                           <li>Password storage and verification</li>
                           <li>Data integrity verification</li>
                           <li>Digital signatures and certificates</li>
@@ -341,8 +326,8 @@ export default function HashGenerator() {
                     </TabsContent>
                     <TabsContent value="security" className="mt-4">
                       <div className="space-y-3 text-sm text-gray-600">
-                        <h4 className="font-semibold text-gray-900">Security Considerations:</h4>
-                        <ul className="space-y-2 list-disc list-inside">
+                        <h4 className="font-semibold text-gray-900 dark:text-gray-100">Security Considerations:</h4>
+                        <ul className="space-y-2 list-disc list-inside text-gray-600 dark:text-gray-400">
                           <li>
                             <strong>MD5:</strong> Deprecated for security use, suitable for checksums only
                           </li>

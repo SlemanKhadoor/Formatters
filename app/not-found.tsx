@@ -8,9 +8,9 @@ export default function NotFound() {
       <div className="text-center">
         <div className="flex items-center justify-center space-x-2 mb-6">
           <Code className="h-12 w-12 text-blue-600" />
-          <h1 className="text-3xl font-bold text-gray-900">Formatters.net</h1>
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">Formatters.net</h1>
         </div>
-        <h2 className="text-6xl font-bold text-gray-900 mb-4">404</h2>
+        <h2 className="text-6xl font-bold text-gray-900 dark:text-gray-100 mb-4">404</h2>
         <h3 className="text-2xl font-semibold text-gray-700 mb-4">Formatter Not Found</h3>
         <p className="text-gray-600 mb-8 max-w-md mx-auto">
           The formatter you're looking for doesn't exist or has been moved.
