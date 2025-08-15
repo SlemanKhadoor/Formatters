@@ -243,7 +243,7 @@ export default function JwtDecoder() {
                         <TabsTrigger value="signature">Signature</TabsTrigger>
                       </TabsList>
 
-                      <TabsContent value="header" className="flex-1 flex flex-col mt-4">
+                      <TabsContent value="header" className="mt-4 hidden data-[state=active]:flex flex-1 flex-col">
                         <div className="flex items-center justify-between mb-2">
                           <label className="text-sm font-medium text-gray-700">Header (Algorithm & Token Type)</label>
                           <Button
@@ -265,7 +265,7 @@ export default function JwtDecoder() {
                         />
                       </TabsContent>
 
-                      <TabsContent value="payload" className="flex-1 flex flex-col mt-4">
+                      <TabsContent value="payload" className="mt-4 hidden data-[state=active]:flex flex-1 flex-col">
                         <div className="flex items-center justify-between mb-2">
                           <label className="text-sm font-medium text-gray-700">Payload (Claims & Data)</label>
                           <Button
@@ -287,7 +287,7 @@ export default function JwtDecoder() {
                         />
                       </TabsContent>
 
-                      <TabsContent value="signature" className="flex-1 flex flex-col mt-4">
+                      <TabsContent value="signature" className="mt-4 hidden data-[state=active]:flex flex-1 flex-col">
                         <div className="flex items-center justify-between mb-2">
                           <label className="text-sm font-medium text-gray-700">Signature (Verification)</label>
                           <Button

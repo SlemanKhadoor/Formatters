@@ -76,7 +76,7 @@ export default function AdPanel({ position = "right", className = "" }: AdPanelP
             <Button
               variant="ghost"
               size="sm"
-              className="h-6 w-6 p-0 text-gray-400 hover:text-gray-600"
+              className="h-6 w-6 p-0 text-gray-400 hover:text-[#539] hover:bg-[#181d25]"
               onClick={() => setIsVisible(false)}
               aria-label="Close ad panel"
             >

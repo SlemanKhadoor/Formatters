@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/badge"
 import { ArrowLeft, Copy, Download, RotateCcw, CheckCircle, AlertCircle, Code, Zap, Upload } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
+import { ThemeToggle } from "./theme-toggle"
 
 interface Props {
     formatterName: string;
@@ -29,7 +30,8 @@ export function Header({ formatterName, icon, statusBadge }: Props) {
                         </div>
                     </div>
                     <div className="flex items-center space-x-2 text-xs">
-                        {statusBadge}
+                        <div>{statusBadge}</div>
+                        <ThemeToggle />
                     </div>
                 </div>
             </div>

@@ -393,10 +393,12 @@ export default function HomePage() {
       <header className="border-b bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm sticky top-0 z-50">
         <div className="container mx-auto px-2 py-4">
           <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-1">
+            <Link href="/" className="flex items-center space-x-1">
               <Code className="h-8 w-7 text-blue-600" />
-              <h1 className="text-base sm:text-2xl font-bold text-gray-900 dark:text-gray-100">Formatters.net</h1>
-            </div>
+              <h1 className="text-base sm:text-2xl font-bold text-gray-900 dark:text-gray-100">
+                Formatters.net
+              </h1>
+            </Link>
             <div className="flex items-center space-x-1">
               <ThemeToggle />
               <Badge variant="secondary" className="bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-100 text-xs text-nowrap">
@@ -603,19 +605,25 @@ export default function HomePage() {
                 Choose from our comprehensive collection of 35+ professional developer tools.
               </p>
               <div className="flex flex-wrap justify-center gap-4">
-                <Button asChild size="lg" variant="secondary">
+                <Button
+                  asChild
+                  size="lg"
+                  variant="secondary"
+                  className="transition-colors duration-300"
+                >
                   <Link href="/formatter/json">Start with JSON</Link>
                 </Button>
                 <Button
                   asChild
                   size="lg"
-                  variant="outline"
-                  className="text-white border-white hover:bg-white hover:text-blue-600 bg-primary"
+                  variant="secondary"
+                  className="transition-colors duration-300"
                 >
                   <Link href="/tools/uuid-generator">Generate UUID</Link>
                 </Button>
               </div>
             </section>
+
           </main>
         </LayoutWithAds>
       </div>

@@ -155,7 +155,7 @@ Alice Brown	28	Sydney	Australia`
                         id="delimiter"
                         value={customDelimiter}
                         onChange={(e) => setCustomDelimiter(e.target.value)}
-                        className="px-2 py-1 border rounded text-sm"
+                        className="px-2 min-w-32 py-1 border rounded text-sm w-fit"
                       >
                         <option value=",">Comma (,)</option>
                         <option value=";">Semicolon (;)</option>
