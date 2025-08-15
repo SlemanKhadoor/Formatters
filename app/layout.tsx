@@ -154,7 +154,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://formatters.net",
   },
-    generator: 'v0.dev'
+  generator: 'v0.dev'
 }
 
 const jsonLd = {
@@ -252,7 +252,7 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         <meta name="apple-mobile-web-app-title" content="Formatters.net" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/logo.svg" />
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
         <link rel="manifest" href="/site.webmanifest" />
       </head>
