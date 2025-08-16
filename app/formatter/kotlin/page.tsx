@@ -13,28 +13,14 @@ export default function KotlinFormatterPage() {
     name: "Kotlin",
     description: "Format and beautify Kotlin code with proper indentation and syntax highlighting",
     placeholder: `// Kotlin example
-data class User(
-    val id: Int,
-    val name: String,
-    val email: String,
-    val isActive: Boolean
-)
-
-fun greetUser(user: User): String {
-    return "Hello, \${user.name}! Your email is \${user.email}"
-}
-
+data class User(val id: Int, val name: String, val email: String, val isActive: Boolean)
+fun greetUser(user: User): String { return "Hello, \${user.name}! Your email is \${user.email}" }
 fun main() {
-    val users = listOf(
-        User(1, "John", "john@example.com", true),
-        User(2, "Jane", "jane@example.com", false)
-    )
-    
-    val activeUsers = users.filter { it.isActive }
-    activeUsers.forEach { user ->
-        println(greetUser(user))
-    }
-}`,
+val users = listOf(User(1, "John", "john@example.com", true), User(2, "Jane", "jane@example.com", false))
+val activeUsers = users.filter { it.isActive }
+activeUsers.forEach { user -> println(greetUser(user)) }
+}
+`,
     longDescription:
       "Format Kotlin code with proper indentation and syntax highlighting. Perfect for cleaning up Kotlin files, classes, and functions.",
     keywords: ["kotlin", "formatter", "beautifier", "code formatter", "kotlin beautifier"],

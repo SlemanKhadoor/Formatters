@@ -17,11 +17,7 @@ export default function CppFormatterPage() {
 #include <vector>
 #include <string>
 
-struct User {
-    int id;
-    std::string name;
-    std::string email;
-    bool isActive;
+struct User {int id;std::string name;std::string email;bool isActive;
 };
 
 std::string greetUser(const User& user) {
