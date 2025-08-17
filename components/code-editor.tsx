@@ -129,31 +129,137 @@ const getSyntaxPatterns = (language: string) => {
       { pattern: /\b\d+\.?\d*\b/g, className: "text-orange-600" }, // Numbers
       { pattern: /\b(true|false|null|yes|no|on|off)\b/gi, className: "text-purple-600" }, // Literals
     ],
+    swift: [
+      { pattern: /\/\/.*$/gm, className: "text-gray-500 italic" }, // Comments
+      { pattern: /\/\*[\s\S]*?\*\//g, className: "text-gray-500 italic" }, // Block comments
+      {
+        pattern: /\b(func|let|var|if|else|for|while|return|class|struct|enum|import|protocol|extension|guard|switch|case|default)\b/g,
+        className: "text-blue-600 font-semibold",
+      }, // Keywords
+      { pattern: /"([^"\\]|\\.)*"/g, className: "text-green-600" }, // Strings
+      { pattern: /'([^'\\]|\\.)*'/g, className: "text-green-600" }, // Characters
+      { pattern: /\b\d+\.?\d*\b/g, className: "text-orange-600" }, // Numbers
+      { pattern: /\b(true|false|nil)\b/g, className: "text-purple-600" }, // Literals
+    ],
+
+    rust: [
+      { pattern: /\/\/.*$/gm, className: "text-gray-500 italic" },
+      { pattern: /\/\*[\s\S]*?\*\//g, className: "text-gray-500 italic" },
+      {
+        pattern: /\b(fn|let|mut|if|else|for|while|loop|return|struct|enum|impl|trait|pub|use|mod|const|static|match)\b/g,
+        className: "text-blue-600 font-semibold",
+      },
+      { pattern: /"([^"\\]|\\.)*"/g, className: "text-green-600" },
+      { pattern: /'([^'\\]|\\.)*'/g, className: "text-green-600" },
+      { pattern: /\b\d+\.?\d*\b/g, className: "text-orange-600" },
+      { pattern: /\b(true|false|None)\b/g, className: "text-purple-600" },
+    ],
+    kotlin: [
+      { pattern: /\/\/.*$/gm, className: "text-gray-500 italic" },
+      { pattern: /\/\*[\s\S]*?\*\//g, className: "text-gray-500 italic" },
+      {
+        pattern: /\b(fun|val|var|if|else|for|while|return|class|interface|object|import|package|when|is|in|as|null|true|false)\b/g,
+        className: "text-blue-600 font-semibold",
+      },
+      { pattern: /"([^"\\]|\\.)*"/g, className: "text-green-600" },
+      { pattern: /'([^'\\]|\\.)*'/g, className: "text-green-600" },
+      { pattern: /\b\d+\.?\d*\b/g, className: "text-orange-600" },
+    ],
+
+    cpp: [
+      { pattern: /\/\/.*$/gm, className: "text-gray-500 italic" },
+      { pattern: /\/\*[\s\S]*?\*\//g, className: "text-gray-500 italic" },
+      {
+        pattern: /\b(int|float|double|char|bool|void|string|if|else|for|while|do|return|class|struct|enum|namespace|using|public|private|protected|static|const)\b/g,
+        className: "text-blue-600 font-semibold",
+      },
+      { pattern: /"([^"\\]|\\.)*"/g, className: "text-green-600" },
+      { pattern: /'([^'\\]|\\.)*'/g, className: "text-green-600" },
+      { pattern: /\b\d+\.?\d*\b/g, className: "text-orange-600" },
+      { pattern: /\b(true|false|nullptr)\b/g, className: "text-purple-600" },
+    ],
+    go: [
+      { pattern: /\/\/.*$/gm, className: "text-gray-500 italic" },
+      { pattern: /\/\*[\s\S]*?\*\//g, className: "text-gray-500 italic" },
+
+      {
+        pattern: /\b(package|import|func|var|const|type|struct|interface|if|else|switch|case|default|for|range|return|break|continue|go|defer|select|map|chan|fallthrough|goto)\b/g,
+        className: "text-blue-600 font-semibold",
+      },
+
+      { pattern: /"([^"\\]|\\.)*"/g, className: "text-green-600" },
+      { pattern: /`[^`]*`/g, className: "text-green-600" },
+
+      { pattern: /\b\d+\.?\d*\b/g, className: "text-orange-600" },
+
+      { pattern: /\b(true|false|nil|iota)\b/g, className: "text-purple-600" },
+
+      {
+        pattern: /\b(int|int8|int16|int32|int64|uint|uint8|uint16|uint32|uint64|uintptr|float32|float64|complex64|complex128|byte|rune|string|bool|error)\b/g,
+        className: "text-teal-600",
+      },
+    ]
+
   }
 
   return patterns[language] || []
 }
 
-const highlightSyntax = (code: string, language: string): string => {
-  const patterns = getSyntaxPatterns(language)
-  let highlightedCode = code
+// const highlightSyntax = (code: string, language: string): string => {
+//   const patterns = getSyntaxPatterns(language)
+//   let highlightedCode = code
 
-  // Escape HTML entities first
-  highlightedCode = highlightedCode
+//   // Escape HTML entities first
+//   highlightedCode = highlightedCode
+//     .replace(/&/g, "&amp;")
+//     .replace(/</g, "&lt;")
+//     .replace(/>/g, "&gt;")
+//     .replace(/"/g, "&quot;")
+//     .replace(/'/g, "&#39;")
+
+//   // Apply syntax highlighting patterns
+//   patterns.forEach(({ pattern, className }) => {
+//     highlightedCode = highlightedCode.replace(pattern, (match) => {
+//       return `<span class="${className}">${match}</span>`
+//     })
+//   })
+
+//   return highlightedCode
+// }
+// Helper function to escape HTML special characters
+const escapeHtml = (str: string) =>
+  str
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;")
     .replace(/'/g, "&#39;")
 
-  // Apply syntax highlighting patterns
+// Fixed highlightSyntax function
+const highlightSyntax = (code: string, language: string) => {
+  const patterns = getSyntaxPatterns(language)
+  const tokens: Array<{ match: string; className: string }> = []
+
+  let tokenized = code
   patterns.forEach(({ pattern, className }) => {
-    highlightedCode = highlightedCode.replace(pattern, (match) => {
-      return `<span class="${className}">${match}</span>`
+    tokenized = tokenized.replace(pattern, (match) => {
+      const idx = tokens.length
+      tokens.push({ match, className })
+      return `@@HIGHLIGHT_TOKEN_${idx}@@`
     })
   })
 
-  return highlightedCode
+  let escaped = escapeHtml(tokenized)
+
+  tokens.forEach((t, i) => {
+    const escapedMatch = escapeHtml(t.match)
+    escaped = escaped.replace(
+      new RegExp(`@@HIGHLIGHT_TOKEN_${i}@@`, "g"),
+      `<span class="${t.className}">${escapedMatch}</span>`
+    )
+  })
+
+  return escaped
 }
 
 export default function CodeEditor({
@@ -196,10 +302,17 @@ export default function CodeEditor({
   }, [value, language])
 
   return (
-    <div ref={containerRef} className={cn("relative border rounded-md bg-white dark:bg-background dark:border-gray-700 overflow-hidden", className)}>
-      <div className="flex">
+    <div
+      ref={containerRef}
+      className={cn(
+        "relative border rounded-md bg-white dark:bg-background dark:border-gray-700 overflow-hidden",
+        className
+      )}
+      style={{ height: "406px" }}
+    >
+      <div className="flex h-full">
         {/* Line numbers */}
-        <div className="flex-shrink-0 bg-gray-50 border-r border-gray-200 px-2 py-2 text-xs text-gray-500 font-mono select-none dark:bg-background">
+        <div className="flex-shrink-0 bg-gray-50 border-r border-gray-200 px-2 py-2 text-xs text-gray-500 font-mono select-none dark:bg-background ">
           {Array.from({ length: Math.max(lineCount, 1) }, (_, i) => (
             <div key={i + 1} className="leading-5 text-right min-w-[2rem]">
               {i + 1}
@@ -208,17 +321,11 @@ export default function CodeEditor({
         </div>
 
         {/* Code editor area */}
-        <div className="flex-1 relative">
+        <div className="flex-1 relative h-full">
           {/* Syntax highlighting layer */}
           <div
             ref={highlightRef}
             className="absolute inset-0 p-2 font-mono text-sm leading-5 pointer-events-none overflow-auto whitespace-pre-wrap break-words text-gray-900 dark:text-gray-300"
-            style={{
-              background: "transparent",
-              border: "none",
-              outline: "none",
-              resize: "none",
-            }}
             aria-hidden="true"
           />
 
@@ -234,14 +341,11 @@ export default function CodeEditor({
             className={cn(
               "w-full h-full p-2 font-mono text-sm leading-5 border-none outline-none resize-none",
               "placeholder:text-gray-400",
-              readOnly ? "cursor-default bg-gray-50 dark:bg-background" : "cursor-text bg-background",
-              // Make text color transparent but keep caret visible
+              readOnly
+                ? "cursor-default bg-gray-50 dark:bg-background"
+                : "cursor-text bg-background",
               "text-transparent caret-gray-900 selection:bg-blue-200",
             )}
-            style={{
-              minHeight: "400px",
-              background: readOnly ? "bg-gray-50 dark:bg-[#1f1f1f]" : "bg-background",
-            }}
             spellCheck={false}
             autoComplete="off"
             autoCorrect="off"

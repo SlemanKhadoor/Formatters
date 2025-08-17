@@ -104,8 +104,9 @@ export default function FormatterInterface({ type, formatter }: FormatterProps) 
             break
 
           case "javascript":
-          case "typescript":
             try {
+              new Function(code); // Will throw SyntaxError if invalid JS
+
               if (formatMode === "minify") {
                 formatted = code
                   .replace(/\/\*[\s\S]*?\*\//g, "") // Remove block comments
@@ -138,50 +139,143 @@ export default function FormatterInterface({ type, formatter }: FormatterProps) 
                   .join("\n")
               }
             } catch (err) {
-              const validationError = err instanceof Error ? err.message : "JavaScript syntax error"
-              throw new Error(validationError)
+              if (err instanceof SyntaxError) {
+                throw new Error(`JavaScript Syntax Error: ${err.message}`)
+              } else {
+                throw new Error(`Invalid JavaScript: ${err instanceof Error ? err.message : "Unknown error"}`)
+              }
             }
-            break
+            break;
+          case "typescript":
+            try {
+              const ts = require("typescript");
+
+              const sourceFile = ts.createSourceFile(
+                "temp.ts",
+                code,
+                ts.ScriptTarget.Latest,
+      /*setParentNodes*/ true,
+                ts.ScriptKind.TS
+              );
+
+              const diagnostics = sourceFile.parseDiagnostics || [];
+              if (diagnostics.length > 0) {
+                const firstError = diagnostics[0];
+                const message = ts.flattenDiagnosticMessageText(firstError.messageText, "\n");
+                throw new Error(`TypeScript Syntax Error: ${message}`);
+              }
+
+              // If valid, proceed to formatting
+              if (formatMode === "minify") {
+                formatted = code
+                  .replace(/\/\*[\s\S]*?\*\//g, "")
+                  .replace(/\/\/.*$/gm, "")
+                  .replace(/\s+/g, " ")
+                  .replace(/;\s*}/g, ";}")
+                  .replace(/{\s*/g, "{")
+                  .replace(/\s*}/g, "}")
+                  .replace(/;\s*/g, ";")
+                  .trim();
+              } else {
+                let indentLevel = 0;
+                formatted = code
+                  .replace(/;(?!\s*$)/g, ";\n")
+                  .replace(/\{(?!\s*$)/g, " {\n")
+                  .replace(/\}(?!\s*$)/g, "\n}\n")
+                  .replace(/,(?![^(]*\))(?!\s*$)/g, ",\n")
+                  .split("\n")
+                  .map((line) => {
+                    const trimmed = line.trim();
+                    if (!trimmed) return "";
+
+                    if (trimmed.startsWith("}")) indentLevel = Math.max(0, indentLevel - 1);
+                    const result = indent.repeat(indentLevel) + trimmed;
+                    if (trimmed.endsWith("{")) indentLevel++;
+
+                    return result;
+                  })
+                  .filter((line) => line.trim())
+                  .join("\n");
+              }
+            } catch (err) {
+              throw new Error(
+                err instanceof Error ? err.message : "TypeScript syntax error"
+              );
+            }
+            break;
 
           case "html":
             try {
+              const openTags: string[] = [];
+              const voidTags = new Set([
+                "area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "param", "source", "track", "wbr"
+              ]);
+              const tagRegex = /<\/?([a-zA-Z0-9]+)(\s[^>]*)?>/g;
+              let match: RegExpExecArray | null;
+
+              // Validate HTML tags
+              while ((match = tagRegex.exec(code)) !== null) {
+                const tagName = match[1].toLowerCase();
+                const fullTag = match[0];
+
+                // Skip DOCTYPE and comments
+                if (fullTag.startsWith("<!") || voidTags.has(tagName)) continue;
+
+                if (fullTag.startsWith("</")) {
+                  // closing tag
+                  if (openTags.length === 0 || openTags[openTags.length - 1] !== tagName) {
+                    throw new Error(`HTML syntax error: unmatched closing tag </${tagName}>`);
+                  }
+                  openTags.pop();
+                } else {
+                  // opening tag
+                  openTags.push(tagName);
+                }
+              }
+
+              if (openTags.length > 0) {
+                throw new Error(`HTML syntax error: unclosed tag <${openTags[openTags.length - 1]}>`);
+              }
+
+              // Formatting
               if (formatMode === "minify") {
                 formatted = code
-                  .replace(/>\s+</g, "><") // Remove whitespace between tags
-                  .replace(/\s+/g, " ") // Replace multiple spaces with single space
-                  .replace(/\s*=\s*/g, "=") // Remove spaces around equals
-                  .trim()
+                  .replace(/>\s+</g, "><")
+                  .replace(/\s+/g, " ")
+                  .replace(/\s*=\s*/g, "=")
+                  .trim();
               } else {
-                let indentLevel = 0
+                let indentLevel = 0;
+                const indent = "  ";
                 formatted = code
                   .replace(/></g, ">\n<")
-                  .replace(/^\s+|\s+$/g, "")
                   .split("\n")
-                  .map((line) => {
-                    const trimmed = line.trim()
-                    if (!trimmed) return ""
+                  .map(line => {
+                    const trimmed = line.trim();
+                    if (!trimmed) return "";
 
-                    if (trimmed.startsWith("</")) indentLevel = Math.max(0, indentLevel - 1)
-                    const result = indent.repeat(indentLevel) + trimmed
+                    if (trimmed.startsWith("</")) indentLevel = Math.max(0, indentLevel - 1);
+                    const result = indent.repeat(indentLevel) + trimmed;
                     if (
                       trimmed.startsWith("<") &&
                       !trimmed.startsWith("</") &&
                       !trimmed.endsWith("/>") &&
                       !trimmed.includes("<!")
                     ) {
-                      indentLevel++
+                      indentLevel++;
                     }
 
-                    return result
+                    return result;
                   })
-                  .filter((line) => line)
-                  .join("\n")
+                  .filter(line => line)
+                  .join("\n");
               }
-            } catch (err) {
-              const validationError = err instanceof Error ? err.message : "HTML syntax error"
-              throw new Error(validationError)
+            } catch (err: unknown) {
+              const validationError = err instanceof Error ? err.message : "HTML syntax error";
+              throw new Error(validationError);
             }
-            break
+            break;
+
 
           case "css":
             try {
@@ -266,38 +360,73 @@ export default function FormatterInterface({ type, formatter }: FormatterProps) 
 
           case "xml":
             try {
+              if (!code.trim().startsWith("<")) {
+                throw new SyntaxError("XML must start with a root tag");
+              }
+
+              // Check for matching opening/closing tags (basic)
+              const tagStack = [];
+              const tagRegex = /<\/?([a-zA-Z_][\w:\-\.]*)(\s[^>]*)?>/g;
+              let match;
+
+              while ((match = tagRegex.exec(code)) !== null) {
+                const fullTag = match[0];
+                const tagName = match[1];
+
+                if (fullTag.startsWith("</")) {
+                  // closing tag
+                  const last = tagStack.pop();
+                  if (last !== tagName) {
+                    throw new SyntaxError(`Mismatched closing tag: expected </${last}> but found </${tagName}>`);
+                  }
+                } else if (!fullTag.endsWith("/>") && !fullTag.startsWith("<?")) {
+                  // opening tag (ignore self-closing <.../> and <?xml ...?>)
+                  tagStack.push(tagName);
+                }
+              }
+
+              if (tagStack.length > 0) {
+                throw new SyntaxError(`Unclosed tag(s): ${tagStack.join(", ")}`);
+              }
+
+              // --- Minify Mode ---
               if (formatMode === "minify") {
-                formatted = code.replace(/>\s+</g, "><").trim()
-              } else {
-                let indentLevel = 0
+                formatted = code.replace(/>\s+</g, "><").trim();
+              }
+              // --- Pretty Format Mode ---
+              else {
+                let indentLevel = 0;
                 formatted = code
                   .replace(/></g, ">\n<")
                   .split("\n")
                   .map((line) => {
-                    const trimmed = line.trim()
-                    if (!trimmed) return ""
+                    const trimmed = line.trim();
+                    if (!trimmed) return "";
 
-                    if (trimmed.startsWith("</")) indentLevel = Math.max(0, indentLevel - 1)
-                    const result = indent.repeat(indentLevel) + trimmed
+                    if (trimmed.startsWith("</")) indentLevel = Math.max(0, indentLevel - 1);
+                    const result = indent.repeat(indentLevel) + trimmed;
                     if (
                       trimmed.startsWith("<") &&
                       !trimmed.startsWith("</") &&
                       !trimmed.endsWith("/>") &&
                       !trimmed.startsWith("<?")
                     ) {
-                      indentLevel++
+                      indentLevel++;
                     }
 
-                    return result
+                    return result;
                   })
                   .filter((line) => line)
-                  .join("\n")
+                  .join("\n");
               }
             } catch (err) {
-              const validationError = err instanceof Error ? err.message : "XML syntax error"
-              throw new Error(validationError)
+              if (err instanceof SyntaxError) {
+                throw new Error(`XML Syntax Error: ${err.message}`);
+              } else {
+                throw new Error(`Invalid XML: ${err instanceof Error ? err.message : "Unknown error"}`);
+              }
             }
-            break
+            break;
 
           case "sql":
             try {
@@ -373,45 +502,217 @@ export default function FormatterInterface({ type, formatter }: FormatterProps) 
 
           case "php":
             try {
+              // --- Basic Syntax Checks ---
+              if (!code.includes("<?php")) {
+                throw new SyntaxError("Missing '<?php' opening tag");
+              }
+
+              const openBraces = (code.match(/{/g) || []).length;
+              const closeBraces = (code.match(/}/g) || []).length;
+              if (openBraces !== closeBraces) {
+                throw new SyntaxError("Mismatched braces");
+              }
+
+              const openParens = (code.match(/\(/g) || []).length;
+              const closeParens = (code.match(/\)/g) || []).length;
+              if (openParens !== closeParens) {
+                throw new SyntaxError("Mismatched parentheses");
+              }
+
+              // --- Minify Mode ---
               if (formatMode === "minify") {
                 formatted = code
-                  .replace(/\/\/.*$/gm, "")
-                  .replace(/\/\*[\s\S]*?\*\//g, "")
-                  .replace(/\s+/g, " ")
-                  .trim()
-              } else {
-                let indentLevel = 0
+                  .replace(/\/\/.*$/gm, "") // Remove single-line comments
+                  .replace(/\/\*[\s\S]*?\*\//g, "") // Remove block comments
+                  .replace(/\s+/g, " ") // Collapse spaces
+                  .trim();
+              }
+              // --- Format Mode ---
+              else {
+                let indentLevel = 0;
                 formatted = code
                   .replace(/\s*{\s*/g, " {\n")
                   .replace(/\s*}\s*/g, "\n}")
                   .replace(/;\s*(?!\s*$)/g, ";\n")
                   .split("\n")
                   .map((line) => {
-                    const trimmed = line.trim()
-                    if (!trimmed) return ""
+                    const trimmed = line.trim();
+                    if (!trimmed) return "";
 
-                    if (trimmed.startsWith("<?php")) return trimmed
-                    if (trimmed.startsWith("}")) indentLevel = Math.max(0, indentLevel - 1)
-                    const result = indent.repeat(indentLevel) + trimmed
-                    if (trimmed.endsWith("{")) indentLevel++
-
-                    return result
+                    if (trimmed.startsWith("<?php")) return trimmed;
+                    if (trimmed.startsWith("}")) indentLevel = Math.max(0, indentLevel - 1);
+                    const result = indent.repeat(indentLevel) + trimmed;
+                    if (trimmed.endsWith("{")) indentLevel++;
+                    return result;
                   })
                   .filter((line) => line)
-                  .join("\n")
+                  .join("\n");
               }
             } catch (err) {
-              const validationError = err instanceof Error ? err.message : "PHP syntax error"
-              throw new Error(validationError)
+              if (err instanceof SyntaxError) {
+                throw new Error(`PHP Syntax Error: ${err.message}`);
+              } else {
+                throw new Error(`Invalid PHP code: ${err instanceof Error ? err.message : "Unknown error"}`);
+              }
             }
-            break
+            break;
+
 
           case "go":
+            try {
+              // Simple syntax check for braces, parentheses, and main function
+              const openBraces = (code.match(/{/g) || []).length;
+              const closeBraces = (code.match(/}/g) || []).length;
+              if (openBraces !== closeBraces) {
+                throw new SyntaxError("Mismatched braces");
+              }
+
+              const openParens = (code.match(/\(/g) || []).length;
+              const closeParens = (code.match(/\)/g) || []).length;
+              if (openParens !== closeParens) {
+                throw new SyntaxError("Mismatched parentheses");
+              }
+
+              if (!/package\s+\w+/.test(code)) {
+                throw new SyntaxError("Missing package declaration");
+              }
+
+              if (formatMode === "minify") {
+                formatted = code
+                  .replace(/\/\/.*$/gm, "") // Remove single-line comments
+                  .replace(/\/\*[\s\S]*?\*\//g, "") // Remove block comments
+                  .replace(/\s+/g, " ") // Collapse spaces
+                  .trim();
+              } else {
+                let indentLevel = 0;
+
+                formatted = code
+                  .replace(/(package\s+\w+)/g, "$1\n")
+                  .replace(/(import\s*\(.*?\))/g, (m) =>
+                    m.replace(/\s+/g, "\n").replace(/\(\n+/, "(\n").replace(/\n+\)/, "\n)")
+                  )
+                  .replace(/(import\s+"[^"]+")/g, "$1\n")
+                  .replace(/}\s*func/g, "}\n\nfunc")
+                  .replace(/}\s*type/g, "}\n\ntype")
+                  .replace(/\s*{\s*/g, " {\n")
+                  .replace(/\s*}\s*/g, "\n}")
+                  .replace(/;\s*(?!\s*$)/g, "\n")
+                  .split("\n")
+                  .map((line) => {
+                    const trimmed = line.trim();
+                    if (!trimmed) return "";
+
+                    if (trimmed.startsWith("}")) indentLevel = Math.max(0, indentLevel - 1);
+                    const result = indent.repeat(indentLevel) + trimmed;
+                    if (trimmed.endsWith("{")) indentLevel++;
+
+                    return result;
+                  })
+                  .filter((line) => line.trim())
+                  .join("\n");
+              }
+            } catch (err) {
+              if (err instanceof SyntaxError) {
+                throw new Error(`Go Syntax Error: ${err.message}`);
+              } else {
+                throw new Error(
+                  `Invalid Go code: ${err instanceof Error ? err.message : "Unknown error"}`
+                );
+              }
+            }
+            break;
+          case "cpp":
+            try {
+              // --- Basic Syntax Check ---
+              const openBraces = (code.match(/{/g) || []).length;
+              const closeBraces = (code.match(/}/g) || []).length;
+              if (openBraces !== closeBraces) {
+                throw new SyntaxError("Mismatched braces");
+              }
+
+              const openParens = (code.match(/\(/g) || []).length;
+              const closeParens = (code.match(/\)/g) || []).length;
+              if (openParens !== closeParens) {
+                throw new SyntaxError("Mismatched parentheses");
+              }
+
+              const openBrackets = (code.match(/\[/g) || []).length;
+              const closeBrackets = (code.match(/\]/g) || []).length;
+              if (openBrackets !== closeBrackets) {
+                throw new SyntaxError("Mismatched square brackets");
+              }
+
+              if (!/#include\s+<.*?>/.test(code) && !/int\s+main\s*\(/.test(code)) {
+                throw new SyntaxError("Missing #include or main() function");
+              }
+
+              // --- Minify Mode ---
+              if (formatMode === "minify") {
+                formatted = code
+                  .replace(/\/\*[\s\S]*?\*\//g, "") // Remove block comments
+                  .replace(/\/\/.*$/gm, "") // Remove single-line comments
+                  .replace(/\s+/g, " ") // Collapse multiple spaces
+                  .replace(/\s*([{}();,])\s*/g, "$1") // Remove spaces around symbols
+                  .trim();
+              }
+              // --- Format Mode ---
+              else {
+                let indentLevel = 0;
+                formatted = code
+                  .replace(/\/\*[\s\S]*?\*\//g, "") // Remove block comments
+                  .replace(/\/\/.*$/gm, "") // Remove single-line comments
+                  .replace(/;/g, ";\n") // Break after semicolons
+                  .replace(/{/g, "{\n") // Break after {
+                  .replace(/}/g, "\n}") // Break before }
+                  .split("\n")
+                  .map((line) => {
+                    const trimmed = line.trim();
+                    if (!trimmed) return "";
+
+                    if (trimmed.startsWith("}")) indentLevel = Math.max(0, indentLevel - 1);
+                    const result = indent.repeat(indentLevel) + trimmed;
+                    if (trimmed.endsWith("{")) indentLevel++;
+                    return result;
+                  })
+                  .filter((line) => line.trim())
+                  .join("\n");
+              }
+            } catch (err) {
+              if (err instanceof SyntaxError) {
+                throw new Error(`C++ Syntax Error: ${err.message}`);
+              } else {
+                throw new Error(
+                  `Invalid C++ code: ${err instanceof Error ? err.message : "Unknown error"}`
+                );
+              }
+            }
+            break;
+
           case "rust":
           case "swift":
           case "kotlin":
-          case "cpp":
+            // case "cpp":
             try {
+              // Basic syntax validation
+              const stack: string[] = [];
+              const pairs: Record<string, string> = { "{": "}", "(": ")", "[": "]" };
+
+              for (let i = 0; i < code.length; i++) {
+                const char = code[i];
+                if (pairs[char]) {
+                  stack.push(char);
+                } else if (Object.values(pairs).includes(char)) {
+                  const last = stack.pop();
+                  if (!last || pairs[last] !== char) {
+                    throw new Error(`Syntax error: unexpected '${char}' at position ${i}`);
+                  }
+                }
+              }
+              if (stack.length > 0) {
+                throw new Error(`Syntax error: unclosed '${stack[stack.length - 1]}'`);
+              }
+
+              // Formatting
               if (formatMode === "minify") {
                 formatted = code
                   .replace(/\/\/.*$/gm, "")
@@ -420,10 +721,13 @@ export default function FormatterInterface({ type, formatter }: FormatterProps) 
                   .trim()
               } else {
                 let indentLevel = 0
+                const indent = "    ";
                 formatted = code
                   .replace(/\s*{\s*/g, " {\n")
                   .replace(/\s*}\s*/g, "\n}")
                   .replace(/;\s*(?!\s*$)/g, ";\n")
+                  .replace(/\)\s*(?=fun|class|let|fn|impl)/g, ")\n")
+                  .replace(/\}\s*(?=fun|class|let|fn|impl)/g, "}\n")
                   .split("\n")
                   .map((line) => {
                     const trimmed = line.trim()
@@ -439,10 +743,12 @@ export default function FormatterInterface({ type, formatter }: FormatterProps) 
                   .join("\n")
               }
             } catch (err) {
-              const validationError = err instanceof Error ? err.message : `${type} syntax error`
-              throw new Error(validationError)
+              const validationError =
+                err instanceof Error ? err.message : `${type} syntax error`;
+              throw new Error(validationError);
             }
-            break
+            break;
+
 
           default:
             formatted = code
@@ -722,7 +1028,7 @@ export default function FormatterInterface({ type, formatter }: FormatterProps) 
             <section>
               <Card>
                 <CardHeader>
-                  <div className="flex flex-col sm:flex-row items-start sm:items-start justify-between gap-3">
+                  <div className="flex flex-col items-start sm:items-start justify-between gap-3">
                     <div>
                       <CardTitle className="text-lg">Output</CardTitle>
                       <CardDescription className="text-sm">

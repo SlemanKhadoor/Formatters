@@ -11,6 +11,7 @@ import { ArrowLeft, Download, QrCode, CheckCircle } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
 import LayoutWithAds from "./layout-with-ads"
 import { Header } from "@/components/Header"
+import QRCode from "qrcode"
 
 export default function QrGenerator() {
   const [text, setText] = useState("")
@@ -20,81 +21,28 @@ export default function QrGenerator() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const { toast } = useToast()
 
-  // Simple QR code generation using a basic algorithm
-  const generateQR = useCallback((data: string, size: number) => {
+
+  const generateQR = useCallback(async (data: string, size: number) => {
     const canvas = canvasRef.current
     if (!canvas) return
 
-    const ctx = canvas.getContext("2d")
-    if (!ctx) return
-
-    canvas.width = size
-    canvas.height = size
-
-    // Clear canvas
-    ctx.fillStyle = "#ffffff"
-    ctx.fillRect(0, 0, size, size)
-
-    // Simple QR-like pattern generation (this is a simplified version)
-    const moduleSize = size / 25 // 25x25 grid
-    ctx.fillStyle = "#000000"
-
-    // Generate a simple pattern based on the text
-    const hash = data.split("").reduce((a, b) => {
-      a = (a << 5) - a + b.charCodeAt(0)
-      return a & a
-    }, 0)
-
-    // Create a deterministic pattern
-    for (let i = 0; i < 25; i++) {
-      for (let j = 0; j < 25; j++) {
-        const value = (hash + i * 25 + j) % 3
-        if (value === 0) {
-          ctx.fillRect(i * moduleSize, j * moduleSize, moduleSize, moduleSize)
-        }
-      }
+    try {
+      await QRCode.toCanvas(canvas, data, {
+        width: size,
+        errorCorrectionLevel: errorLevel, // uses your existing state
+        margin: 1,
+      })
+      const dataUrl = canvas.toDataURL("image/png")
+      setQrDataUrl(dataUrl)
+    } catch (err) {
+      console.error(err)
+      toast({
+        title: "Error",
+        description: "Failed to generate QR code",
+        variant: "destructive",
+      })
     }
-
-    // Add finder patterns (corners)
-    const finderSize = moduleSize * 7
-
-    // Top-left finder pattern
-    ctx.fillRect(0, 0, finderSize, finderSize)
-    ctx.fillStyle = "#ffffff"
-    ctx.fillRect(moduleSize, moduleSize, finderSize - 2 * moduleSize, finderSize - 2 * moduleSize)
-    ctx.fillStyle = "#000000"
-    ctx.fillRect(2 * moduleSize, 2 * moduleSize, finderSize - 4 * moduleSize, finderSize - 4 * moduleSize)
-
-    // Top-right finder pattern
-    ctx.fillStyle = "#000000"
-    ctx.fillRect(size - finderSize, 0, finderSize, finderSize)
-    ctx.fillStyle = "#ffffff"
-    ctx.fillRect(size - finderSize + moduleSize, moduleSize, finderSize - 2 * moduleSize, finderSize - 2 * moduleSize)
-    ctx.fillStyle = "#000000"
-    ctx.fillRect(
-      size - finderSize + 2 * moduleSize,
-      2 * moduleSize,
-      finderSize - 4 * moduleSize,
-      finderSize - 4 * moduleSize,
-    )
-
-    // Bottom-left finder pattern
-    ctx.fillStyle = "#000000"
-    ctx.fillRect(0, size - finderSize, finderSize, finderSize)
-    ctx.fillStyle = "#ffffff"
-    ctx.fillRect(moduleSize, size - finderSize + moduleSize, finderSize - 2 * moduleSize, finderSize - 2 * moduleSize)
-    ctx.fillStyle = "#000000"
-    ctx.fillRect(
-      2 * moduleSize,
-      size - finderSize + 2 * moduleSize,
-      finderSize - 4 * moduleSize,
-      finderSize - 4 * moduleSize,
-    )
-
-    // Convert to data URL
-    const dataUrl = canvas.toDataURL("image/png")
-    setQrDataUrl(dataUrl)
-  }, [])
+  }, [errorLevel, toast])
 
   const handleGenerate = useCallback(() => {
     if (!text.trim()) {
