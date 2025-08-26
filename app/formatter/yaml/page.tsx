@@ -4,64 +4,65 @@ import type { Metadata } from "next"
 const formatter = {
   name: "YAML",
   description: "Format and validate YAML data with proper indentation and structure",
-  placeholder: `# YAML Configuration Example
-app:
-  name: "My Application"
-  version: "1.0.0"
-  debug: true
-  
-database:
-  host: "localhost"
-  port: 5432
-  name: "myapp_db"
-  credentials:
-    username: "admin"
-    password: "secret123"
+  placeholder: `person: {name: John, age:30, hobbies:[coding,reading,music],address:{street: "123 Main St", city: NY, zip:10001},active:true,friends:[{name:Alice,age:25},{name:Bob,age:28},{name:Charlie,age:32}],notes:"This is a sample YAML document that is intentionally written in a messy way to test the formatter. It should be reformatted into something more readable."}`,
+  //   placeholder: `# YAML Configuration Example
+  // app:
+  //   name: "My Application"
+  //   version: "1.0.0"
+  //   debug: true
 
-features:
-  - authentication
-  - logging
-  - metrics
-  - caching
+  // database:
+  //   host: "localhost"
+  //   port: 5432
+  //   name: "myapp_db"
+  //   credentials:
+  //     username: "admin"
+  //     password: "secret123"
 
-environments:
-  development:
-    debug: true
-    log_level: "debug"
-  production:
-    debug: false
-    log_level: "error"
+  // features:
+  //   - authentication
+  //   - logging
+  //   - metrics
+  //   - caching
 
-# Docker Compose Example
-services:
-  web:
-    image: "nginx:latest"
-    ports:
-      - "80:80"
-    volumes:
-      - "./html:/usr/share/nginx/html"
-  
-  api:
-    build: "."
-    ports:
-      - "3000:3000"
-    environment:
-      NODE_ENV: "production"
-      DATABASE_URL: "postgresql://user:pass@db:5432/myapp"
-    depends_on:
-      - db
-  
-  db:
-    image: "postgres:13"
-    environment:
-      POSTGRES_DB: "myapp"
-      POSTGRES_USER: "user"
-      POSTGRES_PASSWORD: "pass"
-    volumes:
-      - "postgres_data:/var/lib/postgresql/data"
+  // environments:
+  //   development:
+  //     debug: true
+  //     log_level: "debug"
+  //   production:
+  //     debug: false
+  //     log_level: "error"
 
-volumes:
-  postgres_data:`,
+  // # Docker Compose Example
+  // services:
+  //   web:
+  //     image: "nginx:latest"
+  //     ports:
+  //       - "80:80"
+  //     volumes:
+  //       - "./html:/usr/share/nginx/html"
+
+  //   api:
+  //     build: "."
+  //     ports:
+  //       - "3000:3000"
+  //     environment:
+  //       NODE_ENV: "production"
+  //       DATABASE_URL: "postgresql://user:pass@db:5432/myapp"
+  //     depends_on:
+  //       - db
+
+  //   db:
+  //     image: "postgres:13"
+  //     environment:
+  //       POSTGRES_DB: "myapp"
+  //       POSTGRES_USER: "user"
+  //       POSTGRES_PASSWORD: "pass"
+  //     volumes:
+  //       - "postgres_data:/var/lib/postgresql/data"
+
+  // volumes:
+  //   postgres_data:`,
   longDescription:
     "Format and validate YAML documents with proper indentation and structure. Perfect for configuration files, Docker Compose, Kubernetes manifests, and CI/CD pipelines.",
   keywords: [

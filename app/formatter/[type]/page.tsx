@@ -51,21 +51,21 @@ const formatters = {
     name: "Python",
     description: "Format and structure Python code with PEP 8 compliance",
     placeholder: `def calculate_fibonacci(n):
-    if n <= 1:
-        return n
-    else:
-        return calculate_fibonacci(n-1) + calculate_fibonacci(n-2)
+                if n <= 1:
+return n
+           else:
+    return calculate_fibonacci(n-1) + calculate_fibonacci(n-2)
 
-def main():
-    numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+                  def main():
+numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
     fibonacci_results = []
     
-    for num in numbers:
-        result = calculate_fibonacci(num)
-        fibonacci_results.append(result)
+           for num in numbers:
+result = calculate_fibonacci(num)
+  fibonacci_results.append(result)
         print(f"Fibonacci({num}) = {result}")
     
-    return fibonacci_results
+  return fibonacci_results
 
 if __name__ == "__main__":
     main()`,

@@ -18,19 +18,21 @@ interface CodeEditorProps {
 const getSyntaxPatterns = (language: string) => {
   const patterns: { [key: string]: Array<{ pattern: RegExp; className: string }> } = {
     javascript: [
+      { pattern: /"([^"\\]|\\.)*"/g, className: "text-green-600" }, // Strings
+      { pattern: /'([^'\\]|\\.)*'/g, className: "text-green-600" }, // Strings
       { pattern: /\/\/.*$/gm, className: "text-gray-500 italic" }, // Comments
       { pattern: /\/\*[\s\S]*?\*\//g, className: "text-gray-500 italic" }, // Block comments
       {
         pattern: /\b(function|const|let|var|if|else|for|while|return|class|extends|import|export|from|default)\b/g,
         className: "text-blue-600 font-semibold",
       }, // Keywords
-      { pattern: /"([^"\\]|\\.)*"/g, className: "text-green-600" }, // Strings
-      { pattern: /'([^'\\]|\\.)*'/g, className: "text-green-600" }, // Strings
       { pattern: /`([^`\\]|\\.)*`/g, className: "text-green-600" }, // Template literals
       { pattern: /\b\d+\.?\d*\b/g, className: "text-orange-600" }, // Numbers
       { pattern: /\b(true|false|null|undefined)\b/g, className: "text-purple-600" }, // Literals
     ],
     typescript: [
+      { pattern: /(["'`])(?:\\.|(?!\1).)*\1/g, className: "text-amber-500" }, // strings
+
       { pattern: /\/\/.*$/gm, className: "text-gray-500 italic" },
       { pattern: /\/\*[\s\S]*?\*\//g, className: "text-gray-500 italic" },
       {
@@ -43,7 +45,7 @@ const getSyntaxPatterns = (language: string) => {
       { pattern: /`([^`\\]|\\.)*`/g, className: "text-green-600" },
       { pattern: /\b\d+\.?\d*\b/g, className: "text-orange-600" },
       { pattern: /\b(true|false|null|undefined)\b/g, className: "text-purple-600" },
-      { pattern: /:\s*\w+/g, className: "text-cyan-600" }, // Type annotations
+      { pattern: /:\s*[A-Za-z0-9_<>,\[\]\|?]+/g, className: "text-cyan-600" }
     ],
     html: [
       { pattern: /<!--[\s\S]*?-->/g, className: "text-gray-500 italic" }, // Comments
@@ -56,7 +58,9 @@ const getSyntaxPatterns = (language: string) => {
       { pattern: /\/\*[\s\S]*?\*\//g, className: "text-gray-500 italic" }, // Comments
       { pattern: /[.#]?[a-zA-Z][a-zA-Z0-9_-]*(?=\s*\{)/g, className: "text-blue-600 font-semibold" }, // Selectors
       { pattern: /[a-zA-Z-]+(?=\s*:)/g, className: "text-red-600" }, // Properties
-      { pattern: /:([^;{}]+)/g, className: "text-green-600" }, // Values
+      // { pattern: /:([^;{}]+)/g, className: "text-green-600" }, // Values
+      { pattern: /:[^;{}]+(?=;)/g, className: "text-green-600" },
+
       {
         pattern:
           /\b\d+\.?\d*(px|em|rem|%|vh|vw|pt|pc|in|cm|mm|ex|ch|vmin|vmax|deg|rad|turn|s|ms|Hz|kHz|dpi|dpcm|dppx)?\b/g,
@@ -64,14 +68,14 @@ const getSyntaxPatterns = (language: string) => {
       }, // Numbers and units
     ],
     python: [
+      { pattern: /"([^"\\]|\\.)*"/g, className: "text-green-600" }, // Strings
+      { pattern: /'([^'\\]|\\.)*'/g, className: "text-green-600" }, // Strings
       { pattern: /#.*$/gm, className: "text-gray-500 italic" }, // Comments
       {
         pattern:
           /\b(def|class|if|elif|else|for|while|return|import|from|as|try|except|finally|with|lambda|and|or|not|in|is)\b/g,
         className: "text-blue-600 font-semibold",
       }, // Keywords
-      { pattern: /"([^"\\]|\\.)*"/g, className: "text-green-600" }, // Strings
-      { pattern: /'([^'\\]|\\.)*'/g, className: "text-green-600" }, // Strings
       { pattern: /"""[\s\S]*?"""/g, className: "text-green-600" }, // Triple quotes
       { pattern: /'''[\s\S]*?'''/g, className: "text-green-600" }, // Triple quotes
       { pattern: /\b\d+\.?\d*\b/g, className: "text-orange-600" }, // Numbers
@@ -91,17 +95,19 @@ const getSyntaxPatterns = (language: string) => {
       { pattern: /"([^"\\]|\\.)*"/g, className: "text-green-600" }, // Attribute values
     ],
     sql: [
-      { pattern: /--.*$/gm, className: "text-gray-500 italic" }, // Comments
+      { pattern: /'([^'\\]|\\.)*'/g, className: "text-green-600" }, // Strings
+      { pattern: /\b\d+\.?\d*\b/g, className: "text-orange-600" }, // Numbers
+      // { pattern: /--.*$/gm, className: "text-gray-500 italic" }, // Comments
       { pattern: /\/\*[\s\S]*?\*\//g, className: "text-gray-500 italic" }, // Block comments
       {
         pattern:
           /\b(SELECT|FROM|WHERE|INSERT|UPDATE|DELETE|CREATE|DROP|ALTER|TABLE|INDEX|JOIN|INNER|LEFT|RIGHT|OUTER|ON|GROUP|ORDER|BY|HAVING|LIMIT|OFFSET|UNION|DISTINCT|AS|AND|OR|NOT|IN|EXISTS|BETWEEN|LIKE|IS|NULL)\b/gi,
         className: "text-blue-600 font-semibold",
       }, // Keywords
-      { pattern: /'([^'\\]|\\.)*'/g, className: "text-green-600" }, // Strings
-      { pattern: /\b\d+\.?\d*\b/g, className: "text-orange-600" }, // Numbers
     ],
     php: [
+      // { pattern: /"([^"\\]|\\.)*"/g, className: "text-green-600" }, // Strings
+      // { pattern: /'([^'\\]|\\.)*'/g, className: "text-green-600" }, // Strings
       { pattern: /\/\/.*$/gm, className: "text-gray-500 italic" }, // Comments
       { pattern: /\/\*[\s\S]*?\*\//g, className: "text-gray-500 italic" }, // Block comments
       { pattern: /<\?php|\?>/g, className: "text-purple-600 font-semibold" }, // PHP tags
@@ -110,8 +116,6 @@ const getSyntaxPatterns = (language: string) => {
           /\b(function|class|if|else|elseif|for|foreach|while|return|public|private|protected|static|const|var|echo|print|include|require|namespace|use)\b/g,
         className: "text-blue-600 font-semibold",
       }, // Keywords
-      { pattern: /"([^"\\]|\\.)*"/g, className: "text-green-600" }, // Strings
-      { pattern: /'([^'\\]|\\.)*'/g, className: "text-green-600" }, // Strings
       { pattern: /\$\w+/g, className: "text-red-600" }, // Variables
       { pattern: /\b\d+\.?\d*\b/g, className: "text-orange-600" }, // Numbers
     ],
@@ -130,55 +134,66 @@ const getSyntaxPatterns = (language: string) => {
       { pattern: /\b(true|false|null|yes|no|on|off)\b/gi, className: "text-purple-600" }, // Literals
     ],
     swift: [
+      { pattern: /"([^"\\]|\\.)*"/g, className: "text-green-600" }, // Strings
+      { pattern: /'([^'\\]|\\.)*'/g, className: "text-green-600" }, // Characters
       { pattern: /\/\/.*$/gm, className: "text-gray-500 italic" }, // Comments
       { pattern: /\/\*[\s\S]*?\*\//g, className: "text-gray-500 italic" }, // Block comments
       {
         pattern: /\b(func|let|var|if|else|for|while|return|class|struct|enum|import|protocol|extension|guard|switch|case|default)\b/g,
         className: "text-blue-600 font-semibold",
       }, // Keywords
-      { pattern: /"([^"\\]|\\.)*"/g, className: "text-green-600" }, // Strings
-      { pattern: /'([^'\\]|\\.)*'/g, className: "text-green-600" }, // Characters
       { pattern: /\b\d+\.?\d*\b/g, className: "text-orange-600" }, // Numbers
       { pattern: /\b(true|false|nil)\b/g, className: "text-purple-600" }, // Literals
     ],
 
     rust: [
+      { pattern: /"([^"\\]|\\.)*"/g, className: "text-green-600" },
+      { pattern: /'([^'\\]|\\.)*'/g, className: "text-green-600" },
       { pattern: /\/\/.*$/gm, className: "text-gray-500 italic" },
       { pattern: /\/\*[\s\S]*?\*\//g, className: "text-gray-500 italic" },
       {
         pattern: /\b(fn|let|mut|if|else|for|while|loop|return|struct|enum|impl|trait|pub|use|mod|const|static|match)\b/g,
         className: "text-blue-600 font-semibold",
       },
-      { pattern: /"([^"\\]|\\.)*"/g, className: "text-green-600" },
-      { pattern: /'([^'\\]|\\.)*'/g, className: "text-green-600" },
       { pattern: /\b\d+\.?\d*\b/g, className: "text-orange-600" },
       { pattern: /\b(true|false|None)\b/g, className: "text-purple-600" },
     ],
     kotlin: [
+      { pattern: /"([^"\\]|\\.)*"/g, className: "text-green-600" },
+      { pattern: /'([^'\\]|\\.)*'/g, className: "text-green-600" },
       { pattern: /\/\/.*$/gm, className: "text-gray-500 italic" },
       { pattern: /\/\*[\s\S]*?\*\//g, className: "text-gray-500 italic" },
       {
         pattern: /\b(fun|val|var|if|else|for|while|return|class|interface|object|import|package|when|is|in|as|null|true|false)\b/g,
         className: "text-blue-600 font-semibold",
       },
-      { pattern: /"([^"\\]|\\.)*"/g, className: "text-green-600" },
-      { pattern: /'([^'\\]|\\.)*'/g, className: "text-green-600" },
       { pattern: /\b\d+\.?\d*\b/g, className: "text-orange-600" },
     ],
 
     cpp: [
+      { pattern: /"(?:\\.|[^"\\])*"/g, className: "text-green-600" },
+      { pattern: /'(?:\\.|[^'\\])'/g, className: "text-green-600" },
+
       { pattern: /\/\/.*$/gm, className: "text-gray-500 italic" },
       { pattern: /\/\*[\s\S]*?\*\//g, className: "text-gray-500 italic" },
+
+      { pattern: /^\s*#\s*(include|define|if|ifdef|ifndef|endif|pragma).*$/gm, className: "text-purple-600 font-semibold" },
+
       {
-        pattern: /\b(int|float|double|char|bool|void|string|if|else|for|while|do|return|class|struct|enum|namespace|using|public|private|protected|static|const)\b/g,
+        pattern: /\b(template|typename|constexpr|constexpr|virtual|override|try|catch|throw|new|delete|using|namespace|std|auto|const|mutable|friend|operator|this|return|class|struct|enum|public|private|protected|static|inline|switch|case|break|continue|for|while|do|if|else)\b/g,
         className: "text-blue-600 font-semibold",
       },
-      { pattern: /"([^"\\]|\\.)*"/g, className: "text-green-600" },
-      { pattern: /'([^'\\]|\\.)*'/g, className: "text-green-600" },
-      { pattern: /\b\d+\.?\d*\b/g, className: "text-orange-600" },
+
+      { pattern: /\b(int|long|short|float|double|char|bool|void|signed|unsigned|size_t|string)\b/g, className: "text-teal-600" },
+
+      { pattern: /\b\d+(?:\.\d+)?(?:[eE][+-]?\d+)?[fLuU]*\b/g, className: "text-orange-600" },
+
       { pattern: /\b(true|false|nullptr)\b/g, className: "text-purple-600" },
     ],
+
     go: [
+      { pattern: /"([^"\\]|\\.)*"/g, className: "text-green-600" },
+      { pattern: /`[^`]*`/g, className: "text-green-600" },
       { pattern: /\/\/.*$/gm, className: "text-gray-500 italic" },
       { pattern: /\/\*[\s\S]*?\*\//g, className: "text-gray-500 italic" },
 
@@ -187,8 +202,6 @@ const getSyntaxPatterns = (language: string) => {
         className: "text-blue-600 font-semibold",
       },
 
-      { pattern: /"([^"\\]|\\.)*"/g, className: "text-green-600" },
-      { pattern: /`[^`]*`/g, className: "text-green-600" },
 
       { pattern: /\b\d+\.?\d*\b/g, className: "text-orange-600" },
 
@@ -261,6 +274,34 @@ const highlightSyntax = (code: string, language: string) => {
 
   return escaped
 }
+// const highlightSyntax = (code: string, language: string) => {
+//   const patterns = getSyntaxPatterns(language)
+//   let tokenized = code
+//   const tokens: Array<{ match: string; className: string }> = []
+
+
+//   patterns.forEach(({ pattern, className }) => {
+//     tokenized = tokenized.replace(pattern, (match) => {
+//       const idx = tokens.length
+//       tokens.push({ match, className })
+//       return `@@HIGHLIGHT_TOKEN_${idx}@@`
+//     })
+//   })
+
+
+//   let escaped = escapeHtml(tokenized)
+
+
+//   tokens.forEach((t, i) => {
+//     escaped = escaped.replace(
+//       new RegExp(`@@HIGHLIGHT_TOKEN_${i}@@`, "g"),
+//       `<span class="${t.className}">${t.match}</span>`
+//     )
+//   })
+
+//   return escaped
+// }
+
 
 export default function CodeEditor({
   value,
@@ -297,7 +338,7 @@ export default function CodeEditor({
   useEffect(() => {
     if (highlightRef.current) {
       const highlightedCode = highlightSyntax(value, language)
-      highlightRef.current.innerHTML = highlightedCode
+      highlightRef.current.innerHTML = highlightedCode + "<br />"
     }
   }, [value, language])
 
@@ -344,7 +385,8 @@ export default function CodeEditor({
               readOnly
                 ? "cursor-default bg-gray-50 dark:bg-background"
                 : "cursor-text bg-background",
-              "text-transparent caret-gray-900 selection:bg-blue-200",
+              "text-transparent caret-gray-900 dark:caret-gray-300 selection:bg-blue-200",
+              "whitespace-pre-wrap break-words"
             )}
             spellCheck={false}
             autoComplete="off"
