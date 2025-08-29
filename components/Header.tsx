@@ -30,8 +30,8 @@ export function Header({ formatterName, icon, statusBadge }: Props) {
                         </div>
                     </div>
                     <div className="flex items-center space-x-2 text-xs">
-                        <div>{statusBadge}</div>
                         <ThemeToggle />
+                        <div>{statusBadge}</div>
                     </div>
                 </div>
             </div>
