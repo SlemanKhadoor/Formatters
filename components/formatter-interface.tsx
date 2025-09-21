@@ -205,30 +205,33 @@ export default function FormatterInterface({ type, formatter }: FormatterProps) 
             }
             break;
 
-          case "html": {
+         case "html": {
             try {
               const openTags: string[] = [];
               const voidTags = new Set([
-                "area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "param", "source", "track", "wbr"
+                "area","base","br","col","embed","hr","img","input","link","meta",
+                "param","source","track","wbr","path","circle","ellipse","line","polyline","polygon"
               ]);
 
               const tagRegex = new RegExp('</?([a-zA-Z0-9]+)(\\s[^>]*)?>', 'g');
               let match: RegExpExecArray | null;
 
-              // reset lastIndex to be safe if reused
               tagRegex.lastIndex = 0;
 
               while ((match = tagRegex.exec(code)) !== null) {
                 const tagName = match[1].toLowerCase();
                 const fullTag = match[0];
 
-                if (fullTag.startsWith("<!") || voidTags.has(tagName)) continue;
+                if (fullTag.startsWith("<!") || voidTags.has(tagName) || fullTag.endsWith("/>")) continue;
 
                 if (fullTag.startsWith("</")) {
-                  if (openTags.length === 0 || openTags[openTags.length - 1] !== tagName) {
+                  if (!openTags.includes(tagName)) {
                     throw new Error(`HTML syntax error: unmatched closing tag </${tagName}>`);
                   }
-                  openTags.pop();
+                  while (openTags.length > 0) {
+                    const last = openTags.pop();
+                    if (last === tagName) break;
+                  }
                 } else {
                   openTags.push(tagName);
                 }
@@ -255,12 +258,15 @@ export default function FormatterInterface({ type, formatter }: FormatterProps) 
                     if (!trimmed) return "";
 
                     if (trimmed.startsWith("</")) indentLevel = Math.max(0, indentLevel - 1);
+
                     const result = indent.repeat(indentLevel) + trimmed;
+
                     if (
                       trimmed.startsWith("<") &&
                       !trimmed.startsWith("</") &&
                       !trimmed.endsWith("/>") &&
-                      !trimmed.includes("<!")
+                      !trimmed.includes("<!") &&
+                      !voidTags.has(trimmed.match(/^<([a-zA-Z0-9]+)/)?.[1]?.toLowerCase() || "")
                     ) {
                       indentLevel++;
                     }
@@ -276,7 +282,6 @@ export default function FormatterInterface({ type, formatter }: FormatterProps) 
             }
             break;
           }
-
 
           case "css":
             try {
@@ -317,238 +322,11 @@ export default function FormatterInterface({ type, formatter }: FormatterProps) 
             }
             break
 
-          // case "python":
-          //   try {
-          //     const keywordsIncrease = /^(if |elif |else:|for |while |def |class |try:|except |finally:|with )/;
-          //     const keywordsDecrease = /^(elif |else:|except |finally:)/;
-
-          //     // 🔹 Split inline statements safely
-          //     function splitInlineStatements(code: string): string {
-          //       const maxAttempts = 5; // أقصى عدد محاولات لكل سطر
-          //       return code
-          //         .split("\n")
-          //         .map((line) => {
-          //           let tmp = line.trim();
-          //           if (!tmp) return "";
-
-          //           let attempts = 0;
-          //           let changed = true;
-
-          //           while (changed && attempts < maxAttempts) {
-          //             const newTmp = tmp.replace(/:(?!\s*$)([^\n]+)/, (match, stmt) => ":\n" + stmt.trim());
-          //             changed = newTmp !== tmp;
-          //             tmp = newTmp;
-          //             attempts++;
-          //           }
-
-          //           // فصل def/class/if/for/while بعد return أو statement
-          //           tmp = tmp.replace(
-          //             /(return [^:\n]+)(def|class|if|for|while)/g,
-          //             (match, stmt, keyword) => stmt + "\n" + keyword
-          //           );
-
-          //           return tmp;
-          //         })
-          //         .join("\n");
-          //     }
-
-          //     const safeCode = splitInlineStatements(code);
-
-          //     // 🔹 Basic syntax validation (strings + brackets)
-          //     function basicPythonValidation(code: string): string | null {
-          //       let stack: string[] = [];
-          //       let inString: string | null = null;
-
-          //       for (let i = 0; i < code.length; i++) {
-          //         const ch = code[i];
-
-          //         if ((ch === '"' || ch === "'") && code[i - 1] !== "\\") {
-          //           if (inString === ch) inString = null;
-          //           else if (!inString) inString = ch;
-          //         }
-
-          //         if (!inString) {
-          //           if ("([{".includes(ch)) stack.push(ch);
-          //           if (")]}".includes(ch)) {
-          //             const last = stack.pop();
-          //             if (!last || "([{".indexOf(last) !== ")]}".indexOf(ch)) {
-          //               return `SyntaxError: unexpected '${ch}' at position ${i}`;
-          //             }
-          //           }
-          //         }
-          //       }
-
-          //       if (inString) return `SyntaxError: unterminated string literal`;
-          //       if (stack.length) return `SyntaxError: unbalanced brackets`;
-
-          //       return null;
-          //     }
-
-          //     const validationErr = basicPythonValidation(safeCode);
-          //     if (validationErr) throw new SyntaxError(validationErr);
-
-          //     // 🔹 Indentation formatting
-          //     const lines = safeCode.split("\n");
-          //     let indentLevel = 0;
-          //     const indentStr =
-          //       indentationType === "tabs"
-          //         ? "\t"
-          //         : indentationType === "4-spaces"
-          //           ? "    "
-          //           : "  ";
-
-          //     const formattedLines = lines.map((line) => {
-          //       const trimmed = line.trim();
-          //       if (!trimmed) return ""; // سطر فارغ
-          //       if (trimmed.startsWith("#")) return indentStr.repeat(indentLevel) + trimmed; // تعليق
-
-          //       if (keywordsDecrease.test(trimmed)) indentLevel = Math.max(indentLevel - 1, 0);
-
-          //       const result = indentStr.repeat(indentLevel) + trimmed;
-
-          //       if (keywordsIncrease.test(trimmed) || trimmed.endsWith(":")) indentLevel++;
-
-          //       return result;
-          //     });
-
-          //     // 🔹 Pretty / Minify
-          //     if (formatMode === "minify") {
-          //       formatted = lines
-          //         .map((l) => l.trim())
-          //         .filter((l) => l && !l.startsWith("#"))
-          //         .join("\n"); // لو بدك يمكن تعمل join("") لسطر واحد فقط
-          //     } else {
-          //       formatted = formattedLines.filter(Boolean).join("\n");
-          //     }
-
-          //     // 🔹 حماية الكود الضخم
-          //     const maxLength = 50000;
-          //     if (formatted.length > maxLength) {
-          //       throw new Error("Python code too large to format safely");
-          //     }
-
-          //   } catch (err) {
-          //     const validationError = err instanceof Error ? err.message : "Python syntax error";
-          //     throw new Error(validationError);
-          //   }
-          //   break;
-
-
-          // case "python":
-          //   try {
-          //     const checkBrackets = (s: string) => {
-          //       const stack: string[] = [];
-          //       const pairs: Record<string, string> = { '(': ')', '[': ']', '{': '}' };
-          //       const quoteChars = ['"', "'"];
-          //       let inString: string | null = null;
-
-          //       for (const char of s) {
-          //         if (quoteChars.includes(char)) {
-          //           if (inString === char) { inString = null; }
-          //           else if (inString === null) { inString = char; }
-          //         }
-          //         if (inString) continue;
-
-          //         if (pairs[char]) {
-          //           stack.push(char);
-          //         } else if (Object.values(pairs).includes(char)) {
-          //           if (stack.length === 0 || pairs[stack.pop()!] !== char) {
-          //             throw new Error(`Python Syntax Error: Mismatched brackets. Unexpected '${char}'`);
-          //           }
-          //         }
-          //       }
-          //       if (stack.length > 0) {
-          //         throw new Error(`Python Syntax Error: Mismatched brackets. Unclosed '${stack[stack.length - 1]}'`);
-          //       }
-          //     };
-          //     checkBrackets(code);
-
-          //     // --- Formatting Logic ---
-          //     if (formatMode === "minify") {
-          //       formatted = code
-          //         .split("\n")
-          //         .map((line) => line.trim().split("#")[0].trim())
-          //         .filter((line) => line)
-          //         .join("; ");
-          //     } else {
-          //       // This is a robust, safe, keyword-based formatter.
-          //       let indentLevel = 0;
-          //       const formattedLines: string[] = [];
-          //       const lines = code.split('\n');
-
-          //       for (const line of lines) {
-          //         const trimmed = line.trim();
-
-          //         if (trimmed === "") {
-          //           formattedLines.push("");
-          //           continue;
-          //         }
-
-
-          //         if (trimmed.startsWith("elif") || trimmed.startsWith("else:") || trimmed.startsWith("except") || trimmed.startsWith("finally:")) {
-          //           indentLevel = Math.max(0, indentLevel - 1);
-          //         }
-
-          //         const safeIndentLevel = Math.max(0, indentLevel);
-          //         formattedLines.push(indent.repeat(safeIndentLevel) + trimmed);
-
-          //         if (trimmed.endsWith(":")) {
-          //           indentLevel++;
-          //         }
-          //       }
-          //       const finalLines = [];
-          //       let finalIndent = 0;
-          //       for (let i = 0; i < formattedLines.length; i++) {
-          //         const currentLine = formattedLines[i].trim();
-          //         if (!currentLine) {
-          //           finalLines.push('');
-          //           continue;
-          //         }
-
-          //         let nextLineTrimmed = "";
-          //         for (let j = i + 1; j < formattedLines.length; j++) {
-          //           if (formattedLines[j].trim()) {
-          //             nextLineTrimmed = formattedLines[j].trim();
-          //             break;
-          //           }
-          //         }
-
-          //         const shouldDeIndentAfter = (
-          //           (nextLineTrimmed.startsWith("elif") || nextLineTrimmed.startsWith("else:")) && currentLine.endsWith(":") ||
-          //           (nextLineTrimmed.startsWith("def ") || nextLineTrimmed.startsWith("class ")) && !currentLine.endsWith(":")
-          //         );
-
-          //         if (i > 0 && !currentLine.endsWith(":") && formattedLines[i - 1].trim().endsWith(":")) {
-          //         }
-
-          //         if (currentLine.startsWith('def ') || currentLine.startsWith('class ')) {
-          //           finalIndent = 0;
-          //         }
-          //         if (currentLine.startsWith('elif ') || currentLine.startsWith('else:') || currentLine.startsWith('except') || currentLine.startsWith('finally:')) {
-          //           finalIndent = Math.max(0, finalIndent - 1);
-          //         }
-
-          //         finalLines.push(indent.repeat(finalIndent) + currentLine);
-
-          //         if (currentLine.endsWith(':')) {
-          //           finalIndent++;
-          //         }
-          //       }
-
-
-          //       formatted = finalLines.join('\n');
-          //     }
-          //   } catch (err) {
-          //     const validationError = err instanceof Error ? err.message : "Python syntax error";
-          //     throw new Error(validationError);
-          //   }
-          //   break;
-
           case "python":
             try {
               const checkBrackets = (s: string) => {
                 const stack: string[] = [];
-                const pairs: Record<string, string> = { '(': ')', '[': ']', '{': '}' };
+                const pairs: Record<string, string> = { "(": ")", "[": "]", "{": "}" };
                 let inString: string | null = null;
                 let tripleQuote: string | null = null;
                 let escapeNext = false;
@@ -561,7 +339,7 @@ export default function FormatterInterface({ type, formatter }: FormatterProps) 
                     continue;
                   }
 
-                  if (char === '\\') {
+                  if (char === "\\") {
                     escapeNext = true;
                     continue;
                   }
@@ -590,16 +368,17 @@ export default function FormatterInterface({ type, formatter }: FormatterProps) 
 
                   if (inString) continue;
 
-                  // تعليق
-                  if (char === '#') {
-                    while (i < s.length && s[i] !== '\n') i++;
+                  if (char === "#") {
+                    while (i < s.length && s[i] !== "\n") i++;
                     continue;
                   }
 
                   if (pairs[char]) stack.push(char);
                   else if (Object.values(pairs).includes(char)) {
                     if (stack.length === 0 || pairs[stack.pop()!] !== char) {
-                      throw new Error(`Python Syntax Error: Mismatched brackets. Unexpected '${char}'`);
+                      throw new Error(
+                        `Python Syntax Error: Mismatched brackets. Unexpected '${char}'`
+                      );
                     }
                   }
                 }
@@ -615,44 +394,98 @@ export default function FormatterInterface({ type, formatter }: FormatterProps) 
 
               // --- Formatting Logic ---
               if (formatMode === "minify") {
+                let inStringMinify: string | null = null;
                 formatted = code
                   .split("\n")
-                  .map((line) => line.trim().split("#")[0].trim())
+                  .map((line) => {
+                    let trimmed = line.trim();
+                    let newLine = "";
+                    for (let i = 0; i < trimmed.length; i++) {
+                      const char = trimmed[i];
+                      if ((char === '"' || char === "'") && !inStringMinify) {
+                        inStringMinify = char;
+                        newLine += char;
+                      } else if (char === inStringMinify) {
+                        newLine += char;
+                        inStringMinify = null;
+                      } else if (char === "#" && !inStringMinify) {
+                        break; // ignore comment outside string
+                      } else {
+                        newLine += char;
+                      }
+                    }
+                    return newLine.trim();
+                  })
                   .filter((line) => line)
                   .join("; ");
               } else {
                 let indentLevel = 0;
                 const formattedLines: string[] = [];
-                const lines = code.split('\n');
+                const lines = code.split("\n");
+                const increaseIndentKeywords = [
+                  "def",
+                  "class",
+                  "for",
+                  "while",
+                  "try",
+                  "with",
+                  "if",
+                  "elif",
+                  "else",
+                  "except",
+                  "finally",
+                ];
 
-                for (const line of lines) {
-                  const trimmed = line.trim();
-
+                for (let line of lines) {
+                  let trimmed = line.trim();
                   if (trimmed === "") {
                     formattedLines.push("");
                     continue;
                   }
 
-                  if (trimmed.startsWith("elif") || trimmed.startsWith("else:") || trimmed.startsWith("except") || trimmed.startsWith("finally:")) {
+                  // Reset indent for new def/class so methods don't nest
+                  if (trimmed.startsWith("def ") || trimmed.startsWith("class ")) {
+                    indentLevel = trimmed.startsWith("class ") ? 0 : 1;
+                  }
+
+                  // Dedent for elif/else/except/finally
+                  if (
+                    ["elif", "else:", "except", "finally:"].some((kw) =>
+                      trimmed.startsWith(kw)
+                    )
+                  ) {
                     indentLevel = Math.max(0, indentLevel - 1);
                   }
 
-                  formattedLines.push(indent.repeat(Math.max(0, indentLevel)) + trimmed);
-
-                  if (trimmed.endsWith(":")) {
+                  if (
+                    trimmed.includes(":") &&
+                    trimmed.indexOf(":") !== trimmed.length - 1
+                  ) {
+                    const parts = trimmed.split(":");
+                    const left = parts[0] + ":";
+                    const right = parts.slice(1).join(":").trim();
+                    formattedLines.push(indent.repeat(indentLevel) + left);
                     indentLevel++;
+                    formattedLines.push(indent.repeat(indentLevel) + right);
+                  } else {
+                    formattedLines.push(indent.repeat(indentLevel) + trimmed);
+                    if (
+                      increaseIndentKeywords.some((kw) => trimmed.startsWith(kw)) ||
+                      trimmed.endsWith(":")
+                    ) {
+                      indentLevel++;
+                    }
                   }
                 }
 
-                formatted = formattedLines.join('\n');
+                formatted = formattedLines.join("\n");
               }
-
             } catch (err) {
-              const validationError = err instanceof Error ? err.message : "Python syntax error";
+              const validationError =
+                err instanceof Error ? err.message : "Python syntax error";
               throw new Error(validationError);
             }
             break;
-
 
           case "xml":
             try {
@@ -1091,7 +924,6 @@ export default function FormatterInterface({ type, formatter }: FormatterProps) 
           case "rust":
           case "swift":
           case "kotlin":
-            // case "cpp":
             try {
               // Basic syntax validation
               const stack: string[] = [];

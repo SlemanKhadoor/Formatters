@@ -48,11 +48,8 @@ const getSyntaxPatterns = (language: string) => {
       { pattern: /:\s*[A-Za-z0-9_<>,\[\]\|?]+/g, className: "text-cyan-600" }
     ],
     html: [
-      { pattern: /<!--[\s\S]*?-->/g, className: "text-gray-500 italic" }, // Comments
-      { pattern: /<\/?[\w\s="/.':;#-/?]+>/g, className: "text-blue-600" }, // Tags
-      { pattern: /\w+(?==)/g, className: "text-red-600" }, // Attributes
       { pattern: /"([^"\\]|\\.)*"/g, className: "text-green-600" }, // Attribute values
-      { pattern: /'([^'\\]|\\.)*'/g, className: "text-green-600" }, // Attribute values
+      { pattern: /<\/?[\w\s="/.':;#-/?]+>/g, className: "text-blue-600" }, // Tags
     ],
     css: [
       { pattern: /\/\*[\s\S]*?\*\//g, className: "text-gray-500 italic" }, // Comments
