@@ -970,10 +970,11 @@ export default function EnhancedFormatterInterface({ type, formatter }: Formatte
                   <div className="space-y-3 text-sm text-gray-600">
                     <h4 className="font-semibold text-gray-900 dark:text-gray-100">How {formatter.name} Formatting Works:</h4>
                     <ul className="space-y-2 list-disc list-inside">
-                      <li>Paste your {formatter.name.toLowerCase()} code and see it formatted instantly</li>
-                      <li>The formatter automatically detects and fixes common formatting issues</li>
-                      <li>Proper indentation and spacing are applied according to best practices</li>
-                      <li>Use the "Load Example" button to see how the formatter works</li>
+                      <li>Paste your {formatter.name.toLowerCase()} code and see it formatted instantly in a readable, structured layout.</li>
+                      <li>The formatter automatically detects and fixes common formatting issues, reducing debugging time.</li>
+                      <li>Proper indentation and spacing are applied according to best practices for better readability.</li>
+                      <li>Use the "Load Example" button to see how the formatter works and learn quickly with practical samples.
+                      </li>
                     </ul>
                   </div>
                 </TabsContent>
@@ -981,10 +982,10 @@ export default function EnhancedFormatterInterface({ type, formatter }: Formatte
                   <div className="space-y-3 text-sm text-gray-600">
                     <h4 className="font-semibold text-gray-900 dark:text-gray-100">Validation Features:</h4>
                     <ul className="space-y-2 list-disc list-inside">
-                      <li>Real-time syntax validation as you type</li>
-                      <li>Detailed error messages help you identify and fix issues</li>
-                      <li>The status badge shows whether your code is valid</li>
-                      <li>Line-by-line error reporting for precise debugging</li>
+                      <li>Real-time syntax validation highlights mistakes as you type, so you can fix them immediately.</li>
+                      <li>Detailed error messages help you understand exactly what went wrong.</li>
+                      <li>The status badge clearly shows whether your code is valid or contains issues.</li>
+                      <li>Line-by-line error reporting allows precise debugging, making it easier to find and correct mistakes.</li>
                     </ul>
                   </div>
                 </TabsContent>
@@ -992,10 +993,10 @@ export default function EnhancedFormatterInterface({ type, formatter }: Formatte
                   <div className="space-y-3 text-sm text-gray-600">
                     <h4 className="font-semibold text-gray-900 dark:text-gray-100">Keyboard Shortcuts & Features:</h4>
                     <ul className="space-y-2 list-disc list-inside">
-                      <li>Copy formatted code with the copy button</li>
-                      <li>Download formatted code as a file</li>
-                      <li>Clear input with the reset button</li>
-                      <li>Load example code to test the formatter</li>
+                      <li>Copy formatted code quickly using the convenient copy button.</li>
+                      <li>Download formatted {formatter.name.toLowerCase()} as a file for offline use or sharing.</li>
+                      <li>Clear the input with the reset button to start fresh whenever needed.</li>
+                      <li>Load example code to experiment with the formatter and understand best practices.</li>
                     </ul>
                   </div>
                 </TabsContent>

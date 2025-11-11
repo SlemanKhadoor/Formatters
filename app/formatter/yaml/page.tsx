@@ -3,7 +3,7 @@ import type { Metadata } from "next"
 
 const formatter = {
   name: "YAML",
-  description: "Format and validate YAML data with proper indentation and structure",
+  description: "Format, validate and beautify YAML data with real-time syntax checking",
   placeholder: `person: {name: John, age:30, hobbies:[coding,reading,music],address:{street: "123 Main St", city: NY, zip:10001},active:true,friends:[{name:Alice,age:25},{name:Bob,age:28},{name:Charlie,age:32}],notes:"This is a sample YAML document that is intentionally written in a messy way to test the formatter. It should be reformatted into something more readable."}`,
   //   placeholder: `# YAML Configuration Example
   // app:
@@ -64,7 +64,7 @@ const formatter = {
   // volumes:
   //   postgres_data:`,
   longDescription:
-    "Format and validate YAML documents with proper indentation and structure. Perfect for configuration files, Docker Compose, Kubernetes manifests, and CI/CD pipelines.",
+    "Format, validate, and beautify your YAML documents effortlessly with our professional YAML formatter. This tool automatically applies proper indentation, spacing, and alignment, ensuring your YAML files are clean, readable, and well-structured. It detects syntax errors, highlights issues, and provides clear messages to help you quickly fix problems. Whether you are working on configuration files, Docker Compose setups, Kubernetes manifests, or CI/CD pipelines, the formatter ensures your YAML is organized and professional. It improves readability, reduces debugging time, and enhances collaboration within development teams. Use it directly in your browser for instant, reliable results, no installation, setup, or plugins required. Ideal for developers, DevOps engineers, and YAML enthusiasts.",
   keywords: [
     "yaml formatter",
     "yaml validator",
