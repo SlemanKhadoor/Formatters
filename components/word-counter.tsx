@@ -117,12 +117,11 @@ Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium dolor
             {/* Page Header */}
             <header className="mb-8">
               <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">Word Counter & Text Statistics</h1>
-              <p className="text-lg text-gray-500 mb-4">
+              <p className="text-lg text-gray-600 mb-4">
                 Count words, characters, and get comprehensive text statistics
               </p>
               <p className="text-gray-500">
-                Analyze your text with detailed statistics including reading time, most common words, and more. Perfect
-                for writers, students, and content creators.
+                Analyze your text thoroughly with our powerful Text Analyzer tool, which provides detailed statistics and insights to help writers, students, and content creators improve their work. The tool calculates reading time, word count, character count, and average sentence length, giving you a clear overview of your content and helping optimize your text for clarity and impact. Perfect for editing articles, essays, blog posts, or academic papers, this tool allows you to understand your writing better, refine your style, and enhance overall readability. All analysis happens instantly in your browser, ensuring privacy and convenience.
               </p>
             </header>
 
