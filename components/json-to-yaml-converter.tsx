@@ -169,12 +169,11 @@ export default function JsonToYamlConverter() {
             {/* Page Header */}
             <header className="mb-8">
               <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">JSON to YAML Converter</h1>
-              <p className="text-lg text-gray-500 mb-4">
+              <p className="text-lg text-gray-600 mb-4">
                 Convert JSON data to YAML format for configuration files and DevOps tools
               </p>
               <p className="text-gray-500">
-                Transform your JSON data into clean, readable YAML. Perfect for Docker Compose, Kubernetes, CI/CD
-                pipelines, and configuration files.
+                Transform your JSON data into clean, readable YAML quickly and efficiently with our professional JSON to YAML Converter. This powerful tool is ideal for developers, DevOps engineers, and system administrators who need to convert structured JSON into YAML for Docker Compose files, Kubernetes manifests, CI/CD pipelines, or any configuration files. Simply paste your JSON data, click convert, and instantly receive well-formatted YAML output that is easy to read, edit, and integrate into your projects. The converter handles nested objects, arrays, and complex structures automatically, ensuring accurate and organized results. All processing happens locally in your browser, guaranteeing privacy, speed, and security. Whether you are managing infrastructure, automating deployments, or configuring applications, this tool simplifies your workflow, reduces errors, and helps maintain consistency across your projects efficiently and reliably.
               </p>
             </header>
 

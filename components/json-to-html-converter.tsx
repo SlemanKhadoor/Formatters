@@ -174,7 +174,7 @@ ${keys.map((key) => `      <td>${escapeHtml(String(item[key] || ""))}</td>`).joi
 ]`
 
   return (
-    <div className="space-y-6">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
       <Header
         formatterName={'JSON to HTML Converter'}
         icon={<FileCode className="sm:h-5 sm:w-5 h-4 w-4 text-orange-600" />}
@@ -197,13 +197,12 @@ ${keys.map((key) => `      <td>${escapeHtml(String(item[key] || ""))}</td>`).joi
           <main>
             {/* Page Header */}
             <header className="mb-8">
-              <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">JSON to TypeScript Converter</h1>
-              <p className="text-lg text-gray-500 mb-4">
-                Generate TypeScript interfaces and types from JSON data for better type safety
+              <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">JSON to HTML Converter</h1>
+              <p className="text-lg text-gray-600 mb-4">
+                Generate HTML structure from JSON data for web display and visualization
               </p>
               <p className="text-gray-500">
-                Transform your JSON data into TypeScript interfaces automatically. Perfect for API development, type
-                definitions, and ensuring type safety in your applications.
+                Transform your JSON data into clean, well-structured HTML quickly and efficiently with our professional JSON to HTML Converter. This powerful tool is perfect for developers working on web interfaces, dashboards, or data visualization projects that require converting JSON into readable and visually formatted HTML. Simply paste your JSON, click convert, and instantly generate elegant HTML tables, lists, or blocks that represent your data clearly. The converter automatically handles nested objects, arrays, and complex data types, ensuring the output is well-organized, semantic, and easy to integrate into your website or application. All processing happens locally in your browser, guaranteeing privacy, speed, and reliability. Whether you’re building admin panels, reports, or dynamic content sections, this tool streamlines your workflow, saves time, and delivers ready-to-use HTML effortlessly.
               </p>
             </header>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">

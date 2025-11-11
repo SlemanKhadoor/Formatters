@@ -136,7 +136,7 @@ export default function CaseConverter() {
             {/* Page Header */}
             <header className="mb-8">
               <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">Case Converter</h1>
-              <p className="text-lg text-gray-500 mb-4">
+              <p className="text-lg text-gray-600 mb-4">
                 Convert text between different case formats for programming and writing
               </p>
               <p className="text-gray-500">

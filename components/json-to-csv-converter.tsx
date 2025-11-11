@@ -168,12 +168,11 @@ export default function JsonToCsvConverter() {
             {/* Page Header */}
             <header className="mb-8">
               <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">JSON to CSV Converter</h1>
-              <p className="text-lg text-gray-500 mb-4">
+              <p className="text-lg text-gray-600 mb-4">
                 Convert JSON arrays to CSV format for Excel, databases, and data analysis
               </p>
               <p className="text-gray-500">
-                Transform your JSON data into CSV format instantly. Perfect for importing into Excel, databases, or any
-                application that accepts CSV files.
+                Transform your JSON data into CSV format quickly and effortlessly with our professional JSON to CSV Converter. This powerful tool allows developers, data analysts, and content creators to convert structured JSON data into a tabular CSV format instantly, making it compatible with Excel, databases, and any other application that accepts CSV files. Simply paste your JSON, click convert, and download the resulting CSV file with ease. The tool automatically handles nested objects, arrays, and complex structures, ensuring accurate and clean data transformation. All processing happens locally in your browser, guaranteeing privacy, speed, and reliability. Perfect for anyone who works with data and wants a fast, efficient, and hassle-free conversion process.
               </p>
             </header>
 

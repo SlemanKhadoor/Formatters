@@ -88,7 +88,7 @@ Bob Johnson	35	Toronto	Canada
 Alice Brown	28	Sydney	Australia`
 
   return (
-    <div className="space-y-6">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
       <Header
         formatterName={'TSV to CSV Converter'}
         icon={<FileSpreadsheet className="sm:h-5 sm:w-5 h-4 w-4 text-blue-600" />}
@@ -111,13 +111,12 @@ Alice Brown	28	Sydney	Australia`
           <main>
             {/* Page Header */}
             <header className="mb-8">
-              <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">JSON to TypeScript Converter</h1>
+              <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">TSV to CSV Converter</h1>
               <p className="text-lg text-gray-600 mb-4">
-                Generate TypeScript interfaces and types from JSON data for better type safety
+                Convert TSV data to clean and well-structured CSV format for easier data handling
               </p>
               <p className="text-gray-500">
-                Transform your JSON data into TypeScript interfaces automatically. Perfect for API development, type
-                definitions, and ensuring type safety in your applications.
+                Transform your TSV data into clean, well-structured CSV format effortlessly with our professional TSV to CSV Converter. This tool is perfect for developers, data analysts, and anyone working with spreadsheets, databases, or APIs that require standardized CSV files. Simply paste or upload your TSV data, click convert, and instantly get a properly formatted CSV file ready for import or analysis. The converter automatically handles tabs, quotes, and escape characters, ensuring accuracy and consistency in your output. All processing happens locally in your browser, guaranteeing privacy, speed, and reliability. Whether you’re preparing data for Excel, Google Sheets, or backend systems, this tool streamlines your workflow, saves time, and delivers precise, clean CSV data with just one click.
               </p>
             </header>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
