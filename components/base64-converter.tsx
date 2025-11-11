@@ -146,8 +146,7 @@ export default function Base64Converter() {
                 Encode text to Base64 or decode Base64 strings back to readable text
               </p>
               <p className="text-gray-500">
-                Secure client-side Base64 encoding and decoding. Perfect for data transmission, API authentication, and
-                text encoding needs.
+                Experience secure and efficient Base64 encoding and decoding directly in your browser with our professional tool. It allows you to convert text, files, and binary data into Base64 format for safe data transmission, API authentication, and web development. The encoder ensures your data remains intact and readable across platforms using proper padding and character mapping, while the decoder accurately restores the original data without loss. Whether you’re handling sensitive information, creating secure tokens, or embedding images in HTML or CSS, this tool provides reliable performance and strong security. It features real-time conversion, syntax validation, and instant error detection for precise results. Use it directly online, no installation required, and enjoy fast, accurate, and private encoding and decoding. Perfect for developers and cybersecurity experts.
               </p>
             </header>
 

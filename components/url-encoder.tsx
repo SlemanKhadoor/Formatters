@@ -144,8 +144,7 @@ export default function UrlEncoder() {
               <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">URL Encoder & Decoder</h1>
               <p className="text-lg text-gray-600 mb-4">Encode URLs for web safety or decode URL-encoded strings</p>
               <p className="text-gray-500">
-                Secure client-side URL encoding and decoding. Perfect for web development, API work, and handling
-                special characters in URLs.
+                Securely encode and decode URLs directly in your browser with our professional and reliable URL encoder and decoder tool. It helps you safely handle special characters, query parameters, and complex data within web links, ensuring your URLs remain valid, secure, and properly formatted. Ideal for developers working on web applications, APIs, or integrations that require accurate and consistent URL handling. The tool automatically detects unsafe or invalid characters and converts them into a clean, encoded format for reliable data transmission. It also decodes URLs back to their readable form instantly, preserving the original structure and content without any errors. Featuring real-time conversion, syntax validation, and instant feedback, it guarantees a smooth, efficient workflow. Use it online, no installation or setup required, and enjoy secure, fast, and precise URL encoding and decoding right from your browser.
               </p>
             </header>
 

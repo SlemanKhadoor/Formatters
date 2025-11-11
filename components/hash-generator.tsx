@@ -148,12 +148,11 @@ export default function HashGenerator() {
             {/* Page Header */}
             <header className="mb-8">
               <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">Hash Generator</h1>
-              <p className="text-lg text-gray-500 mb-4">
+              <p className="text-lg text-gray-600 mb-4">
                 Generate MD5, SHA-1, and SHA-256 hashes from text for security and data integrity
               </p>
               <p className="text-gray-500">
-                Secure client-side hash generation. Perfect for password hashing, data integrity checks, and
-                cryptographic applications.
+                Generate secure client-side hashes instantly with our professional and reliable hash generator tool. It allows you to create strong, consistent, and reliable hashes for passwords, data integrity checks, and cryptographic applications ,  all directly in your browser without sending any data to a server. The tool supports multiple widely used algorithms such as MD5, SHA-1, and SHA-256, ensuring flexibility, compatibility, and accuracy across different use cases. It helps developers verify data authenticity, detect tampering attempts, and protect sensitive information through powerful hashing mechanisms. Featuring real-time hash generation, instant previews, fast performance, and complete client-side privacy, it guarantees that your input always remains secure. Use it online, no installation or setup required, and experience safe, efficient, and private hashing for both personal projects and enterprise-level applications.
               </p>
             </header>
 
