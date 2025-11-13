@@ -7,7 +7,11 @@ export const metadata: Metadata = {
     "Free online URL encoder and decoder. Encode URLs for web safety or decode URL-encoded strings. Perfect for web development and API work.",
   keywords: [
     "url encoder",
+    "url encoder online",
+    "online url encoder",
     "url decoder",
+    "url decoder online",
+    "online url decoder",
     "url encode",
     "url decode",
     "percent encoding",

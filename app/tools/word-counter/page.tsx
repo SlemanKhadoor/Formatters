@@ -7,6 +7,9 @@ export const metadata: Metadata = {
     "Free online word counter tool. Count words, characters, paragraphs, and sentences. Get reading time estimates and text statistics for writing and content creation.",
   keywords: [
     "word counter",
+    "online word counter",
+    "word counter online",
+    "article words count",
     "character counter",
     "text counter",
     "word count",

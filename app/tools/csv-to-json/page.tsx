@@ -8,10 +8,14 @@ export const metadata: Metadata = {
   keywords: [
     "csv to json",
     "csv json converter",
+    "csv json converter online",
+    "online csv json converter",
     "convert csv to json",
     "data conversion",
     "json generator",
     "csv parser",
+    "csv parser online",
+    "online csv parser",
   ],
   openGraph: {
     title: "CSV to JSON Converter - Formatters.net",

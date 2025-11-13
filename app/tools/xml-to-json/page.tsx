@@ -8,6 +8,8 @@ export const metadata: Metadata = {
   keywords: [
     "xml to json",
     "xml json converter",
+    "xml json converter online",
+    "online xml json converter",
     "convert xml to json",
     "data conversion",
     "json generator",

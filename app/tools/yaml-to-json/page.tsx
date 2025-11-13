@@ -8,6 +8,7 @@ export const metadata: Metadata = {
   keywords: [
     "yaml to json",
     "yml to json",
+    "yaml to json online",
     "yaml json converter",
     "convert yaml to json",
     "data conversion",

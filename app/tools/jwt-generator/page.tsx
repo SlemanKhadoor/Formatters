@@ -7,11 +7,14 @@ export const metadata: Metadata = {
     "Free online JWT generator. Create and sign JWT tokens with custom headers and payloads. Perfect for API development, authentication testing, and token generation.",
   keywords: [
     "jwt generator",
+    "jwt generator online",
     "jwt token generator",
+    "jwt token generator online",
     "json web token generator",
     "create jwt",
     "jwt maker",
     "token generator",
+    "token generator online",
     "authentication",
   ],
   openGraph: {

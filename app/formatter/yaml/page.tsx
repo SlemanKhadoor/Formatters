@@ -68,7 +68,12 @@ const formatter = {
   keywords: [
     "yaml formatter",
     "yaml validator",
+    "yaml online format",
+    "format yaml online",
+    "YAML checker",
     "format yaml",
+    "yaml formatter online",
+    "online yaml formatter",
     "yaml beautifier",
     "docker compose yaml",
     "kubernetes yaml",

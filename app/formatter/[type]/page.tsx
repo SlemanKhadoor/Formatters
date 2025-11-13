@@ -15,7 +15,7 @@ const formatters = {
 }`,
     longDescription:
       "Our advanced JSON formatter is carefully designed to help developers and data analysts format, validate, and beautifully beautify JSON data instantly. It provides a clean, intuitive, and user-friendly interface where you can easily paste, edit, and preview your JSON files in real time. The tool automatically highlights syntax errors, ensures proper indentation, and makes complex data structures much easier to read and understand. Whether you’re working with APIs, configuration files, or large datasets, this smart formatter saves you time and effort by improving accuracy and readability. It’s an essential and must-have utility for anyone who regularly handles JSON data in development, data analysis, or software testing.",
-    keywords: ["json formatter", "json validator", "json beautifier", "format json online", "validate json"],
+    keywords: ["json formatter","json beautifier","json validator","online json formatter","json formatter online","json beautify","beautify json","format json","jsonlint","JSON Checker","JSON Cleaner","json converter","json format","json online format","format json online"],
   },
   javascript: {
     name: "JavaScript",
@@ -37,7 +37,7 @@ const formatters = {
     placeholder: `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Sample Page</title></head><body><header><h1>Welcome to My Website</h1><nav><ul><li><a href="#home">Home</a></li><li><a href="#about">About</a></li><li><a href="#contact">Contact</a></li></ul></nav></header><main><section><h2>About Us</h2><p>This is a sample paragraph with <strong>bold text</strong> and <em>italic text</em>.</p></section></main><footer><p>&copy; 2024 My Website. All rights reserved.</p></footer></body></html>`,
     longDescription:
       "Format and structure your HTML markup effortlessly with our professional HTML formatter. This tool automatically organizes your code with proper indentation, spacing, and tag alignment, making it easier to read, maintain, and debug. It validates tag nesting, detects unclosed or misplaced tags, and ensures your HTML follows best coding practices. Whether you’re working on simple web pages or complex layouts, the formatter helps you achieve clean, consistent, and well-structured markup. It also improves overall readability, reduces human errors, and enhances your workflow efficiency. Use it directly in your browser for instant, reliable results—no installations, plugins, or setup required. Perfect for developers, designers, and learners alike.",
-    keywords: ["html formatter", "html beautifier", "format html", "html validator", "structure html"],
+    keywords: ["html formatter","html beautifier","html validator","online html formatter","html formatter online","html beautify","beautify html","format html","html lint","HTML checker","HTML cleaner","html convert","html format","html online format","format html online"],
   },
   css: {
     name: "CSS",
@@ -45,7 +45,7 @@ const formatters = {
     placeholder: `.header{background-color:#333;color:white;padding:1rem;display:flex;justify-content:space-between;align-items:center;}.nav ul{list-style:none;display:flex;gap:1rem;margin:0;padding:0;}.nav a{color:white;text-decoration:none;padding:0.5rem 1rem;border-radius:4px;transition:background-color 0.3s;}.nav a:hover{background-color:rgba(255,255,255,0.1);}.main{max-width:1200px;margin:0 auto;padding:2rem;}.card{background:white;border-radius:8px;box-shadow:0 2px 4px rgba(0,0,0,0.1);padding:1.5rem;margin-bottom:1rem;}`,
     longDescription:
       "Organize and format your CSS styles effortlessly with our professional CSS formatter. This tool automatically arranges your style rules with proper indentation, spacing, and alignment, ensuring your code is clean, readable, and consistent across all files. It validates syntax, detects common mistakes, and organizes properties logically to improve maintainability. Whether you’re managing simple stylesheets or large-scale design systems, the formatter helps keep your CSS structured and professional. It reduces manual cleanup time, prevents formatting inconsistencies, and enhances overall workflow efficiency. Use it directly in your browser to instantly clean and beautify your CSS code, no installations, plugins, or technical setup required. Perfect for front-end developers and designers alike.",
-    keywords: ["css formatter", "css beautifier", "format css", "css validator", "organize css"],
+    keywords: ["css formatter","css beautifier","css validator","online css formatter","css formatter online","css beautify","beautify css","format css","css lint","CSS checker","CSS cleaner","css convert","css format","css online format","format css online"],
   },
   python: {
     name: "Python",

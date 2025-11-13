@@ -7,9 +7,13 @@ export const metadata: Metadata = {
     "Free online password generator. Create strong, secure passwords with custom rules, length, and character sets. Includes password strength meter and security tips.",
   keywords: [
     "password generator",
+    "online password generator",
+    "password generator online",
     "secure password",
     "strong password",
     "random password",
+    "random password generator",
+    "random password online",
     "password creator",
     "password security",
   ],

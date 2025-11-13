@@ -7,7 +7,10 @@ export const metadata: Metadata = {
     "Free online hash generator. Generate MD5, SHA-1, and SHA-256 hashes from text. Secure client-side hashing for passwords, data integrity, and security.",
   keywords: [
     "hash generator",
+    "hash generator online",
+    "online hash generator",
     "md5 hash",
+    "md5 hash online",
     "sha1 hash",
     "sha256 hash",
     "password hash",

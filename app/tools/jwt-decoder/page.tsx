@@ -7,9 +7,12 @@ export const metadata: Metadata = {
     "Free online JWT decoder. Decode JWT tokens to view header and payload data. Perfect for debugging authentication tokens and API development.",
   keywords: [
     "jwt decoder",
+    "jwt decoder online",
     "jwt token decoder",
+    "jwt token decoder online",
     "json web token",
     "decode jwt",
+    "decode jwt online",
     "jwt debugger",
     "token decoder",
     "authentication",
