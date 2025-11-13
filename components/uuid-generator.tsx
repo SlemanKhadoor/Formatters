@@ -117,8 +117,7 @@ export default function UuidGenerator() {
                 Generate UUID/GUID (Universally Unique Identifiers) instantly
               </p>
               <p className="text-gray-500 dark:text-gray-400">
-                Create version 1, version 4, or NIL UUIDs for your applications. All generation happens securely in your
-                browser.
+                Generate Version 1, Version 4, or NIL UUIDs securely and instantly with our professional UUID Generator. All generation happens entirely in your browser, ensuring complete data privacy and top-level security, no external requests, servers, or tracking involved. This advanced tool provides developers with unique, collision-free identifiers ideal for databases, APIs, authentication systems, and distributed architectures. You can easily copy, regenerate, or validate UUIDs with a single click using the intuitive interface. It supports real-time generation, batch creation, and guarantees full compliance with the official RFC 4122 standard. Whether you need UUIDs for user sessions, resource tracking, application development, or testing environments, this generator delivers fast, reliable, and consistent results every time. Perfect for developers, engineers, and system architects who want a secure, lightweight, and client-side UUID generation solution without dependencies or installations.
               </p>
             </header>
 

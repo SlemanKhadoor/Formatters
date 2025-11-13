@@ -207,12 +207,11 @@ export default function CsvToJsonConverter() {
             {/* Page Header */}
             <header className="mb-8">
               <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">CSV to JSON Converter</h1>
-              <p className="text-lg text-gray-500 mb-4">
+              <p className="text-lg text-gray-600 mb-4">
                 Convert CSV data to JSON format for data analysis and API development
               </p>
               <p className="text-gray-500">
-                Transform your CSV data into well-structured JSON arrays. Perfect for data analysis, API development,
-                and database operations.
+                Transform your CSV data into well-structured JSON arrays quickly and efficiently with our professional CSV to JSON Converter. This powerful tool is ideal for developers, data analysts, and content creators who need to convert tabular CSV data into JSON for APIs, data analysis, or database operations. Simply paste your CSV data, click convert, and instantly receive clean, organized JSON arrays that are easy to read, integrate, and process in your projects. The converter automatically handles headers, nested values, and complex structures, ensuring accurate and reliable results every time. All processing happens locally in your browser, maintaining privacy, speed, and security. Whether you are preparing data for web applications, databases, or analytical tools, this converter streamlines your workflow, reduces errors, and ensures your data is properly structured, consistent, and ready for use efficiently and effortlessly.
               </p>
             </header>
 

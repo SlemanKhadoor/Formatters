@@ -218,8 +218,7 @@ ${generatedToken}`
                 Create and sign JWT tokens with custom headers and payloads for authentication and API development
               </p>
               <p className="text-gray-500 dark:text-gray-400">
-                Secure client-side JWT token generation. Perfect for API development, authentication testing, and token
-                creation with various algorithms.
+                Generate secure client-side JWT tokens instantly with our professional JWT generator tool. It allows developers to create authentication tokens directly in the browser without sending sensitive data to external servers. The tool supports multiple signing algorithms, ensuring flexibility and security for various applications. Perfect for API development, authentication testing, and creating custom tokens, it helps developers verify claims, expiration times, and token structures easily. With real-time token generation, instant validation, and full client-side privacy, this tool provides a safe and efficient solution for managing JWTs. Ideal for developers, security engineers, and anyone working with token-based authentication systems.
               </p>
             </header>
 

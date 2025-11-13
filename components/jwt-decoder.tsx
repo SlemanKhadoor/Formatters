@@ -160,12 +160,11 @@ export default function JwtDecoder() {
             {/* Page Header */}
             <header className="mb-8">
               <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">JWT Decoder</h1>
-              <p className="text-lg text-gray-500 mb-4">
+              <p className="text-lg text-gray-600 mb-4">
                 Decode JWT tokens to view header and payload data for debugging and development
               </p>
               <p className="text-gray-500">
-                Secure client-side JWT token decoding. Perfect for debugging authentication tokens, API development, and
-                understanding JWT structure.
+                Secure client-side JWT token decoding ensures safe, private, and efficient analysis of authentication tokens directly within the browser environment. This advanced tool allows developers to inspect the header, payload, and signature of any JWT securely, without exposing sensitive data to external servers or third parties. It’s perfect for debugging authentication flows, verifying user sessions, testing API integrations, and understanding the internal structure of JWTs used in modern web and mobile applications. With real-time decoding and instant validation, users can review token claims, expiration times, and signing algorithms with full transparency. Ideal for developers working with OAuth, OpenID Connect, Firebase Auth, or custom authentication systems, this utility helps ensure accuracy, reliability, and security in token-based workflows, making it an essential companion for developers building secure, scalable, and privacy-focused web platforms.
               </p>
             </header>
 

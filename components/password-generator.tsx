@@ -134,12 +134,11 @@ export default function PasswordGenerator() {
             {/* Page Header */}
             <header className="mb-8">
               <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">Password Generator</h1>
-              <p className="text-lg text-gray-500 mb-4">
+              <p className="text-lg text-gray-600 mb-4">
                 Generate secure passwords with custom rules and character sets
               </p>
               <p className="text-gray-500">
-                Create strong, unique passwords for your accounts. All generation happens locally in your browser for
-                maximum security.
+                Create strong, unique, and secure passwords instantly with our professional Password Generator. All generation happens locally in your browser, ensuring maximum privacy and security, no data is ever sent to any server. Customize your passwords by adjusting their length and choosing whether to include uppercase letters, lowercase letters, numbers, and special symbols. This tool helps you protect your online accounts, applications, and sensitive data from unauthorized access and brute-force attacks. With one click, you can generate multiple complex passwords that meet strict security standards and best practices. Perfect for developers, system administrators, and everyday users who value safety and reliability. Use it anytime directly in your browser for fast, secure, and hassle-free password creation without installing any software or extensions.
               </p>
             </header>
 

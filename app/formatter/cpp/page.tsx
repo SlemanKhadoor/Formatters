@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 export default function CppFormatterPage() {
   const formatter = {
     name: "C/C++",
-    description: "Format and beautify C and C++ code with proper indentation and syntax highlighting",
+    description: "Format, validate and beautify C and C++ code with real-time syntax checking",
     placeholder: `// C++ example
 #include <iostream>
 #include <vector>
@@ -39,7 +39,7 @@ int main() {
     return 0;
 }`,
     longDescription:
-      "Format C and C++ code with proper indentation and syntax highlighting. Perfect for cleaning up C/C++ files, classes, and functions.",
+      "Format and beautify your C and C++ code effortlessly with our professional C/C++ formatter. This tool automatically applies proper indentation, spacing, and alignment, ensuring your code is clean, readable, and consistent across all files. It provides syntax highlighting, detects common mistakes, and organizes your C and C++ files, classes, and functions efficiently. Whether you are maintaining legacy projects or developing new applications, the formatter helps you produce high-quality, production-ready code. It improves readability, reduces debugging time, and enhances collaboration within development teams. Use it directly in your browser for instant, reliable, and convenient results, no installation, setup, or plugins required. Perfect for C/C++ developers, learners, and enthusiasts alike.",
     keywords: ["c", "c++", "cpp", "formatter", "beautifier", "code formatter"],
   }
 

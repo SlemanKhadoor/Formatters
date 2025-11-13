@@ -115,8 +115,7 @@ export default function QrGenerator() {
                 Generate QR codes for text, URLs, emails, phone numbers, and more
               </p>
               <p className="text-gray-500 dark:text-gray-400">
-                Create custom QR codes with adjustable size and error correction levels. All processing happens in your
-                browser.
+                Create custom QR codes instantly with our professional QR Code Generator. This tool lets you generate high-quality QR codes directly in your browser without any server-side processing, ensuring complete data privacy. Adjust the size, color, and error correction levels to match your design and reliability needs. Whether you’re creating QR codes for URLs, contact information, event tickets, or product labels, this generator provides accurate and scannable results every time. It also supports transparent backgrounds and download options in multiple formats like PNG. Perfect for developers, marketers, and businesses who want secure, fast, and customizable QR code generation with no installation or external dependencies.
               </p>
             </header>
 

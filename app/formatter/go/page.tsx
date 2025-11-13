@@ -11,11 +11,11 @@ export const metadata: Metadata = {
 export default function GoFormatterPage() {
 	const formatter = {
 		name: "Go",
-		description: "Format and beautify Go code with proper indentation and syntax highlighting",
+		description: "Format, validate and beautify Go code with real-time syntax checking",
 		placeholder: `package main;import("fmt");type User struct{ID int;Name string;Email string;IsActive bool};func GreetUser(user User)string{return fmt.Sprintf("Hello, %s! Your email is %s",user.Name,user.Email)};func main(){users:=[]User{{1,"John","john@example.com",true},{2,"Jane","jane@example.com",false}};for _,user:=range users{if user.IsActive{fmt.Println(GreetUser(user))}}}`,
 
 		longDescription:
-			"Format Go code with proper indentation and syntax highlighting. Perfect for cleaning up Go files, structs, and functions.",
+			"Format and beautify your Go code effortlessly with our professional Go formatter. This tool automatically applies proper indentation, spacing, and alignment, ensuring your code is clean, readable, and consistent. It provides syntax highlighting, detects common errors, and organizes your Go files, structs, and functions efficiently. Whether you are maintaining existing projects or building new applications, the formatter helps you produce professional, production-ready code. It improves code readability, reduces debugging time, and enhances collaboration within development teams. Use it directly in your browser for instant, reliable results, no installation, setup, or plugins required. Perfect for developers, learners, and Go enthusiasts alike.",
 		keywords: ["go", "golang", "formatter", "beautifier", "code formatter", "go beautifier"],
 	}
 

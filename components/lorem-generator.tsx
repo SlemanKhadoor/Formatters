@@ -246,10 +246,10 @@ export function LoremGenerator() {
         <LayoutWithAds adPosition="right" showAds={true}>
           <main>
             {/* Page Header */}
-            <header className="mb-8">
-              <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">Lorem Ipsum Generator</h1>
-              <p className="text-lg text-gray-600 mb-4">
-                Generate placeholder text for your design and development projects.
+            <header className="mb-8">  
+              <h1 className="text-3xl font-bold mb-4">Lorem Ipsum Generator</h1>
+              <p className="text-gray-600 dark:text-gray-300">
+                Design and development are creative journeys filled with exploration, innovation, and refinement. Every project begins with an idea that grows into something meaningful through collaboration, strategy, and technical skill. This placeholder text serves as a temporary guide while your real content takes shape. Use it to visualize layouts, test typography, and structure your user interface. Whether you’re building a website, mobile app, or presentation, well-organized content flow is essential for clarity and impact. Keep refining, iterating, and improving as you move closer to your final product. Remember, great design balances beauty and function, making every detail count for your users’ experience.
               </p>
             </header>
 

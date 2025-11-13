@@ -211,12 +211,11 @@ export default function JsonToTypescriptConverter() {
             {/* Page Header */}
             <header className="mb-8">
               <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">JSON to TypeScript Converter</h1>
-              <p className="text-lg text-gray-500 mb-4">
+              <p className="text-lg text-gray-600 mb-4">
                 Generate TypeScript interfaces and types from JSON data for better type safety
               </p>
               <p className="text-gray-500">
-                Transform your JSON data into TypeScript interfaces automatically. Perfect for API development, type
-                definitions, and ensuring type safety in your applications.
+                Transform your JSON data into fully structured TypeScript interfaces quickly and efficiently with our professional JSON to TypeScript Converter. This powerful tool is perfect for developers working on APIs, front-end applications, or any TypeScript project that requires accurate type definitions and type safety. Simply paste your JSON data, click convert, and instantly generate clean, well-formatted TypeScript interfaces that match your JSON structure. The converter automatically handles nested objects, arrays, and complex data types, ensuring that your interfaces are accurate, readable, and ready for integration into your projects. All processing happens locally in your browser, guaranteeing privacy, speed, and reliability. Whether you are building web apps, mobile applications, or server-side solutions, this tool streamlines your workflow, reduces errors, and ensures type-safe, maintainable, and production-ready code efficiently and effortlessly.
               </p>
             </header>
 

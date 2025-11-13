@@ -386,11 +386,11 @@ console.log("Total:", calculateTotal(items));`
                 {/* Page Header */}
                 <header className="mb-8">
                   <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">Enhanced Text & Code Diff Checker</h1>
-                  <p className="text-lg text-gray-500 mb-4">
+                  <p className="text-lg text-gray-600 mb-4">
                     Compare two pieces of text or code with word-level highlighting and advanced options
                   </p>
                   <p className="text-gray-500">
-                    Perfect for comparing code versions, documents, or any text content with detailed word-by-word analysis.
+                    Compare code versions, documents, or any text content efficiently with our advanced Diff Tool. This powerful utility allows developers, writers, editors, and content creators to see precise differences between two sets of text. It highlights changes word by word, line by line, and even character by character, making it easy to track edits, updates, and revisions. Perfect for reviewing code, proofreading documents, or analyzing written content for collaboration and version control. You can copy, download, or share the comparison results instantly. All processing happens locally in your browser, ensuring privacy, speed, and reliability. Simplify your workflow and catch every difference accurately with this intuitive, easy-to-use tool.
                   </p>
                 </header>
 

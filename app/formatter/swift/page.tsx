@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 export default function SwiftFormatterPage() {
   const formatter = {
     name: "Swift",
-    description: "Format and beautify Swift code with proper indentation and syntax highlighting",
+    description: "Format, validate and beautify Swift code with real-time syntax checking",
     placeholder: `// Swift example
 struct User {
     let id: Int
@@ -34,7 +34,7 @@ activeUsers.forEach { user in
     print(greetUser(user))
 }`,
     longDescription:
-      "Format Swift code with proper indentation and syntax highlighting. Perfect for cleaning up Swift files, structs, and functions.",
+      "Format and beautifully beautify your Swift code effortlessly with our professional Swift formatter. This powerful tool automatically applies proper indentation, spacing, and alignment, ensuring your code is clean, readable, and fully consistent. It provides advanced syntax highlighting, intelligently detects common mistakes, and organizes your Swift files, structs, and functions efficiently. Whether you are maintaining existing projects or building new applications, the formatter helps you produce high-quality, production-ready code. It significantly improves readability, reduces debugging time, and enhances collaboration within development teams. Use it directly in your browser for instant, reliable, and convenient results, no installation, setup, or plugins required. Perfect for Swift developers, learners, and enthusiasts alike.",
     keywords: ["swift", "formatter", "beautifier", "code formatter", "swift beautifier"],
   }
 

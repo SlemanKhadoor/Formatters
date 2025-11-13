@@ -5,8 +5,8 @@ import { ArrowLeft, Code } from "lucide-react"
 import { Header } from "@/components/Header"
 
 export const metadata: Metadata = {
-  title: "CSS/JS/HTML Minifier | Formatters.net",
-  description: "Minify CSS, JavaScript, and HTML code to reduce file size and improve website performance.",
+  title: "CSS/JS/HTML Minifier | Formatters.net",           
+  description: "Minify CSS, JavaScript, and HTML code quickly and efficiently with our professional Minifier tool. This powerful and easy-to-use utility helps web developers and designers reduce file sizes, improve loading times, and significantly enhance overall website performance. By removing unnecessary spaces, line breaks, and comments, the minifier creates optimized, clean, and compact code without altering functionality. It supports single or multiple files, provides instant previews to verify results before deployment, and allows users to copy or download the optimized code immediately. Ideal for websites, web applications, and mobile projects, the tool ensures faster page rendering, better SEO performance, and a smoother user experience. All processing happens locally in your browser, maintaining privacy, speed, and security. Perfect for developers who want a reliable, simple, and highly efficient solution to optimize their front-end code for production environments while still maintaining readability when needed.",
   keywords: "css minifier, javascript minifier, html minifier, code compression, web optimization",
 }
 
@@ -23,7 +23,7 @@ export default function MinifierPage() {
             <div className="mb-8">
               <h1 className="text-3xl font-bold mb-4">CSS/JS/HTML Minifier</h1>
               <p className="text-gray-600 dark:text-gray-300">
-                Minify CSS, JavaScript, and HTML code to reduce file size and improve website performance.
+                Minify CSS, JavaScript, and HTML code quickly and efficiently with our professional Minifier tool. This powerful and easy-to-use utility helps web developers and designers reduce file sizes, improve loading times, and significantly enhance overall website performance. By removing unnecessary spaces, line breaks, and comments, the minifier creates optimized, clean, and compact code without altering functionality. It supports single or multiple files, provides instant previews to verify results before deployment, and allows users to copy or download the optimized code immediately. Ideal for websites, web applications, and mobile projects, the tool ensures faster page rendering, better SEO performance, and a smoother user experience. All processing happens locally in your browser, maintaining privacy, speed, and security. Perfect for developers who want a reliable, simple, and highly efficient solution to optimize their front-end code for production environments while still maintaining readability when needed.
               </p>
             </div>
             <CodeMinifier />

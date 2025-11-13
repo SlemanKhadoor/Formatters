@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 export default function PHPFormatterPage() {
   const formatter = {
     name: "PHP",
-    description: "Format and beautify PHP code with proper indentation and syntax highlighting",
+    description: "Format, validate and beautify PHP code with real-time syntax checking",
     placeholder: `<?php
 // PHP example
 class User {
@@ -47,7 +47,7 @@ foreach ($users as $user) {
     echo greetUser($user) . "\\n";
 }`,
     longDescription:
-      "Format PHP code with proper indentation and syntax highlighting. Perfect for cleaning up PHP files, classes, and functions.",
+      "Format and beautify your PHP code effortlessly with our professional PHP formatter. This tool automatically applies proper indentation, spacing, and alignment, ensuring your code is clean, consistent, and easy to read. It provides syntax highlighting, detects common formatting and structural issues, and organizes your PHP files, classes, and functions efficiently. Whether you’re maintaining existing projects or building new applications, the formatter helps you write production-ready, professional-quality code. It improves readability, reduces debugging time, and enhances collaboration within development teams. Use it directly in your browser for instant, reliable formatting, no installation, setup, or plugins required. Perfect for developers, students, and anyone working with PHP code daily.",
     keywords: ["php", "formatter", "beautifier", "code formatter", "php beautifier"],
   }
 

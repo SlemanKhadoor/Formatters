@@ -14,15 +14,15 @@ const formatters = {
   "isActive": true
 }`,
     longDescription:
-      "Our JSON formatter helps you format, validate, and beautify JSON data instantly. Perfect for developers working with APIs, configuration files, and data structures.",
+      "Our advanced JSON formatter is carefully designed to help developers and data analysts format, validate, and beautifully beautify JSON data instantly. It provides a clean, intuitive, and user-friendly interface where you can easily paste, edit, and preview your JSON files in real time. The tool automatically highlights syntax errors, ensures proper indentation, and makes complex data structures much easier to read and understand. Whether you’re working with APIs, configuration files, or large datasets, this smart formatter saves you time and effort by improving accuracy and readability. It’s an essential and must-have utility for anyone who regularly handles JSON data in development, data analysis, or software testing.",
     keywords: ["json formatter", "json validator", "json beautifier", "format json online", "validate json"],
   },
   javascript: {
     name: "JavaScript",
-    description: "Format and beautify JavaScript code with syntax validation",
+    description: "Format, validate and beautify JavaScript code with real-time syntax checking",
     placeholder: `function calculateTotal(items){let total=0;for(let i=0;i<items.length;i++){if(items[i].price&&items[i].quantity){total+=items[i].price*items[i].quantity;}}return total;}const items=[{name:"Product 1",price:29.99,quantity:2},{name:"Product 2",price:15.50,quantity:1}];console.log("Total:",calculateTotal(items));`,
     longDescription:
-      "Format and beautify your JavaScript code with our professional JavaScript formatter. Includes syntax validation, error detection, and proper indentation.",
+        "Format and beautify your JavaScript code effortlessly with our professional JavaScript formatter. This powerful tool automatically organizes your code with proper indentation, consistent spacing, and a clean, well-structured layout, making it easier to read, debug, and maintain. It also includes advanced syntax validation and intelligent error detection to help you identify mistakes instantly and improve overall code quality and performance. Whether you’re writing simple scripts or managing complex, large-scale applications, this formatter ensures your JavaScript stays clean, optimized, and production-ready. Perfect for developers who want reliable, efficient, and visually appealing code formatting directly in the browser without installing any additional software or plugins.",
     keywords: [
       "javascript formatter",
       "js beautifier",
@@ -33,23 +33,23 @@ const formatters = {
   },
   html: {
     name: "HTML",
-    description: "Format and structure HTML markup with tag validation",
+    description: "Format, validate and beautify HTML markup with real-time syntax checking",
     placeholder: `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Sample Page</title></head><body><header><h1>Welcome to My Website</h1><nav><ul><li><a href="#home">Home</a></li><li><a href="#about">About</a></li><li><a href="#contact">Contact</a></li></ul></nav></header><main><section><h2>About Us</h2><p>This is a sample paragraph with <strong>bold text</strong> and <em>italic text</em>.</p></section></main><footer><p>&copy; 2024 My Website. All rights reserved.</p></footer></body></html>`,
     longDescription:
-      "Format and structure your HTML markup with our HTML formatter. Validates tag nesting, detects unclosed tags, and provides proper indentation.",
+      "Format and structure your HTML markup effortlessly with our professional HTML formatter. This tool automatically organizes your code with proper indentation, spacing, and tag alignment, making it easier to read, maintain, and debug. It validates tag nesting, detects unclosed or misplaced tags, and ensures your HTML follows best coding practices. Whether you’re working on simple web pages or complex layouts, the formatter helps you achieve clean, consistent, and well-structured markup. It also improves overall readability, reduces human errors, and enhances your workflow efficiency. Use it directly in your browser for instant, reliable results—no installations, plugins, or setup required. Perfect for developers, designers, and learners alike.",
     keywords: ["html formatter", "html beautifier", "format html", "html validator", "structure html"],
   },
   css: {
     name: "CSS",
-    description: "Format and organize CSS styles with syntax validation",
+    description: "Format, validate and beautify CSS code with real-time syntax checking",
     placeholder: `.header{background-color:#333;color:white;padding:1rem;display:flex;justify-content:space-between;align-items:center;}.nav ul{list-style:none;display:flex;gap:1rem;margin:0;padding:0;}.nav a{color:white;text-decoration:none;padding:0.5rem 1rem;border-radius:4px;transition:background-color 0.3s;}.nav a:hover{background-color:rgba(255,255,255,0.1);}.main{max-width:1200px;margin:0 auto;padding:2rem;}.card{background:white;border-radius:8px;box-shadow:0 2px 4px rgba(0,0,0,0.1);padding:1.5rem;margin-bottom:1rem;}`,
     longDescription:
-      "Organize and format your CSS styles with our CSS formatter. Validates syntax, organizes properties, and provides consistent formatting.",
+      "Organize and format your CSS styles effortlessly with our professional CSS formatter. This tool automatically arranges your style rules with proper indentation, spacing, and alignment, ensuring your code is clean, readable, and consistent across all files. It validates syntax, detects common mistakes, and organizes properties logically to improve maintainability. Whether you’re managing simple stylesheets or large-scale design systems, the formatter helps keep your CSS structured and professional. It reduces manual cleanup time, prevents formatting inconsistencies, and enhances overall workflow efficiency. Use it directly in your browser to instantly clean and beautify your CSS code, no installations, plugins, or technical setup required. Perfect for front-end developers and designers alike.",
     keywords: ["css formatter", "css beautifier", "format css", "css validator", "organize css"],
   },
   python: {
     name: "Python",
-    description: "Format and structure Python code with PEP 8 compliance",
+    description: "Format, validate and beautify Python code with real-time syntax checking",
     placeholder: `def calculate_fibonacci(n):
                 if n <= 1:
 return n
@@ -70,28 +70,28 @@ result = calculate_fibonacci(num)
 if __name__ == "__main__":
     main()`,
     longDescription:
-      "Format your Python code with proper indentation and PEP 8 compliance. Validates syntax and provides clean, readable code structure.",
+      "Format and structure your Python code effortlessly with our professional Python formatter. This tool automatically applies proper indentation, spacing, and alignment based on PEP 8 standards, the official style guide for Python code. It validates syntax, highlights common errors, and ensures your code remains clean, consistent, and easy to read. Whether you’re writing simple scripts or managing complex applications, the formatter helps you maintain professional, production-ready code quality. It also enhances collaboration within teams by enforcing consistent formatting rules. Use it directly in your browser for instant, accurate results without needing to install any plugins or software. Perfect for developers, learners, and Python enthusiasts alike.",
     keywords: ["python formatter", "python beautifier", "format python", "python validator", "pep 8 formatter"],
   },
   xml: {
     name: "XML",
-    description: "Format and validate XML documents with proper structure",
+    description: "Format, validate and beautify XML documents with real-time syntax checking",
     placeholder: `<?xml version="1.0" encoding="UTF-8"?><catalog><book id="1"><title>The Great Gatsby</title><author>F. Scott Fitzgerald</author><genre>Fiction</genre><price currency="USD">12.99</price><publishDate>1925-04-10</publishDate></book><book id="2"><title>To Kill a Mockingbird</title><author>Harper Lee</author><genre>Fiction</genre><price currency="USD">14.99</price><publishDate>1960-07-11</publishDate></book></catalog>`,
     longDescription:
-      "Format and validate XML documents with proper structure and indentation. Detects malformed XML and provides clear error messages.",
+      "Format, validate, and beautify your XML documents effortlessly with our professional XML formatter. This tool automatically applies proper indentation, spacing, and alignment, ensuring your XML files are clean, readable, and consistent. It detects malformed XML, highlights errors, and provides clear, descriptive messages to help you quickly identify and fix issues. Whether you are working on configuration files, data exchange documents, or complex XML structures, the formatter ensures your code is well-structured and professional. It improves readability, reduces debugging time, and enhances workflow efficiency. Use it directly in your browser for instant, reliable, and convenient results, no installation, setup, or plugins required. Ideal for developers, analysts, and XML enthusiasts alike.",
     keywords: ["xml formatter", "xml validator", "format xml", "xml beautifier", "validate xml"],
   },
   sql: {
     name: "SQL",
-    description: "Format and beautify SQL queries with syntax validation",
+    description: "Format, validate and beautify SQL queries with real-time syntax checking",
     placeholder: `SELECT u.id, u.name, u.email, p.title as profile_title, COUNT(o.id) as order_count, SUM(o.total) as total_spent FROM users u LEFT JOIN profiles p ON u.id = p.user_id LEFT JOIN orders o ON u.id = o.user_id WHERE u.created_at >= '2024-01-01' AND u.status = 'active' GROUP BY u.id, u.name, u.email, p.title HAVING COUNT(o.id) > 0 ORDER BY total_spent DESC, u.name ASC LIMIT 100;`,
     longDescription:
-      "Format and beautify SQL queries with proper indentation and keyword capitalization. Validates syntax and improves query readability.",
+      "Format, beautify, and optimize your SQL queries effortlessly with our professional SQL formatter. This tool automatically applies proper indentation, aligns keywords consistently, and capitalizes SQL commands for better readability. It validates syntax, detects common mistakes, and organizes complex queries, making them easier to read, understand, and maintain. Whether you are working on simple SELECT statements or managing large, multi-join queries in production databases, the formatter helps you produce clean, professional, and error-free SQL code. It reduces debugging time, enhances collaboration within development teams, and improves overall workflow efficiency. Use it directly in your browser for instant, reliable, and convenient results, no installation or plugins required. Ideal for database developers, analysts, and SQL enthusiasts.",
     keywords: ["sql formatter", "sql beautifier", "format sql", "sql validator", "beautify sql query"],
   },
   markdown: {
     name: "Markdown",
-    description: "Format and preview Markdown text with syntax validation",
+    description: "Format, validate and beautify Markdown text with real-time syntax checking",
     placeholder: `# Welcome to Markdown Formatter
 
 This is a comprehensive guide to **Markdown formatting**.
@@ -134,7 +134,7 @@ function greet(name) {
 
 *Thank you for using our Markdown formatter!*`,
     longDescription:
-      "Format and preview Markdown text with syntax validation. Perfect for documentation, README files, and content creation.",
+      "Format, preview, and validate your Markdown text effortlessly with our professional Markdown formatter. This tool automatically organizes headings, lists, code blocks, links, and other Markdown elements with proper indentation and spacing, ensuring your content is clean, structured, and readable. It provides real-time syntax validation, detects common formatting mistakes, and highlights errors to help you fix them quickly. Whether you are writing documentation, README files, blog posts, or any other Markdown-based content, this formatter ensures your text looks professional and well-organized. It improves readability, reduces errors, and enhances workflow efficiency. Use it directly in your browser for instant, reliable, and convenient results, no installation or plugins required. Ideal for developers, writers, and content creators.",
     keywords: ["markdown formatter", "markdown editor", "format markdown", "markdown validator", "md formatter"],
   },
 }

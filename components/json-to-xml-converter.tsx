@@ -169,12 +169,11 @@ export default function JsonToXmlConverter() {
             {/* Page Header */}
             <header className="mb-8">
               <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">JSON to XML Converter</h1>
-              <p className="text-lg text-gray-500 mb-4">
+              <p className="text-lg text-gray-600 mb-4">
                 Convert JSON data to XML format for system integration and data interchange
               </p>
               <p className="text-gray-500">
-                Transform your JSON data into well-formed XML. Perfect for APIs, data migration, and system integration
-                projects.
+                Transform your JSON data into well-formed XML quickly and efficiently with our professional JSON to XML Converter. This powerful tool is perfect for developers, data analysts, and system integrators who need to convert structured JSON data into XML for APIs, data migration, or system integration projects. Simply paste your JSON data, click convert, and instantly receive clean, properly formatted XML output that is easy to read and ready for use. The tool automatically handles nested objects and arrays, ensuring accurate and well-structured XML. All processing happens locally in your browser, guaranteeing privacy, speed, and reliability. Whether you’re working on web services, database synchronization, or backend system workflows, this converter saves time, reduces errors, and simplifies data handling. It is an essential solution for anyone managing data across different platforms.
               </p>
             </header>
 
